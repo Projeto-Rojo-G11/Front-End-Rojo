@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Raleway", "Open Sans", Arial, Helvetica, sans-serif;
+  }
+
+.App{
+    background-color: #EDEDED;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+
+
+.erro-box{
+    background-image: url(../img/erro.png);
+    height: 490px;
+    width: 784px;
+    position: absolute;
+    z-index: 1;
+    top: 200px;
+    right: 540px;
+
+    background-repeat:no-repeat ;
+    background-size: cover;
+}

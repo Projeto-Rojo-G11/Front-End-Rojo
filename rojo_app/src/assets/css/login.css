@@ -1,0 +1,173 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Raleway", "Open Sans", Arial, Helvetica, sans-serif;
+  }
+
+.container-login 
+{
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  background: radial-gradient(85.45% 198.93% at 97.55% 15.23%, #DA192C 0%, #90101D 12.33%, #47080E 55.48%, #30090D 82.94%, #210508 94.8%);
+  
+}
+
+.container-header{
+  width: 100%;
+  height: 6em;
+  /* background-color:black; */
+
+  display: flex;
+  align-items: center;
+  padding-left: 12em;
+  
+  position: absolute;
+  z-index: 1;
+  top: 0;
+}
+
+.logo-header{
+ width: 165px;
+ height: 45px;
+  /* background-color: aqua; */
+}
+
+.bg-animation-pilula{
+  position: absolute;
+  z-index: 1;
+  width: 617px;
+  height: 500px;
+  background-image: url(../../assets/img/pilula.png);
+  background-position: center;
+  background-size: cover;
+  margin-left: 1200px;
+  margin-top: -110px;
+  transform: rotate(0deg)
+}
+
+.bg-animation-roda{
+  position: absolute;
+  z-index: 0;
+  width: 1250px;
+  height: 850px;
+  background-image: url(../../assets/img/roda.png);
+  background-position: center;
+  background-size: cover;
+  right: 0;
+  top: 0;
+  transform: rotate(0deg)
+}
+
+.box-login{
+  z-index: 1;
+  position: absolute;
+  top: 270px;
+  right: 39.5%;
+  width: 377px;
+  height: 430px;
+  border-radius: 10px;
+;
+  padding: 3.5em;
+  background: linear-gradient(319.74deg, rgba(0, 0, 0, 0.3952) -0.87%, rgba(0, 0, 0, 0.76) 116.41%);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  /* align-items: center; */
+}
+
+.box-login a{
+  text-decoration: none;
+  font-size: 16px;
+  font-family: 'Open Sans', sans-serif;
+  color: white;
+}
+
+.box-login-nav{
+  width: 100%;
+  height: auto;
+  /* background-color:orange;s */
+  margin-bottom: 45px;
+}
+
+#box-login-nav-cadastrar{
+  color: rgba(255, 255, 255, 0.2);
+  transition: ease-out 0.3s;
+}
+
+#box-login-nav-cadastrar:hover {
+  color: white;
+}
+
+.box-login-nav a{
+  color: white;
+  font-size: 20px;
+  margin-right: 1em;
+
+}
+
+/* box que contém o formulário */
+.box-form-login{
+  width: 100%;
+  height: 330px;
+  /* background-color: blueviolet; */
+}
+
+/* box do formulário */
+.form-login{
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  width: 100%;
+  height: 100%;
+  /* background-color: aquamarine; */
+}
+
+.form-login p{
+  color: white;
+  font-size: 12px;
+}
+/* o campo que contém o box input completo */
+.box-input-login{
+  width: 100%;
+  height: 54px;
+  margin-bottom: 0.8em;
+  /* background-color: #DA192C; */
+}
+
+.box-input-login-p {
+  color: white;
+  font-family: 14px;
+}
+
+.box-input-login input{
+  color:white;
+}
+
+.input-login{
+  width: 100%;
+  height: 35px;
+  background: none;
+  border-top: 0 ;
+  border-left: 0;
+  border-right: 0;
+}
+
+.btn-login{
+  width: 176px;
+  height: 48px;
+  border-radius:5px;
+  background-color: #A71111;
+  border: none;
+  color:white;
+  font-size: 16px;
+}
+
+.login-recuperar{
+  margin-top: 5px;
+  margin-right: 162px;
+  margin-bottom: 3.5em  ;
+}
+

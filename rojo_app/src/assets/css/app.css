@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Raleway", "Open Sans", Arial, Helvetica, sans-serif;
+}
+
+.container-app
+{
+  /* position: relative; */
+  height: 100vh;
+  width: 100%;
+  
+}
+
+.container-header{
+  width: 100%;
+  height: 6em;
+  background-color:rgba(30, 30, 30, 1);
+  ;
+  
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 12em;
+  padding-right: 12em;
+  position: absolute;
+  z-index: 1;
+  top: 0;
+}
+  
+.logo-header{
+  width: 165px;
+  height: 45px;
+  /* background-color: aqua; */
+}
+
+.box-nav-header{
+  width: 583px;
+  height: auto;
+  /* background-color: yellowgreen; */
+  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.box-nav-header a {
+  color: white;
+  text-decoration: none;
+  
+}
+
+#btn-login{
+  width: 91px;
+  height: 50px;
+  background-color: #C81C1C;
+  border-radius: 5px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.palito-header{
+  width: 2px;
+  height: 40px;
+  background-color: white;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.login-header{
+  width: auto;
+  height: 40px;
+  /* background-color: blue; */
+  font-size: 16px;
+}
+
