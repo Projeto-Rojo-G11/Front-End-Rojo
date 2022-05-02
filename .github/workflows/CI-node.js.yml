@@ -16,9 +16,9 @@ jobs:
       - name: Use Node.js 16.x
         uses: actions/setup-node@v3
         with:
-          node-version: 16.x
+          node-version: 16.0.x
 
       - name: Install dependencies
         run: cd /projetorojo/rojo_app; npm ci
-      - run: npm run build --if-present
+      - run: npm run build
       - run: mv build/ /var/www/webappFront
