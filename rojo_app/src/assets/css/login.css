@@ -10,7 +10,7 @@
   position: relative;
   height: 100vh;
   width: 100%;
-  background: radial-gradient(85.45% 198.93% at 97.55% 15.23%, #DA192C 0%, #90101D 12.33%, #47080E 55.48%, #30090D 82.94%, #210508 94.8%);
+  background: radial-gradient(88.69% 203.63% at 96.72% 11.85%, #CC1A2B 0%, #90101D 22.71%, #47080E 48.78%, #30090D 82.94%, #210508 94.8%)
   
 }
 
@@ -153,10 +153,15 @@
   border-top: 0 ;
   border-left: 0;
   border-right: 0;
+  outline: 0;
+}
+
+.input-login-senha{
+  letter-spacing: 0.5em;
 }
 
 .btn-login{
-  width: 176px;
+  width: 150px;
   height: 48px;
   border-radius:5px;
   background-color: #A71111;

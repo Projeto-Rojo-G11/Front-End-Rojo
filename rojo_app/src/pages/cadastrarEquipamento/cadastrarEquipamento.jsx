@@ -21,11 +21,12 @@ import ta from '../../assets/icon/topologia.png';
 import aa from '../../assets/icon/alerta.png';
 
 import '../../assets/css/barra-esquerda.css';
-import '../../assets/css/equipamento.css';
+import '../../assets/css/animation__input.css';
+import '../../assets/css/cadastroEquipamento.css';
+import '../../assets/css/style_search.css';
 
 
 export default function CadastroEquipamento() {
-
 
     var navigate = useNavigate();
     
@@ -38,14 +39,13 @@ export default function CadastroEquipamento() {
     const [cargo, setCargo] = useState('');
 
     //States Equipamento
-    const [idTipoEquipamento, setIdTipoEquipamento] = useState(0);
-    const [modelo, setModelo] = useState(0);
-    const [numeroSerie, setNumeroSerie] = useState(0);
-    const [gateWay, setGateWay] = useState(0);
-    const [ip, setIp] = useState(0);
-    const [dns, setDns] = useState(0);
-    const [porta, setPorta] = useState(0);
-    const [img64, setImg64] = useState(0);
+    const [idTipoEquipamento, setIdTipoEquipamento] = useState();
+    const [modelo, setModelo] = useState();
+    const [numeroSerie, setNumeroSerie] = useState();
+    const [gateWay, setGateWay] = useState();
+    const [ip, setIp] = useState();
+    const [dns, setDns] = useState();
+    const [porta, setPorta] = useState();
     const [descricao, setDescricao] = useState('');
     const [data, setData] = useState(new Date())
     const [condicao, setCondicao] = useState('');
@@ -55,6 +55,9 @@ export default function CadastroEquipamento() {
     const [dadoTipoEquipamento, setDadoTipoEquipamento] = useState([]);
     const [dadoModelo, setDadoModelo] =useState([]);
 
+    //States Imagem Equipamento
+    const [img64, setImg64] = useState('');
+    const [arquivo, setArquivo] = useState(null);
 
     const buscarTipoEquipamento = () =>
     {
@@ -108,38 +111,32 @@ export default function CadastroEquipamento() {
         .catch(erro => console.log(erro))
 
     }
+    
     function cadastrarEquipamento (event) 
     {
         event.preventDefault();
 
-        var formData = new FormData();
-
-        const target = document.getElementById('arquivo');
-        const file = target.files[0]
-        formData.append(`arquivo`, file, file.name);
-        
-        formData.append('id', 0);
-        formData.append(`img64`, img64)
-        formData.append( `Modelo`, modelo);
-        formData.append('NumeroSerie', numeroSerie);
-        formData.append('GateWay', gateWay);
-        formData.append('Mask', ip);
-        formData.append('Dns', dns);
-        formData.append('Porta', porta);
-        formData.append('Condicao', condicao);
-        formData.append('Descricao', descricao);
-        formData.append('Data', data);
-
+        let novoEquipamento = {
+        Modelo: modelo,
+        NumeroSerie: numeroSerie,
+        GateWay: gateWay,
+        Mask: ip,
+        Dns: dns,
+        Porta: porta,
+        Condicao: condicao,
+        Descricao: descricao,
+        Data: data,
+        }
 
         axios({
             method: "post",
             url: "http://localhost:5000/api/Equipamento",
-            data: formData,
+            data: novoEquipamento,
             parseJwt,
-            headers: {"Content-Type" : "multipart/form-data" },
+            headers: {"Content-Type" : "application/json" },
         })
-        .then( function (resposta){
-            setDadoEquipamento(resposta.data)
+        .then( function (response){
+            setDadoEquipamento(response.data);
         })
 
         .then( function (resposta) {
@@ -152,8 +149,30 @@ export default function CadastroEquipamento() {
         });
     }
 
+    function upload(){
+       
+        var formData = new FormData();
+
+        formData.append(
+            'arquivo', arquivo
+        );
+        
+        axios({
+            method: "post",
+            url: "http://localhost:5000/api/Equipamento",
+            data: formData,
+            headers: {
+            "Content-Type": "multipart/form-data",
+            "Authorization" : 'Bearer' + localStorage.getItem('usuario-login') }
+        } )
+        .catch((erro) => console.log(erro))
+    }
     
-    
+    const atualizaState = (event) => {
+        setArquivo(             event.target.files[0]
+        )
+    }
+
     useEffect(() => (buscarTipoEquipamento()),[])
         return(   
             <div className="container-equipamento">
@@ -285,7 +304,7 @@ export default function CadastroEquipamento() {
 
                                                 <div className="container-info-dados">
 
-                                                    <form encType="multipart/form-data">
+                                                    <form onSubmit={(event) => cadastrarEquipamento(event)}>
                                                         <div className="dados">
                                                             <div className="info-1">
                                                                 <div>
@@ -300,130 +319,124 @@ export default function CadastroEquipamento() {
                                                                         className="input"      
                                                                         onChange={(event) => setIdTipoEquipamento(event.target.value)}>
                                                                          <option value="#">Escolha</option>
-                                    {dadoTipoEquipamento.map((event) => {
-                                        return (
+                                                                            {dadoTipoEquipamento.map((event) => {
+                                                                                return (
 
-                                            <option key={event.idTipoEquipamento} value={event.idTipoEquipamento}>{event.equipamento}
-                                            </option>
-                                        );
-                                    })}                                 
+                                                                                    <option key={event.idTipoEquipamento} value={event.idTipoEquipamento}>{event.equipamento}
+                                                                                    </option>
+                                                                                );
+                                                                            })}                                 
                                                                     </select>                        
                                                                     
                                                                 </div>
 
 
-                                                                <div>
-
-                                                                    <p>
-                                                                        Modelo
-                                                                        </p>                         
-                                                                    <input
-                                                                        className="input"
+                                                                <div className="form__div">                       
+                                                                    <input 
+                                                                        className="form__input"
                                                                         type="text"
                                                                         name="Modelo"
                                                                         value={modelo}
-                                                                        placeholder="Modelo"
+                                                                        autoComplete='off'
+                                                                        placeholder=" "
                                                                         onChange={(event) => setModelo(event.target.value)}
-                                                                        disabled = {condicaoAtualizar === true ? 'none' : ''}
+                                                                        // disabled = {condicaoAtualizar === true ? 'none' : ''}
                                                                     /> 
+                                                                    <label className="form__label">
+                                                                        Modelo
+                                                                    </label>
                                                                 </div>
 
-                                                                <div>
-
-                                                                    <p>
-                                                                        GateWay
-                                                                        </p>                         
+                                                                <div className="form__div">                        
                                                                     <input
-                                                                        className="input"
+                                                                        className="form__input"
                                                                         type="text"
                                                                         name="Gateway"
                                                                         value={gateWay}
-                                                                        placeholder="GateWay"
+                                                                        placeholder=" "
                                                                         onChange={(event) => setGateWay(event.target.value)}
-                                                                        disabled = {condicaoAtualizar === true ? 'none' : ''}
-                                                                    /> 
+                                                                        // disabled = {condicaoAtualizar === true ? 'none' : ''}
+                                                                    />
+                                                                    <label className="form__label">
+                                                                        GateWay
+                                                                    </label>
                                                                 </div>
 
-                                                                <div>
-
-                                                                    <p>
-                                                                        Mask
-                                                                        </p>                         
+                                                                <div className="form__div">                        
                                                                     <input
-                                                                        className="input"
+                                                                        className="form__input"
                                                                         type="text"
                                                                         name="IP"
                                                                         value={ip}
-                                                                        placeholder="IP"
+                                                                        placeholder=" "
                                                                         onChange={(event) => setIp(event.target.value)}
-                                                                        disabled = {condicaoAtualizar === true ? 'none' : ''}
-                                                                    /> 
+                                                                        // disabled = {condicaoAtualizar === true ? 'none' : ''}
+                                                                    />
+                                                                    <label className="form__label">
+                                                                        Mask
+                                                                    </label>
                                                                 </div>
 
-                                                                <div>
-
-                                                                    <p>
-                                                                        Descricao
-                                                                        </p>                         
+                                                                <div className="form__div">                       
                                                                     <input
-                                                                        className="input"
+                                                                        className="form__input"
                                                                         type="text"
                                                                         name="descricao"
                                                                         value={descricao}
-                                                                        placeholder="Descrição"
+                                                                        placeholder=" "
                                                                         onChange={(event) => setDescricao(event.target.value)}
-                                                                        disabled = {condicaoAtualizar === true ? 'none' : ''}
+                                                                        // disabled = {condicaoAtualizar === true ? 'none' : ''}
                                                                     /> 
+                                                                    <label classname="form__label">
+                                                                        Descrição
+                                                                    </label>
                                                                 </div> 
                                                             </div>
                                                             <div className="info-2">
 
-                                                                <div>
-
-                                                                    <p>
-                                                                        DNS
-                                                                        </p>                         
+                                                                <div className="form__div">                      
                                                                     <input
-                                                                        className="input"
+                                                                        className="form__input"
                                                                         type="text"
                                                                         name="DNS"
                                                                         value={dns}
-                                                                        placeholder="Modelo"
+                                                                        placeholder=" "
                                                                         onChange={(event) => setDns(event.target.value)}
-                                                                        disabled = {condicaoAtualizar === true ? 'none' : ''}
-                                                                    /> 
+                                                                        // disabled = {condicaoAtualizar === true ? 'none' : ''}
+                                                                    />
+                                                                    <label className="form__label">
+                                                                        DNS
+                                                                    </label> 
                                                                 </div> 
 
-                                                                <div>
-
-                                                                    <p>
-                                                                        Porta
-                                                                        </p>                         
+                                                                <div className="form__div">                        
                                                                     <input
-                                                                        className="input"
+                                                                        className="form__input"
                                                                         type="text"
                                                                         name="Porta"
                                                                         value={porta}
-                                                                        placeholder="Porta"
+                                                                        placeholder=" "
                                                                         onChange={(event) => setDescricao(event.target.value)}
-                                                                        disabled = {condicaoAtualizar === true ? 'none' : ''}
-                                                                    /> 
+                                                                        // disabled = {condicaoAtualizar === true ? 'none' : ''}
+                                                                    />
+                                                                    <label className="form__label">
+                                                                        Porta
+                                                                    </label>
                                                                 </div>
 
-                                                                <div>
-
-                                                                    <p>
-                                                                        Numero de Série
-                                                                    </p>                         
+                                                                <div className="form__div">                   
                                                                     <input
-                                                                        className="input"
+                                                                        className="form__input"
                                                                         type="text"
                                                                         name="NumeroSerie"
                                                                         value={numeroSerie}
-                                                                        placeholder="Numero de Série"
+                                                                        placeholder=" "
                                                                         onChange={(event) => setNumeroSerie(event.target.value)}
-                                                                        disabled = {condicaoAtualizar === true ? 'none' : ''}
-                                                                    /> 
+                                                                        // disabled = {condicaoAtualizar === true ? 'none' : ''}
+                                                                    />  
+                                                                    <label className="form__label">
+                                                                        Numero de Série
+                                                                    </label>
                                                                 </div> 
                                                                 
                                                                 {
@@ -465,14 +478,14 @@ export default function CadastroEquipamento() {
 
                                                         </div>
                                                         <div className="container-img">
-                                                            <div className="box-img" />
+                                                            <div className="box-img" alt="imagem do perfil"/>
 
                                                             <input 
                                                             type="file"
                                                             accept="image/png, image/jpeg"
-                                                            onChange={(e) => setImg64(e)}
+                                                            onChange={(e) => atualizaState(e)}
                                                             />
-                                                                                                              
+                                                            <button onClick={upload()}>Enviar</button>                                         
                                                         </div>
                                                     </form>
                                                 </div>

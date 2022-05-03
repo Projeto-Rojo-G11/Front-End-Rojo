@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 import { buscarUsuarioPorId } from '../../services/auth';
 
-import Logo from '../../assets/img/logoRojo.png';
+import Logo from '../../assets/img/logoRojo2.png';
 
 import '../../assets/css/login.css';
 
@@ -102,11 +102,11 @@ export default function Login() {
                         <div className="box-input-login">
                             <p className="box-input-login-p"    >Senha</p>
                             <input
-                                className="input-login"
+                                className="input-login input-login-senha"
                                 type="password"
                                 value={senhaUsuario}
                                 onChange={(event) => setSenhaUsuario(event.target.value)}
-                                placeholder="* * * * *"
+                                placeholder="*****"
                             />
                         </div>
 

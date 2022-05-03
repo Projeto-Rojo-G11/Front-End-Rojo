@@ -3,6 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useState } from "react";
 
+import { Form } from 'react-bootstrap';
+import InputControl from '../../additional/components/InputControl.js';
+
+
 import Filtro from '../../assets/icon/icon-filtro.png';
 import Editar from '../../assets/icon/icon-editar.png';
 import Ferramenta from '../../assets/icon/icon-ferramenta.png';
@@ -240,6 +244,15 @@ export default function Equipamento(){
 
                     <header>
                         <h2 className="todo-titulo">Equipamento</h2>
+                        <div className="search-form">
+                            <Form>
+                            <InputControl
+                                name="country"
+                                label="Enter Country"
+                                placeholder="Type a country name"
+                            />
+                            </Form>
+                        </div>
                     </header>
                 
                     <section>

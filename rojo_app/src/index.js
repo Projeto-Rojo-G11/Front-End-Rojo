@@ -28,9 +28,9 @@ routing.render(
     <div>
       <Routes>
         <Route exact path="/" element={<Home/>}/>
-        <Route element={<PrivateRoute/>}>
+        {/* <Route element={<PrivateRoute/>}> */}
           <Route path="/Equipamento" element={<Equipamento/>}/>
-        </Route>
+        {/* </Route> */}
           <Route path="/Alerta" element={<Alerta/>}/>
           <Route path="/ListaEquipamento" element={<ListaEquipamento/>}/>
           <Route path="/Topologia" element={<Topologia/>}/>
