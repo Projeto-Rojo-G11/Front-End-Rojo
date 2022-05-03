@@ -63,8 +63,8 @@ export default function CadastroUsuario() {
 
     formData.append("url", file, file.name);
 
-    let resultado_OCR = LerConteudoDaImagem(formData);
-    resultado_OCR.then(res => setDescricao(img))
+    // let resultado_OCR = LerConteudoDaImagem(formData);
+    // resultado_OCR.then(res => setDescricao(img))
   } 
 
   return (

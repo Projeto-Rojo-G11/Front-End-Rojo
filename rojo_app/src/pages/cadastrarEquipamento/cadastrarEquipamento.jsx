@@ -174,9 +174,10 @@ export default function CadastroEquipamento() {
     }
 
     useEffect(() => (buscarTipoEquipamento()),[])
-        return(   
-            <div className="container-equipamento">
-                <div>
+
+    return(   
+            <div className="container-cadastro-equipamento">
+                
                     <div className="container-barra-esquerda">
                         <div className="barra-superior">
                             <nav  className="Logo">
@@ -282,43 +283,34 @@ export default function CadastroEquipamento() {
                                 </div>
                         </div>
     
-                </div>
-            </div>
+                
+                    </div>
                 <div className="conteudo-equipamento">
 
                     <header>
-                        <h2 className="todo-titulo">Cadastrar Equipamento</h2>
+                        <h2 className="titulo">NOVO EQUIPAMENTO</h2>
                     </header>
                 
                     
 
                     <section>
                             
-                    <div className="container-info-equipamento">
+                    <div className="container-info-equipamento">    
                                         
                                         <div className="con-equi-info">
-                                            {/* <div className="head-equi-info">
-                                                <p>Dados {this.state.Modelo}</p>
-                                            </div> */}
-                                            <div className="container-box-info-dados-2">
-
-                                                <div className="container-info-dados">
-
-                                                    <form onSubmit={(event) => cadastrarEquipamento(event)}>
+                
+                                                
+                                                    <form className="form-cadastro-equipamento" onSubmit={(event) => cadastrarEquipamento(event)}>
                                                         <div className="dados">
-                                                            <div className="info-1">
-                                                                <div>
-
-                                                                    <p>
-                                                                        Tipo Equipamento
-                                                                    </p>
+                                                            <div className="box-1">
+                                                                <div className="form__div">
                                                                     <select
                                                                         name="idTipoEquipamento"  
                                                                         disabled = {condicaoAtualizar === true ? 'none' : ''}
                                                                         value={idTipoEquipamento}   
-                                                                        className="input"      
+                                                                        className="form__input"      
                                                                         onChange={(event) => setIdTipoEquipamento(event.target.value)}>
-                                                                         <option value="#">Escolha</option>
+                                                                         <option className="form__label" value="#">Escolha</option>
                                                                             {dadoTipoEquipamento.map((event) => {
                                                                                 return (
 
@@ -381,7 +373,7 @@ export default function CadastroEquipamento() {
                                                                     <input
                                                                         className="form__input"
                                                                         type="text"
-                                                                        name="descricao"
+                                                                        name="Descricao"
                                                                         value={descricao}
                                                                         placeholder=" "
                                                                         onChange={(event) => setDescricao(event.target.value)}
@@ -392,7 +384,7 @@ export default function CadastroEquipamento() {
                                                                     </label>
                                                                 </div> 
                                                             </div>
-                                                            <div className="info-2">
+                                                            <div className="box-2">
 
                                                                 <div className="form__div">                      
                                                                     <input
@@ -488,9 +480,6 @@ export default function CadastroEquipamento() {
                                                             <button onClick={upload()}>Enviar</button>                                         
                                                         </div>
                                                     </form>
-                                                </div>
-                                            </div>
-
                                         </div>
                                     </div>
                     </section>

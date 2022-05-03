@@ -77,69 +77,18 @@ header h2{
   height: 100%;
   background-color: white;
   border-radius: 5px;
-
+  
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
 }
 
-.head-equi-info{
-  width: 832px;
-  height: 23px;
-  background-color: 
-  #CC2323;
-  border-radius: 3px;
-  margin-top: 50px;
-
-  padding-left: 15px ;
-  font-size: 14px;
-  color: white;
-  font-family: 'Open Sans', sans-serif;
-}
-
-.container-box-info-dados{
-  width: 847px;
-  height: 500px;
-  /* background-color: violet; */
-  margin: none;
-  display: flex;  
-  justify-content: space-between;
-
-  margin-bottom: 80px;
-}
-
-.container-box-info-dados-2{
-  width: 847px;
-  height: 500px;
-  /* background-color: violet; */
- 
-  display: flex;  
-  justify-content: space-between;
-  margin-top: 50px;
-  margin-bottom: 80px;
-}
-
-.container-box-info-dados-3{
-  width: 847px;
-  height: 500px;
-  /* background-color: violet; */
- 
-  display: flex;  
-  justify-content: center;
-  align-items: center;
-  margin-top: 50px;
-  margin-bottom: 80px;
-}
-
-
 .container-info-dados{
   width: 545px;
   height: 500px;
   /* background-color: burlywood; */
-  
 }
-
 
 .input{
   width: 200px;
