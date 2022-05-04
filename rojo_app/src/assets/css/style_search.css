@@ -1,4 +1,3 @@
-// ---------------------------style component search
 h1 {
   margin-bottom: 20px;
   text-align: center;
@@ -13,7 +12,7 @@ h1 {
 .suggestion-box {
   position: absolute;
   z-index: 1;
-  background-color: #e6ded1;
+  background-color: white;
   color: #000;
   border: 1px solid black;
   width: 100%;
@@ -29,7 +28,7 @@ h1 {
 }
 
 .suggestion-box li {
-  border-bottom: 1px solid #adb5bb;
+  border-bottom: 1px solid black;
   padding: 4px;
   cursor: pointer;
 }
@@ -57,4 +56,45 @@ h1 {
 
 .result {
   margin-top: 20px;
+}
+
+
+
+
+
+
+
+
+
+.search-form{
+  margin: 0;
+  padding:0 1em 0 1em;
+  width: 324px;
+  height: 40px;
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+  background: white;
+  border-radius:5px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.lupa{
+  width: 20px;
+  height:20px;
+  background-image: url(../../assets/icon/lupa.png);
+  background-size:cover;
+  background-repeat:no-repeat;
+}
+
+#searchTerm{
+  height: 30px;
+  width: 250px;
+  border:none;
+  outline:0;
+}
+
+.form-group{
+  height: 100%;
 }

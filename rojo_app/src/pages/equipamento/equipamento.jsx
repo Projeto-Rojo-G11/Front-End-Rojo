@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useState } from "react";
+import React,{ useEffect, useState} from "react";
 
 import { Form } from 'react-bootstrap';
 import InputControl from '../../additional/components/InputControl.js';
@@ -13,9 +13,8 @@ import Ferramenta from '../../assets/icon/icon-ferramenta.png';
 
 import Logo from '../../assets/img/logoRojo.png';
 import Sair from '../../assets/icon/icon-sair.png';
-import Linq from '../../assets/icon/icon-link.png';
 import Grafana from '../../assets/icon/icon-grafana.png';
-import Graylog from '../../assets/icon/icon-graylog.png';
+import DataDog from '../../assets/icon/data.png';
 import Zabbix from '../../assets/icon/icon-zabbix.png';
 import ho from '../../assets/icon/historico.png';
 import la from '../../assets/icon/lista.png';
@@ -23,14 +22,17 @@ import ta from '../../assets/icon/topologia.png';
 import aa from '../../assets/icon/alerta.png';
 
 import '../../assets/css/barra-esquerda.css';
-import '../../assets/css/equipamento.css';
+import '../../assets/css/animation__input.css';
+import '../../assets/css/cadastroEquipamento.css';
+import '../../assets/css/style_search.css';
 
 
 
 export default function Equipamento(){
     
-    const [Loading, setLoading] = useState(false);
-    const [boolPut, setBoolPut] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [condicaoAtualizar, setCondicaoAtualizar] = useState(false);
+
 
     //States Usuario
     const [nome, setNome] = useState('');
@@ -53,6 +55,8 @@ export default function Equipamento(){
     const [alterarCondicaoAtualizar, setAlterarCondicaoAtualizar] = useState(false)
     
     //Listas 
+    const [dadoTipoEquipamento, setDadoTipoEquipamento] = useState([]);
+
     // const [listaEquipamento, setListaEquipamento] = useState([]);  
     
     var navigate = useNavigate();
@@ -129,322 +133,350 @@ export default function Equipamento(){
         .catch(erro => console.log(erro))
     }
 
+    const atualizaState = (event) => {
+        setArquivo( event.target.files[0]
+        )
+    }
+
+    const buscarTipoEquipamento = () =>
+    {
+        axios
+        .get('http://localhost:5000/api/TipoEquipamento/lista')
+
+        .then(function (response) {
+            setDadoTipoEquipamento(response.data)
+        })
+        .catch((erro)=> console.log(erro))
+    }
+
+    useEffect(() => (buscarTipoEquipamento()),[])
     
-        return(   
-            <div className="container-equipamento">
-                <div>
-                    <div className="container-barra-esquerda">
-                        <div className="barra-superior">
-                            <nav  className="Logo">
-                                <Link to="/"><img src={Logo} alt="Logo da Rojo"/></Link>
+    return(   
+        <div className="container-cadastro-equipamento">
+            
+                <div className="container-barra-esquerda">
+                    <div className="barra-superior">
+                        <nav  className="Logo">
+                            <Link to="/"><img src={Logo} alt="Logo da Rojo"/></Link>
+                        </nav>
+                        <div className= "cadastro">
+                            <Link to="/CadastrarEquipamento">
+                                <p className="cadastro-texto">
+                                    CADASTRAR EQUIPAMENTO
+
+                                </p>
+                                <div className="cadastro-box-anime"/>         
+                            </Link>
+
+                        </div>
+                        <div className="box-container-link">
+                            <nav className="funcao-superior">
+                                <p className="fp">GESTAO DE INFRAESTRUTURA</p>
+                                <Link className= "funcao" to="/Listar Equipamento">
+                                    <img src={la} alt="Icone de listagem"/>
+                                    <p>Listar Equipamentos</p>
+                                </Link>
+                                <Link className= "funcao" to="/Historico">
+                                    <img src={ho} alt="Icone de histórico"/>
+                                    <p>Histórico</p>
+                                </Link>
+                                <Link className= "funcao" to="/Topologia">
+                                    <img src={ta} alt="Icone de topologia"/>
+                                    <p>Topologia</p>
+                                </Link>
+                                <Link className= "funcao" to="/Alertas">
+                                    <img src={aa} alt="Icone de topologia"/>
+                                    <p>Alerta</p>
+                                </Link>
+
+
                             </nav>
-                            <div className="box-container-link">
-                                <nav className="funcao-superior">
+                            <div className="funcao-inferior">
+                                <p className="fp">SERVICOS DE MONITORAMENTO</p>
+                                <Link className="container-link" to="/grafana">
+                                    <div className="btn-link">
+                                        <img src={Grafana} alt="Logo do Grafana"></img>
+                                    </div>
+                                    <p>GRAFANA</p>
+                                </Link>
 
-                                    <Link className= "cadastro" to="/CadastrarEquipamento">
-                                        <p className="cadastro-texto">
-                                        Cadastro Equipamento
+                                <Link className="container-link" to="/graylog">
+                                    <div className="btn-link">
+                                        <img src={DataDog} alt="Logo da DataDog"></img>
+                                    </div>
+                                    <p>DATADOG</p>
+                                </Link>
 
+                                <Link className="container-link" to="/zabbix">
+                                    <div className="btn-link">
+                                        <img src={Zabbix} alt="Logo do Zabbix"></img>
+                                    </div>
+                                    <p>ZABBIX </p>
+                                </Link>
+                            </div>
+
+                        </div>
+                        <div className="btn-container-mode">
+                                <p> MODO ESCURO</p>
+                                <button className="btn-mode">
+                                    <div className="btn-mode-interruptor">
+                                        <div className="btn-mode-bola">
+                                        </div>
+                                    </div>
+                                </button>
+                        </div>
+
+
+
+                    </div>
+                    <div className="barra-inferior">
+                            <div className="container-perfil">
+                                    <div
+                                        className="perfil-imagem"
+                                        
+                                    />
+                                    <div className="perfil-texto">
+                                        <p
+                                        className="perfil-nome">{nome}</p>
+                                                           
+                                        <p
+                                        className="perfil-cargo">
+                                            {cargo}
                                         </p>
-                                    <div className="cadastro-box-anime">
-                                        <div className="palito"></div>
                                         
                                     </div>
-                                    </Link>
-                                    <Link className= "funcao" to="/Listar Equipamento">
-                                        <img src={la} alt="Icone de listagem"/>
-                                        <p>Listar Equipamentos</p>
-                                    </Link>
-                                    <Link className= "funcao" to="/Historico">
-                                        <img src={ho} alt="Icone de histórico"/>
-                                        <p>Histórico</p>
-                                    </Link>
-                                    <Link className= "funcao" to="/Topologia">
-                                        <img src={ta} alt="Icone de topologia"/>
-                                        <p>Topologia</p>
-                                    </Link>
-                                    <Link className= "funcao" to="/Alertas">
-                                        <img src={aa} alt="Icone de topologia"/>
-                                        <p>Alerta</p>
-                                    </Link>
+                                    <div>
 
-
-                                </nav>
-                                <div className="funcao-inferior">
-
-                                    <Link className="container-link" to="/grafana">
-                                        <div className="btn-link">
-                                            <img src={Grafana} alt="Logo do Grafana"></img>
-                                        </div>
-                                        <p>Grafana</p>
-                                        <img src={Linq} alt="Logo da Grafana"/>
-                                    </Link>
-
-                                    <Link className="container-link" to="/graylog">
-                                        <div className="btn-link">
-                                            <img src={Graylog} alt="Logo do Graylog"></img>
-                                        </div>
-                                        <p>Graylog</p>
-                                        <img src={Linq} alt="Logo do Graylog"/>
-                                    </Link>
-
-                                    <Link className="container-link" to="/zabbix">
-                                        <div className="btn-link">
-                                            <img src={Zabbix} alt="Logo do Zabbix"></img>
-                                        </div>
-                                        <p>Zabbix</p>
-                                        <img src={Linq} alt="Logo do Zabbix"/>
-                                    </Link>
-                                </div>
-
+                                        <button
+                                            onClick={realizarLogout}
+                                        >
+                                            <img src={Sair} alt="icone sair"/>
+                                        </button>
+                                    </div>
                             </div>
-                            <div class="btn-container-mode">
-                                    <p> MODO ESCURO</p>
-                                    <button className="btn-mode">
-                                        <div className="btn-mode-interruptor">
-                                            <div className="btn-mode-bola">
-                                            </div>
-                                        </div>
-                                    </button>
-                            </div>
+                    </div>
 
-
-
-                        </div>
-                        <div className="barra-inferior">
-                                <div className="container-perfil">
-                                        <div
-                                            className="perfil-imagem"
-                                            image src={{uri: 'data:image/jpg;img64,${setImg64}'}}
-                                        />
-                                        <div className="perfil-texto">
-                                            <p
-                                            className="perfil-nome">{nome}</p>
-                                                               
-                                            <p
-                                            className="perfil-cargo">
-                                                {cargo}
-                                            </p>
-                                            
-                                        </div>
-                                        <div>
-
-                                            <button
-                                                onClick={realizarLogout}
-                                            >
-                                                <img src={Sair} alt="icone sair"/>
-                                            </button>
-                                        </div>
-                                </div>
-                        </div>
-    
+            
                 </div>
-            </div>
-                <div className="conteudo-equipamento">
+            <div className="conteudo-equipamento">
 
-                    <header>
-                        <h2 className="todo-titulo">Equipamento</h2>
-                        <div className="search-form">
-                            <Form>
-                            <InputControl
-                                name="country"
-                                label="Enter Country"
-                                placeholder="Type a country name"
-                            />
-                            </Form>
-                        </div>
-                    </header>
+                <header>
+                    <h2 className="titulo"> EQUIPAMENTO</h2>
+                    <div className="search-form">
+                        <Form>
+                        <InputControl
+                            name="country"
+                            label="Enter Country"
+                            placeholder="Procure por um equipamento"
+                        />
+                    
+                        </Form>
+                    </div>
+                </header>
+            
                 
-                    <section>
-                        <div className="container-direita">
-                            <div className="barra-direita">
-                                <div className="button">
 
-                                    <button>
-                                        <img src={Editar} alt="icone filtro"/>
-                                    </button>
+                <section>
+                        
+                <div className="container-info-equipamento">    
+                <div className="container-info-equipamento-h3"><h3>Dados {setModelo}</h3></div>
+                                    
+            
+                                                <form className="form-cadastro-equipamento" onSubmit={(event) => atualizarEquipamento(event)}>
+                                                    <div className="dados">
+                                                        <div className="box-1">
+                                                            <div className="box-1-1">
+                                                                
+                                                                <div className="form__div">
+                                                                    <select
+                                                                        name="idTipoEquipamento"  
+                                                                        disabled = {condicaoAtualizar === true ? 'none' : ''}
+                                                                        value={idTipoEquipamento}   
+                                                                        id="form__input_tipoEquipamento"      
+                                                                        onChange={(event) => setIdTipoEquipamento(event.target.value)}>
+                                                                            {dadoTipoEquipamento.map((event) => {
+                                                                                return (
 
-                                    <button
-                                        onClick={alterarCondicaoAtualizar}
-                                    >
-                                    <img src={Filtro} alt="icone editar"/>
-                                
-                                    </button>
-
-                                    <button>
-                                        <img src={Ferramenta} alt="Icone ferramenta"/>
-                                    </button>
-                                </div>
-                            </div>
-
-                        </div>
-                    </section>
-
-                    <section>
-                            
-                    <div className="container-info-equipamento">
-                                        
-                                        <div className="con-equi-info">
-                                            <div className="head-equi-info">
-                                                <p>Dados {modelo}</p>
-                                            </div>
-                                            <div className="container-box-info-dados">
-
-                                                <div className="container-info-dados">
-
-                                                    <form onSubmit={atualizarEquipamento}>
-                                                        <div className="dados">
-                                                            <div className="info-1">
-                                                                <div>
-
-                                                                    <p>
-                                                                        Tipo Equipamento
-                                                                    </p>                         
-                                                                    <input
-                                                                        className="input"
-                                                                        type="text"
-                                                                        name="tipoEquipamento"
-                                                                        value={idTipoEquipamento}
-                                                                        placeholder="Tipo Equipamento"
-                                                                        onChange={(event) => setIdTipoEquipamento(event.target.value)}
-                                                                        disabled = {atualizar === true ? 'none' : ''}
-                                                                    /> 
+                                                                                    <option key={event.idTipoEquipamento} value={event.idTipoEquipamento}>{event.equipamento}
+                                                                                    </option>
+                                                                                );
+                                                                            })}                                 
+                                                                            <option  value="#">Tipo de Equipamento </option>
+                                                                    </select>                        
+                                                                    
                                                                 </div>
-
-
-                                                                <div>
-
-                                                                    <p>
-                                                                        Modelo
-                                                                        </p>                         
-                                                                    <input
-                                                                        className="input"
+                                                                <div className="form__div">                       
+                                                                    <input 
+                                                                        className="form__input"
                                                                         type="text"
                                                                         name="Modelo"
                                                                         value={modelo}
-                                                                        placeholder="Modelo"
+                                                                        autoComplete='off'
+                                                                        placeholder=" "
                                                                         onChange={(event) => setModelo(event.target.value)}
-                                                                        disabled = {atualizar === true ? 'none' : ''}
+                                                                        disabled = {condicaoAtualizar === true ? 'none' : ''}
                                                                     /> 
+                                                                    <label className="form__label">
+                                                                        Modelo
+                                                                    </label>
                                                                 </div>
-
-                                                                <div>
-
-                                                                    <p>
-                                                                        GateWay
-                                                                        </p>                         
-                                                                    <input
-                                                                        className="input"
-                                                                        type="text"
-                                                                        name="Gateway"
-                                                                        value={gateWay}
-                                                                        placeholder="GateWay"
-                                                                        onChange={(event) => setGateWay(event.target.value)}
-                                                                        disabled = {atualizar === true ? 'none' : ''}
-                                                                    /> 
-                                                                </div>
-
-                                                                <div>
-
-                                                                    <p>
-                                                                        Mask
-                                                                        </p>                         
-                                                                    <input
-                                                                        className="input"
-                                                                        type="text"
-                                                                        name="IP"
-                                                                        value={ip}
-                                                                        placeholder="IP"
-                                                                        onChange={(event) => setIp(event.target.value)}
-                                                                        disabled = {atualizar === true ? 'none' : ''}
-                                                                    /> 
-                                                                </div>
-
-                                                                <div>
-
-                                                                    <p>
-                                                                        Descricao
-                                                                        </p>                         
-                                                                    <input
-                                                                        className="input"
-                                                                        type="text"
-                                                                        name="descricao"
-                                                                        value={descricao}
-                                                                        placeholder="Descrição"
-                                                                        onChange={(event) => setDescricao(event.target.value)}
-                                                                        disabled = {atualizar === true ? 'none' : ''}
-                                                                    /> 
-                                                                </div> 
                                                             </div>
-                                                            <div className="info-2">
 
-                                                                <div>
 
-                                                                    <p>
-                                                                        DNS
-                                                                        </p>                         
-                                                                    <input
-                                                                        className="input"
-                                                                        type="text"
-                                                                        name="DNS"
-                                                                        value={dns}
-                                                                        placeholder="DNS"
-                                                                        onChange={(event) => setDns(event.target.value)}
-                                                                        disabled = {atualizar === true ? 'none' : ''}
-                                                                    /> 
-                                                                </div> 
+                                                            <div className="form__div">                   
+                                                                <input
+                                                                    className="form__input"
+                                                                    type="text"
+                                                                    name="NumeroSerie"
+                                                                    value={numeroSerie}
+                                                                    placeholder=" "
+                                                                    onChange={(event) => setNumeroSerie(event.target.value)}
+                                                                    disabled = {condicaoAtualizar === true ? 'none' : ''}
+                                                                />  
+                                                                <label className="form__label">
+                                                                    Numero de Série
+                                                                </label>
+                                                            </div> 
 
-                                                                <div>
-
-                                                                    <p>
-                                                                        Porta
-                                                                        </p>                         
-                                                                    <input
-                                                                        className="input"
-                                                                        type="text"
-                                                                        name="Porta"
-                                                                        value={porta}
-                                                                        placeholder="Porta"
-                                                                        onChange={(event) => setPorta(event.target.value)}
-                                                                        disabled = {atualizar === true ? 'none' : ''}
-                                                                    /> 
-                                                                </div>
-
-                                                                <div>
-
-                                                                    <p>
-                                                                        Numero de Série
-                                                                    </p>                         
-                                                                    <input
-                                                                        className="input"
-                                                                        type="text"
-                                                                        name="NumeroSerie"
-                                                                        value={numeroSerie}
-                                                                        placeholder="Numero de Série"
-                                                                        onChange={(event) => setNumeroSerie(event.target.value)}
-                                                                        disabled = {atualizar === true ? 'none' : ''}
-                                                                    /> 
-                                                                </div> 
-                                                            </div>
 
                                                         </div>
-                                                    </form>
-                                                </div>
-                                                {/* <div className="container-img">
-                                                    <div className="box-img" />
+                                                        <div className="divisor">
+                                                            <p>Informações para consultas básicas do sistema</p>
+                                                            <div className="palito-divisor"/>
+                                                        </div>
+                                                        <div className="box-2">
+                                                            <div className="form__div">                        
+                                                                <input
+                                                                    className="form__input"
+                                                                    type="text"
+                                                                    name="Gateway"
+                                                                    value={gateWay}
+                                                                    placeholder=" "
+                                                                    onChange={(event) => setGateWay(event.target.value)}
+                                                                    disabled = {condicaoAtualizar === true ? 'none' : ''}
+                                                                />
+                                                                <label className="form__label">
+                                                                    GateWay
+                                                                </label>
+                                                            </div>
 
-                                                    <input type="file"/>
-                                                    <button onClick={this.uploadImg }>Enviar</button>
-                                                </div> */}
-                                            </div>
+                                                            <div className="form__div">                        
+                                                                <input
+                                                                    className="form__input"
+                                                                    type="text"
+                                                                    name="IP"
+                                                                    value={ip}
+                                                                    placeholder=" "
+                                                                    onChange={(event) => setIp(event.target.value)}
+                                                                    disabled = {condicaoAtualizar === true ? 'none' : ''}
+                                                                />
+                                                                <label className="form__label">
+                                                                    Mask
+                                                                </label>
+                                                            </div>
 
-                                        </div>
-                                    </div>
-                    </section>
-        
-                </div>
+                                                            <div className="form__div">                      
+                                                                <input
+                                                                    className="form__input"
+                                                                    type="text"
+                                                                    name="DNS"
+                                                                    value={dns}
+                                                                    placeholder=" "
+                                                                    onChange={(event) => setDns(event.target.value)}
+                                                                    disabled = {condicaoAtualizar === true ? 'none' : ''}
+                                                                />
+                                                                <label className="form__label">
+                                                                    DNS
+                                                                </label> 
+                                                            </div> 
+
+                                                            <div className="form__div">                        
+                                                                <input
+                                                                    className="form__input"
+                                                                    type="text"
+                                                                    name="Porta"
+                                                                    value={porta}
+                                                                    placeholder=" "
+                                                                    onChange={(event) => setDescricao(event.target.value)}
+                                                                    disabled = {condicaoAtualizar === true ? 'none' : ''}
+                                                                />
+                                                                <label className="form__label">
+                                                                    Porta
+                                                                </label>
+                                                            </div>
+
+                                                            
+                                                            </div>
+
+                                                    </div>
+                                                    <div className="container-img">
+                                                        <div className="box-img" alt="imagem do perfil"/>
+
+                                                        <input 
+                                                        type="file"
+                                                        accept="image/png, image/jpeg"
+                                                        onChange={(e) => atualizaState(e)}
+                                                        />
+                                                       
+                                                        {/* <button onClick={upload()}>Enviar</button>   */}
+
+                                                            <div className="form__div">    
+                                                                <textarea rows="6" cols="20" wrap="hard"
+                                                                        className="form__input"
+                                                                        id="form__input_descricao"
+                                                                        type="text"                                                                        value={descricao}
+                                                                        placeholder=" "
+                                                                        onChange={(event) => setDescricao(event.target.value)}
+                                                                        disabled = {condicaoAtualizar === true ? 'none' : ''}
+                                                                />                   
+                                                             
+                                                                <label className="form__label">
+                                                                    Descrição
+                                                                </label>
+                                                            </div> 
+                                                        
+                                                        {
+                                                            isLoading === true && (
+
+                                                                <button
+                                                                type="submit"
+                                                                disabled
+                                                                className="btn__login"
+                                                                id="btn__login"
+                                                                >
+                                                                Loading...
+                                                                </button>
+                                                        )
+
+                                                        }
+                                                        {
+                                                            isLoading === false &&(
+                                                                <button
+                                                                    type="submit"
+                                                                    className="btn__login-2"
+                                                                    disabled={
+                                                                        modelo === '' || 
+                                                                        numeroSerie === '' |
+                                                                        gateWay === '' ||
+                                                                        dns === ''||
+                                                                        ip === ''||
+                                                                        porta === '' 
+                                                                        ? 'none'
+                                                                        : ''
+                                                                    }
+                                                                >    
+                                                                    CADASTRAR
+                                                                </button>
+                                                            )
+                                                        }
+                                                    </div>
+                                                </form>
+                                </div>
+                </section>
+    
             </div>
-        );
+        </div>
+    );
     
 
 }

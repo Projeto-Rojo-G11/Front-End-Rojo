@@ -19,24 +19,33 @@
 /* ----------Header Equipamento */
 
 .conteudo-equipamento{
-  background-color: orange;
+  background-color: #E9EDFB;
   height: AUTO;
   width: 80%;
+  padding: 3em 6.5em 3em 6.5em;
 }
 
 header{
   width: 100%;
-  height: auto;
-  /* background-color: aquamarine; */
+  height: 3em;
+  margin-bottom: 2.3em;
+  background-color: aquamarine;
+  display:flex;
+  align-items: center;
+  justify-content:space-between;
 }
 
 .titulo{
+  width:250px;
+  height:auto;
+  background:white;
   font-size: 22px;
   color: rgba(0, 0, 0, 0.8);
-  font-size: 24px;
+  font-size: 20px;
   font-family: 'Open Sans', sans-serif;
-  margin: 2em;
-  margin-left: 3em;
+}
+h2.titulo{
+  margin:0;
 }
 
 /*******************Body Cadastro Equipamento&*/
@@ -44,42 +53,69 @@ header{
 .container-cadastro-equipamento{
   width: 100%;
   height: 100VH;
-  background-color: #E9EDFB;
+  /* background-color: #E9EDFB; */
   display: flex;
 }
 
 
 .container-info-equipamento{
   width: 100%;
-  height: 700px;
-  background-color:palegoldenrod;
-  
+  height: 800px;
+  background-color:white;
+  border-radius:5px;
   display: flex;
-  justify-content: center;
+  flex-direction:column;
+  justify-content: start;
+  padding: 3em 8em 4em 8em;
 } 
 
-.con-equi-info{
-  width: 90%;
-  height: 100%;
-  background-color: white;
-  padding: 2em;
-  border-radius: 5px;
+.container-info-equipamento-h3{
+  width: 100%;
+  height: 2em;
+  background:#CC2323;
+  border-radius:3px;
+  padding-left:2em;
+  color:white;
+  font-size:12px;
+  display:flex;
+  align-items:center;
 }
 
 .form-cadastro-equipamento{
   height: auto;
-  width: 80%;
-  background-color: chartreuse;
+  width: 100%;
+  /* background-color: chartreuse; */
   display: flex;
   justify-content: space-between;
 }
 
-.box-1{
-  width: 220px;
+.dados{
+  width: 70%;
   height: auto;
+  /* background-color: brown; */
   display: flex;
+  justify-content: space-between;
   flex-direction: column;
-  justify-content: space-around;
+  padding-top:5%;
+  padding-right:10%;
+}
+
+.box-1{
+  width: 100%;
+  height: 180px;
+  display: flex;
+  /* background-color:orange; */
+  justify-content: space-between;
+}
+
+.box-1-1{
+  height: 100%;
+  display: flex;
+  flex-direction:column;
+  width: 250px;
+justify-content: space-between;
+  /* background-color:blanchedalmond; */
+  padding-bottom: 3em;
 }
 
 .box-1 p {
@@ -88,20 +124,66 @@ header{
   font-size: 12px;
 }
 
-.box-2{
-  width: 220px;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+.divisor{
+  height:20px;
+  width: 100%;
+  /* background-color: blueviolet; */
+  font-size:12px;
+  color: rgba(0, 0, 0, 0.4);
+  margin-bottom:2em;
 }
 
-.dados{
-  width: 545px;
-  height: 500px;
-  /* background-color: brown; */
+.palito-divisor{
+  width: 100%;
+  height:1px;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.box-2{
+  width: 100%;
+  height: 350px;
   display: flex;
+  padding-bottom:88px;
+  flex-direction: column;
   justify-content: space-between;
+  /* background:blue; */
+}
+
+.container-img{
+  width: 30%;
+  height: 600px;
+  display:flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* background-color: pink; */
+  padding-top:5%;
+  align-items:end;
+}
+
+.box-img{
+  width: 100%;
+  height: 200px;
+  background-image: url(../../assets/img/R.png);
+  background-size:cover;
+  background-repeat: no-repeat;
+}
+
+#form__input_descricao{
+  width:250px;
+  height:100px;
+  
+}
+
+#form__input_tipoEquipamento{
+  position: absolute;
+  font-size: 16px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  padding: 0 2em 0 10px;
+  border-radius: 5px;
 }
 
 
@@ -114,23 +196,13 @@ header{
 }
 .btn__login{
   background-color: #CC2323;
+  width: 150px;
+
 }
 
 .btn__login-2{
   background-color: gray;
   width: 150px;
-}
-
-.container-img{
-  width: 300px;
-  height: 300px;
-  /* background-color: chartreuse; */
-}
-
-.box-img{
-  width: 300px;
-  height: 200px;
-  background-image: url(../../assets/img/R.png);
 }
 
 

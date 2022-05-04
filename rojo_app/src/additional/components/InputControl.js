@@ -20,7 +20,7 @@ const InputControl = ({ name, label, placeholder }) => {
 
   function processRequest(searchValue) {
     axios
-      .get('http://localhost:3000/Equipamento')
+      .get('/countries.json')
       .then((response) => {
         const countries = response.data;
         const result = countries.filter((country) =>
@@ -34,7 +34,7 @@ const InputControl = ({ name, label, placeholder }) => {
         }
         setErrorMsg('');
       })
-      .catch(() => setErrorMsg('Something went wrong. Try again later'));
+      .catch(() => setErrorMsg('Nenhum resultado encontrado'));
   }
 
   function handleSearch(event) {

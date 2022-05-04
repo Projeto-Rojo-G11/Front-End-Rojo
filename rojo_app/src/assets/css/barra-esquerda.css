@@ -1,18 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    font-family: "Raleway", "Open Sans", Arial, Helvetica, sans-serif;
-  }
-
-.container-equipamento{
-    display: flex;
-    justify-content: space-between;
-    width: 100vw;
-    /* background-color: yellow; */
-}
-
 .container-barra-esquerda{
       display: flex;
       flex-direction: column;
@@ -20,41 +7,70 @@
       width: 20%;
       height: 100%;
       background-color: black;
-    
+
+      padding: 3em 2.5em 2.5em 3em;
+      position:relative;
 }
 
-.barra-esquerda-superior {
+.barra-superior{
+    /* background-color: aqua; */
+    height:100%;
+    width:100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    /* background: rgba(0, 0, 0, 0.88); */
-    background-color: aqua;
-    height: 700px;
-    width:240px;
-  
-
-};
-
-.barra{   
-   width: auto;
-   height: 980px;
-   display: flex;
-   flex-direction: column;
-   justify-content: space-between;
+    /* justify-content: start; */
 }
+
+
 
 .Logo{
     height: 80px;
     width: 80px;
-    margin-left:45px ;
-    margin-top: 45px;
+    margin-bottom:2.5em;
+}
+
+
+.cadastro a{
+    display: flex;
+    width: 100%;
+    height:3em;
+    /* background:blue; */
+    justify-content:space-between
+}
+
+.cadastro-texto {
+    height: 100%;
+    width: 220px;
+    display:flex;
+    justify-content: center;
+    font-size: 15px;
+    border-radius: 10px;
+    border: 1px solid #FFFFFF;
+    background: rgba(255, 255, 255, 0.22);
+    text-decoration: none;
+    color: white;
+    align-items:center;
+}
+
+
+.cadastro-box-anime {
+    width: 48px;
+    height: 100%;
+    background-color: white;
+    border-radius: 10px;
+    background-image: url(../icon/palito.png);
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .box-container-link{
-    height: 550px;
+    height: auto;
     display: flex;
+    padding-left: 0.5em;
+    padding-top:3.5em;
     flex-direction: column;
     justify-content: space-around;
+    /* background:green; */
 }
 
 .funcao-superior{
@@ -62,88 +78,66 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin-top: 25px;
-    margin-left: 45px;
-    margin-right: 45px;
-    margin-bottom: 45px;
-    
 }
 
-a.funcao{
+.fp{
+    font-size:12px;
+    color:white;
+    margin-bottom:25px;
+}
+
+.funcao{
     display: flex;
     align-items: center;
     text-decoration: none;
     color: white;
     font-size: 14px;
     font-weight: 500;
-    margin-left: 15px;
-    margin-top: 20px;
-    height:45px ;
+    margin-bottom: 2em;
+    height:45px;
+    /* background-color:purple; */
+    width:100%;
 }
 
 .funcao p{
     margin-left: 15px;
 }
 
-.cadastro{
-    display: flex;
-    
-}
-
-a.cadastro{
-    height: 40px;
-    width: 240px;
-    margin-bottom: 20px;
-    align-items: center;
-    font-size: 15px;
-    border-radius: 10px;
-    border: 1px solid #FFFFFF;
-    background: rgba(255, 255, 255, 0.22);
-    text-decoration: none;
-    color: white;
-
-}
-p.cadastro-texto{
-    width: 180px;
-    margin-left: 25px;
-    font-size: 14px;
-}
-
-
-.cadastro-box-anime{
-    width: 40px;
-    height: 40px;
-    background-color: white;
-    border-radius: 10px;
-    background-image: url(../icon/palito.png);
-    background-position: center;
-    background-repeat: no-repeat;
-
-}
-
-
 .funcao-inferior{
-    margin-left: 45px;
+
     margin-right: 45px;
-    height: 180px;
-    width: 250px;
+    height: auto;
+    width: 100%;
     /* background-color: wheat; */
 }
 
 .container-link{
-    /* background-color: aqua; */
-    height: 58px;
-    width: 250px;
-    border-bottom: 1px solid white;
+    /* background-color: pink; */
+    height: auto;
+    width: 100%;
+    margin-bottom:2em;
     font-size: 16px;
     color: white;
     text-decoration: none;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
 }
 
+.container-link p{
+    width: 80px;
+    text-align: start;
+    height: auto;
+    margin-right:130px;
+}
 
+.funcao p{
+    width: 180px;
+    text-align: start;
+    height: auto;
+    margin-right:20px;
+    margin-left:30px
+}
 .btn-link{
     height: 34px;
     width: 34px;
@@ -157,12 +151,12 @@ p.cadastro-texto{
 
 .btn-container-mode{
     display: flex;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
-    width: 150px;
-    margin-top: 50px;
-    margin-left: 45px;
-
+    width: 100%;
+    height:100%;
+    margin-bottom:2em;
+    /* background:pink; */
     color:white;
     font-size: 12px;
     font-family: 'Open Sans', sans-serif;
@@ -173,11 +167,14 @@ p.cadastro-texto{
     height: 26px;
     background: rgba(0, 0, 0, 0.88);
     border-radius: 30px;
+    margin-left:1em;
 }
 
 
 .btn-mode-interruptor{
-    width: 50px;
+    width: 10px;
+    height:10px;
+    background-color:white;
 }
 
 .btn-mode-bola{
@@ -195,21 +192,26 @@ p.cadastro-texto{
     font-size: 28px;
 }
 
+
 .barra-inferior{
     background-color: #351313;
     height: 90px;
     width: 100%;
+    position: absolute;
+    z-index: 1;
+    bottom:0;
+    left:0;
+
+    padding: 1em 2.5em 1em 2.5em;
 }
 
-
 .container-perfil{
-    width: 288px;
-    height: 48px;
-    margin : 22px;
+    width: auto;
+    height: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /* background-color: aqua; */
+    /* background-color: orange; */
 }
 
 .container-perfil button{
@@ -218,9 +220,11 @@ p.cadastro-texto{
 }
 
 .perfil-imagem {
-    height: 48px;
-    width: 48px;
+    height: 50px;
+    width: 50px;
     background-image: url(../img/ex.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .perfil-texto{
