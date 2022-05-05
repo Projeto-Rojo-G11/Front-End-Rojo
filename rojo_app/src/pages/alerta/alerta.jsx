@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Form } from 'react-bootstrap';
-import InputControl from '../../../src/additional/components/InputControl';
+import InputControl from '../../additional/components/InputControl';
 import { parseJwt } from "../../services/auth";
 
 import Grafana from '../../assets/icon/icon-grafana.png';
@@ -119,7 +119,7 @@ export default function ListaEquipamento (){
                                     <img src={ta} alt="Icone de topologia"/>
                                     <p>Topologia</p>
                                 </Link>
-                                <Link className= "funcao" to="/Alertas">
+                                <Link className= "funcao" to="/Alerta">
                                     <img src={aa} alt="Icone de topologia"/>
                                     <p>Alerta</p>
                                 </Link>
