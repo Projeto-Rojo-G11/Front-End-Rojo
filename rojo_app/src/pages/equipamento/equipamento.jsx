@@ -2,8 +2,9 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React,{ useEffect, useState} from "react";
-
 import { Form } from 'react-bootstrap';
+
+import { parseJwt } from "../../services/auth";
 import InputControl from '../../additional/components/InputControl.js';
 
 
@@ -35,8 +36,8 @@ export default function Equipamento(){
 
 
     //States Usuario
-    const [nome, setNome] = useState('');
-    const [cargo, setCargo] = useState('');
+    const [nome, setNome] = useState(parseJwt().nome);
+    const [cargo, setCargo] = useState(parseJwt().cargo);
 
     //States Equipamento
     const [idEquipamento, setIdEquipamento] = useState(0);
@@ -80,7 +81,7 @@ export default function Equipamento(){
         })
     }
 
-    useEffect(()=> (listarMeusEquipamentos()),[])
+    useEffect(() => (listarMeusEquipamentos()),[])
 
     const realizarLogout = async () => {
         try {
@@ -90,43 +91,6 @@ export default function Equipamento(){
           console.warn(error);
         }
       };
-
-    function buscarUsuarioPorId(event)
-    {
-        event.preventDefault();
-        
-        axios.get('http://localhost:5000/api/Usuario/', {
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('usuario-login')
-            }
-        })
-
-        .then((resposta) => {
-            if(resposta.status === 200){
-                navigate('/Equipamento')
-            }
-                
-            }
-        )
-        .catch(erro => console.log(erro))
-
-    }
-
-    function buscarImagemUsuario (event) 
-    {
-        event.preventDefault();
-
-        axios
-        .get(`http://localhost:5000/api/Usuario/bd/`,{
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('usuario-login')
-            }
-        })
-        .then((resposta => {
-                setImg64(resposta.data)
-
-        }))
-    }
 
     function atualizarEquipamento(event)
     {

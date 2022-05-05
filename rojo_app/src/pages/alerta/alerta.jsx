@@ -14,7 +14,7 @@ import Filtro from '../../assets/icon/icon-filtro.png';
 import Editar from '../../assets/icon/icon-editar.png';
 import Ferramenta from '../../assets/icon/icon-ferramenta.png';
 
-import Logo from '../../assets/img/logoRojo.png';
+import Logo from '../../assets/img/logoRojo2.png';
 import Sair from '../../assets/icon/icon-sair.png';
 import Linq from '../../assets/icon/icon-link.png';
 
@@ -35,8 +35,8 @@ export default function ListaEquipamento (){
     var navigate = useNavigate();
 
     //States Usuario
-    const [nome, setNome] = useState('');
-    const [cargo, setCargo] = useState('');
+    const [nome, setNome] = useState(parseJwt().nome);
+    const [cargo, setCargo] = useState(parseJwt().cargo);
 
     //States Equipamento
     const [idTipoEquipamento, setIdTipoEquipamento] = useState(0);

@@ -21,14 +21,11 @@
     /* justify-content: start; */
 }
 
-
-
 .Logo{
     height: 80px;
     width: 80px;
     margin-bottom:2.5em;
 }
-
 
 .cadastro a{
     display: flex;
@@ -51,7 +48,6 @@
     color: white;
     align-items:center;
 }
-
 
 .cadastro-box-anime {
     width: 48px;
@@ -245,22 +241,22 @@
 .perfil-nome {
     width: auto;
     height: 20px;
-    font-size: 14px;
+    font-size: 16px;
     /* background-color: aqua; */
     color : white;
+
 }
 .perfil-nome input{
     background: none;
     border: none;
-    color: whites;
+    color: white;
 }
 
 .perfil-cargo {
-    width: auto;
+    width: 180px;
     height: 20px;
-    font-size: 12px;
+    font-size: 14px;
     /* background-color: aqua; */
-
     color : white;
 }
 
@@ -269,5 +265,5 @@
     height: 100%;
     display: flex;
     justify-content: center;
-    background-color: antiquewhite;
+    /* background-color: antiquewhite; */
 }

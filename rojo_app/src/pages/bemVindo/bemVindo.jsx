@@ -22,6 +22,7 @@ import '../../assets/css/animation__input.css';
 import '../../assets/css/cadastroEquipamento.css';
 import '../../assets/css/style_search.css';
 import { parseJwt } from "../../services/auth";
+// import { parseJwt } from "../../services/auth";
 
 
 export default function BemVindo() 
@@ -29,34 +30,9 @@ export default function BemVindo()
     var navigate = useNavigate();
     
     //States Usuario
-    const [usuario, setUsuario] = useState([]);
-    const [nome, setNome] = useState("");
-    const [cargo, setCargo] = useState("");
+    const [nome, setNome] = useState(parseJwt().nome);
+    const [cargo, setCargo] = useState(parseJwt().cargo);
     
-    const buscarUsuario = () =>
-    {
-        axios
-        .get('http://localhost:5000/api/usuario/token')
-
-        .then(function (response) {
-            console.log('resposta' + response.data);
-            setUsuario(response.data)
-        })
-        .catch((erro) => console.log(erro))
-    }
-
-    useEffect(() => (buscarUsuario()),[])
-
-    const atualizarValores = () => 
-    {
-        setNome(usuario.slice(-2));
-        setCargo(usuario.slice(-3));
-        console.log("deu certo", usuario)  
-    }       
-        
-    useEffect(() => (atualizarValores()),[])
-
-
     const realizarLogout = async () => {
         try {
           await AsyncStorage.removeItem('usuario-login');

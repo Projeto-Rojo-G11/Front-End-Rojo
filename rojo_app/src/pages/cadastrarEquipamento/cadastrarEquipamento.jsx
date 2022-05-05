@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Form } from 'react-bootstrap';
 import InputControl from '../../../src/additional/components/InputControl';
-// import { parseJwt } from "../../services/auth";
+import { parseJwt } from "../../services/auth";
 
 // import Filtro from '../../assets/icon/icon-filtro.png';
 // import Editar from '../../assets/icon/icon-editar.png';
@@ -35,8 +35,9 @@ export default function CadastroEquipamento() {
     // const [boolPut, setBoolPut] = useState(false);
 
     //States Usuario
-    const [nome, setNome] = useState('');
-    const [cargo, setCargo] = useState('');
+    const [idUsuario, setIdUsuario] = useState(parseJwt().jti)
+    const [nome, setNome] = useState(parseJwt().nome);
+    const [cargo, setCargo] = useState(parseJwt().cargo);
 
     //States Equipamento
     const [idTipoEquipamento, setIdTipoEquipamento] = useState(null);
@@ -70,18 +71,6 @@ export default function CadastroEquipamento() {
         .catch((erro)=> console.log(erro))
     }
 
-    const buscarTipoModelo = () =>
-    {
-        axios
-        .get('http://localhost:5000/api/TipoEquipamento/lista')
-
-        .then(function (response) {
-            setDadoModelo(response.data)
-        })
-        .catch((erro)=> console.log(erro))
-    }
-
-
     const realizarLogout = async () => {
         try {
           await AsyncStorage.removeItem('userToken');
@@ -90,30 +79,13 @@ export default function CadastroEquipamento() {
           console.warn(error);
         }
       };
-
-    function buscarUsuarioPorId(event)
-    {
-        event.preventDefault();
-        
-        axios
-        .get('http://localhost:5000/api/Usuario/')
-
-        .then((resposta) =>
-            {
-                setDadoUsuario(resposta.data);
-                console.log(dadoUsuario);
-            }
-        )
-        .catch(erro => console.log(erro))
-
-    }
     
     const cadastroEquipamento = (event) => 
     {
         event.preventDefault();
 
         let equipamento = {
-        idUsuario: 1,
+        idUsuario: idUsuario,
         idTipoEquipamento: parseInt(idTipoEquipamento),
         modelo: modelo,
         numeroSerie: parseInt(numeroSerie),
@@ -321,7 +293,7 @@ export default function CadastroEquipamento() {
                                                                 <div className="form__div">                   
                                                                     <input
                                                                         className="form__input"
-                                                                        type="number"
+                                                                        type="text"
                                                                         name="NumeroSerie"
                                                                         value={numeroSerie}
                                                                         placeholder=" "

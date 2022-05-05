@@ -14,7 +14,7 @@ import Filtro from '../../assets/icon/icon-filtro.png';
 import Editar from '../../assets/icon/icon-editar.png';
 import Ferramenta from '../../assets/icon/icon-ferramenta.png';
 
-import Logo from '../../assets/img/logoRojo.png';
+import Logo from '../../assets/img/logoRojo2.png';
 import Sair from '../../assets/icon/icon-sair.png';
 import Linq from '../../assets/icon/icon-link.png';
 
@@ -29,14 +29,16 @@ import '../../assets/css/animation__input.css';
 import '../../assets/css/cadastroEquipamento.css';
 import '../../assets/css/style_search.css';
 import '../../assets/css/listaEquipamento.css';
+import { map } from "lodash";
 
 
 export default function ListaEquipamento (){
+
     var navigate = useNavigate();
 
     //States Usuario
-    const [nome, setNome] = useState('');
-    const [cargo, setCargo] = useState('');
+    const [nome, setNome] = useState(parseJwt().nome);
+    const [cargo, setCargo] = useState(parseJwt().cargo);
 
     //States Equipamento
     const [idTipoEquipamento, setIdTipoEquipamento] = useState(0);
@@ -52,29 +54,20 @@ export default function ListaEquipamento (){
     const [isLoading, setIsLoading] = useState('');
     const [ listaEquipamento, setListaEquipamento ] = useState([])
 
-
-
     function buscarMeusEquipamentos(){
-        axios('http://localhost:5000/api/Equipamento/listar-meus-equipamentos', {
-            headers : {
-                'Authorization' : 'Bearer ' + localStorage.getItem('usuario-login')
-            }
-        })
+        let idUsuario =  parseJwt().jti
+
+        axios.get('http://localhost:5000/api/Equipamento/listar-meus-equipamentos')
         .then(response => {
             if (response.status === 200) {
+                console.log(response.data)
                 setListEq( response.data );
             }
         })
         .catch( erro => console.log(erro) );
     };
     
-    useEffect( buscarMeusEquipamentos, [] );
-
-    function listaTipoequipamento(){
-        axios.get('http://localhost:5000/api/Usuario/',{})
-
-        .then(resposta => resposta.status === 201)
-    }
+    useEffect( () => buscarMeusEquipamentos(), [] );
     
     const realizarLogout = async () => {
         try {
@@ -98,7 +91,6 @@ export default function ListaEquipamento (){
                             <Link to="/CadastrarEquipamento">
                                 <p className="cadastro-texto">
                                     CADASTRAR EQUIPAMENTO
-
                                 </p>
                                 <div className="cadastro-box-anime"/>         
                             </Link>
@@ -146,7 +138,7 @@ export default function ListaEquipamento (){
                                     <div className="btn-link">
                                         <img src={Zabbix} alt="Logo do Zabbix"></img>
                                     </div>
-                                    <p>ZABBIX </p>
+                                    <p>ZABBIX</p>
                                 </Link>
                             </div>
 
@@ -166,18 +158,13 @@ export default function ListaEquipamento (){
                     </div>
                     <div className="barra-inferior">
                             <div className="container-perfil">
-                                    <div
-                                        className="perfil-imagem"
-                                        
-                                    />
+                                    <div className="perfil-imagem"/>
                                     <div className="perfil-texto">
                                         <p
                                         className="perfil-nome">{nome}</p>
                                                            
                                         <p
-                                        className="perfil-cargo">
-                                            {cargo}
-                                        </p>
+                                        className="perfil-cargo">{cargo}</p>
                                         
                                     </div>
                                     <div>
@@ -196,7 +183,7 @@ export default function ListaEquipamento (){
             <div className="conteudo-equipamento">
 
                 <header>
-                    <h2 className="titulo">SEUS EQUIPAMENTOS</h2>
+                    <h2 className="titulo">SEUS EQUIPAMENTOS </h2>
                     <div className="search-form">
                         <div className="lupa"/>
                         <Form>
@@ -205,7 +192,6 @@ export default function ListaEquipamento (){
                             label=" "
                             placeholder="Procure por um equipamento"
                         />
-                    
                         </Form>
                     </div>
                 </header>
@@ -215,92 +201,92 @@ export default function ListaEquipamento (){
                 <section>
                         
                     <div className="container-info-equipamento">  
-                    {
-                        
-                     
-                            <div className="box-lista">
-                                <div className="box-head-lista">
-                                    <div><p>#{listEq.idEquipamento} </p></div>
-                                </div>
-                                <div className="box-body-lista">
-                                        <div className="ob1-info">
-                                            <div className="ob1-info-input">
-                                                    <div className="form__div">                       
-                                                                        <div
-                                                                            className="-lista"
-                                                                        >
-                                                                            {idTipoEquipamento}
-                                                                        </div>
-                                                                        <label className="label">
-                                                                            Tipo Equipamento
-                                                                        </label>
-                                                    </div>
-                                                    <div className="form__div">                       
-                                                                        <div 
-                                                                            className="-lista"
-                                                                        >
-                                                                            {modelo}
-                                                                        </div>
-                                                                        <label className="label">
-                                                                            Modelo
-                                                                        </label>
-                                                    </div>
-                                            </div>
-                                            <div className="ob1-info-input-2">
-                                                    <div className="form__div">                       
-                                                                        <div 
-                                                                            className="-lista"
-                                                                        >{numeroSerie}</div> 
-                                                                        <label className="label">
-                                                                            Numero de Serie
-                                                                        </label>
-                                                                        
-                                                    </div>
-                                            </div>
-                                        </div>
-                                        <div className="ob2-status">
-                                            <div className="status">
-
-                                                STATUS 
-                                                <div>
-                                                    {
-                                                    statusOn === true && (
-                                                        <div className="on-off">
-                                                            <div className="circle1"/>
-                                                            <p>Ligado</p>
+                            {
+                            listEq.map(item => {
+                                <div className="box-lista">
+                                    <div className="box-head-lista">
+                                        <div><p>#{listEq.idEquipamento} </p></div>
+                                    </div>
+                                    <div className="box-body-lista">
+                                            <div className="ob1-info">
+                                                <div className="ob1-info-input">
+                                                        <div className="form__div">                       
+                                                                            <div
+                                                                                className="-lista"
+                                                                            >
+                                                                                {}
+                                                                            </div>
+                                                                            <label className="label">
+                                                                                Tipo Equipamento
+                                                                            </label>
                                                         </div>
-                                                    )}
-                                                    {
-                                                    statusOn === false && (
-                                                        <div className="on-off">
-                                                            <div className="circle2"/>
-                                                            <p>Desligado</p>
+                                                        <div className="form__div">                       
+                                                                            <div 
+                                                                                className="-lista"
+                                                                            >
+                                                                                {modelo}
+                                                                            </div>
+                                                                            <label className="label">
+                                                                                Modelo
+                                                                            </label>
                                                         </div>
-                                                    )}
-
+                                                </div>
+                                                <div className="ob1-info-input-2">
+                                                        <div className="form__div">                       
+                                                                            <div 
+                                                                                className="-lista"
+                                                                            >{numeroSerie}</div> 
+                                                                            <label className="label">
+                                                                                Numero de Serie
+                                                                            </label>
+                                                                            
+                                                        </div>
                                                 </div>
                                             </div>
-                                            <div>
-                                                ALERTAS
-                                                <div className="box-alerta">
-                                                    <div className="alerta">
-                                                        <div className="alerta1"/>
-                                                        <p>0</p>
-                                                        </div>
-                                            
-                                            
-                                                    <div className="alerta">
-                                                        <div className="alerta2"/>
-                                                        <p>0</p>
+                                            <div className="ob2-status">
+                                                <div className="status">
+
+                                                    STATUS 
+                                                    <div>
+                                                        {
+                                                        statusOn === true && (
+                                                            <div className="on-off">
+                                                                <div className="circle1"/>
+                                                                <p>Ligado</p>
+                                                            </div>
+                                                        )}
+                                                        {
+                                                        statusOn === false && (
+                                                            <div className="on-off">
+                                                                <div className="circle2"/>
+                                                                <p>Desligado</p>
+                                                            </div>
+                                                        )}
+
                                                     </div>
-                                                    </div>               
-                                                </div> 
-                                        </div>
-                                        <div className="ob3-img"/>
+                                                </div>
+                                                <div>
+                                                    ALERTAS
+                                                    <div className="box-alerta">
+                                                        <div className="alerta">
+                                                            <div className="alerta1"/>
+                                                            <p>0</p>
+                                                            </div>
+                                                
+                                                
+                                                        <div className="alerta">
+                                                            <div className="alerta2"/>
+                                                            <p>0</p>
+                                                        </div>
+                                                        </div>               
+                                                    </div> 
+                                            </div>
+                                            <div className="ob3-img"/>
+                                    </div>
                                 </div>
-                            </div>
-                         
-                    }  
+
+                            })
+                        }
                     </div>
                 </section>
     
