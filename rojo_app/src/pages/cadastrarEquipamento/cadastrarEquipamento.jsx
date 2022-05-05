@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Form } from 'react-bootstrap';
 import InputControl from '../../../src/additional/components/InputControl';
-import { parseJwt } from "../../services/auth";
+// import { parseJwt } from "../../services/auth";
 
 // import Filtro from '../../assets/icon/icon-filtro.png';
 // import Editar from '../../assets/icon/icon-editar.png';
@@ -32,20 +32,20 @@ export default function CadastroEquipamento() {
     var navigate = useNavigate();
     
     const [isLoading, setIsLoading] = useState(false);
-    const [boolPut, setBoolPut] = useState(false);
+    // const [boolPut, setBoolPut] = useState(false);
 
     //States Usuario
     const [nome, setNome] = useState('');
     const [cargo, setCargo] = useState('');
 
     //States Equipamento
-    const [idTipoEquipamento, setIdTipoEquipamento] = useState(0);
-    const [modelo, setModelo] = useState(0);
-    const [numeroSerie, setNumeroSerie] = useState(0);
-    const [gateWay, setGateWay] = useState(0);
-    const [ip, setIp] = useState(0);
-    const [dns, setDns] = useState(0);
-    const [porta, setPorta] = useState(0);
+    const [idTipoEquipamento, setIdTipoEquipamento] = useState(null);
+    const [modelo, setModelo] = useState('');
+    const [numeroSerie, setNumeroSerie] = useState('');
+    const [gateWay, setGateWay] = useState('');
+    const [ip, setIp] = useState('');
+    const [dns, setDns] = useState('');
+    const [porta, setPorta] = useState('');
     const [descricao, setDescricao] = useState('');
     const [data, setData] = useState(new Date())
     const [condicao, setCondicao] = useState('');
@@ -55,8 +55,8 @@ export default function CadastroEquipamento() {
     const [dadoTipoEquipamento, setDadoTipoEquipamento] = useState([]);
     const [dadoModelo, setDadoModelo] =useState([]);
 
-    //States Imagem Equipamento
-    const [img64, setImg64] = useState('');
+    // //States Imagem Equipamento
+    // const [img64, setImg64] = useState('');
     const [arquivo, setArquivo] = useState(null);
 
     const buscarTipoEquipamento = () =>
@@ -96,11 +96,7 @@ export default function CadastroEquipamento() {
         event.preventDefault();
         
         axios
-        .get('http://localhost:5000/api/Usuario/', {
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('usuario-login')
-            }
-        })
+        .get('http://localhost:5000/api/Usuario/')
 
         .then((resposta) =>
             {
@@ -118,31 +114,21 @@ export default function CadastroEquipamento() {
 
         let equipamento = {
         idUsuario: 1,
+        idTipoEquipamento: parseInt(idTipoEquipamento),
         modelo: modelo,
-        numeroSerie: numeroSerie,
-        gateWay: gateWay,
-        mask: ip,
-        dns: dns,
-        porta: porta,
-        condicao: condicao,
+        numeroSerie: parseInt(numeroSerie),
+        gateWay: parseInt(gateWay),
+        mask: parseInt(ip),
+        dns: parseInt(dns),
+        porta: parseInt(porta),
+        condicao: parseInt(condicao),
+        dataEntrada : new Date(data),
         descricao: descricao,
         };
 
-        axios({
-            method: "post",
-            url: "http://localhost:5000/api/Equipamento/cadastro-equipamento",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                idUsuario: 1,
-                modelo: modelo,
-                numeroSerie: numeroSerie,
-                gateWay: gateWay,
-                mask: ip,
-                dns: dns,
-                porta: porta,
-                condicao: condicao,
-                descricao: descricao}),
-          })   
+        axios
+        .post("http://localhost:5000/api/Equipamento/cadastro-equipamento", equipamento
+        )   
         
         .then( function (response){
             setDadoEquipamento(response.data);
@@ -150,37 +136,14 @@ export default function CadastroEquipamento() {
 
         .then( function (resposta) {
             console.log(resposta);
-            navigate('/Equipamento/'+ dadoEquipamento.IdEquipamento)
+            navigate('/ListaEquipamento')
         })
         
-        .catch( function (resposta) {
-            console.log(resposta);
+        .catch( function (erro) {
+            console.log(erro);
         });
     }
 
-    function upload(){
-       
-        var formData = new FormData();
-
-        formData.append(
-            'arquivo', arquivo
-        );
-        
-        axios({
-            method: "post",
-            url: "http://localhost:5000/api/Equipamento",
-            data: formData,
-            headers: {
-            "Content-Type": "multipart/form-data",
-            "Authorization" : 'Bearer' + localStorage.getItem('usuario-login') }
-        } )
-        .catch((erro) => console.log(erro))
-    }
-    
-    const atualizaState = (event) => {
-        setArquivo( event.target.files[0]
-        )
-    }
 
     useEffect(() => (buscarTipoEquipamento()),[])
 
@@ -205,7 +168,7 @@ export default function CadastroEquipamento() {
                             <div className="box-container-link">
                                 <nav className="funcao-superior">
                                     <p className="fp">GESTAO DE INFRAESTRUTURA</p>
-                                    <Link className= "funcao" to="/Listar Equipamento">
+                                    <Link className= "funcao" to="/ListaEquipamento">
                                         <img src={la} alt="Icone de listagem"/>
                                         <p>Listar Equipamentos</p>
                                     </Link>
@@ -358,7 +321,7 @@ export default function CadastroEquipamento() {
                                                                 <div className="form__div">                   
                                                                     <input
                                                                         className="form__input"
-                                                                        type="text"
+                                                                        type="number"
                                                                         name="NumeroSerie"
                                                                         value={numeroSerie}
                                                                         placeholder=" "
@@ -425,7 +388,7 @@ export default function CadastroEquipamento() {
                                                                         name="Porta"
                                                                         value={porta}
                                                                         placeholder=" "
-                                                                        onChange={(event) => setDescricao(event.target.value)}
+                                                                        onChange={(event) => setPorta(event.target.value)}
                                                                     />
                                                                     <label className="form__label">
                                                                         Porta
@@ -439,61 +402,39 @@ export default function CadastroEquipamento() {
                                                         <div className="container-img">
                                                             <div className="box-img" alt="imagem do perfil"/>
 
-                                                            <input 
-                                                            type="file"
-                                                            accept="image/png, image/jpeg"
-                                                            onChange={(e) => atualizaState(e)}
-                                                            />
-                                                            <button onClick={upload()}>Enviar</button>  
-
                                                                 <div className="form__div">    
                                                                     <textarea rows="6" cols="20" wrap="hard"
                                                                             className="form__input"
                                                                             id="form__input_descricao"
                                                                             type="text"                                                                        value={descricao}
-                                                                            placeholder=" "
+                                                                            placeholder=" "                                                                        
                                                                             onChange={(event) => setDescricao(event.target.value)}
                                                                     />                   
-                                                                 
+                                        
                                                                     <label className="form__label">
                                                                         Descrição
                                                                     </label>
                                                                 </div> 
                                                             
-                                                            {
-                                                                isLoading === true && (
-
-                                                                    <button
+                                        
+                                                                <button
                                                                     type="submit"
-                                                                    disabled
-                                                                    className="btn__login"
-                                                                    id="btn__login"
-                                                                    >
-                                                                    Loading...
-                                                                    </button>
-                                                            )
-
-                                                            }
-                                                            {
-                                                                isLoading === false &&(
-                                                                    <button
-                                                                        type="submit"
-                                                                        className="btn__login-2"
-                                                                        disabled={
-                                                                            modelo === '' || 
-                                                                            numeroSerie === '' |
-                                                                            gateWay === '' ||
-                                                                            dns === ''||
-                                                                            ip === ''||
-                                                                            porta === '' 
-                                                                            ? 'none'
-                                                                            : ''
-                                                                        }
-                                                                    >    
-                                                                        CADASTRAR
-                                                                    </button>
-                                                                )
-                                                            }
+                                                                    className="btn__login-2"
+                                                                    disabled={
+                                                                        idTipoEquipamento === '' ||
+                                                                        modelo === '' || 
+                                                                        numeroSerie === '' |
+                                                                        gateWay === '' ||
+                                                                        dns === ''||
+                                                                        ip === ''||
+                                                                        porta === '' 
+                                                                        ? 'none'
+                                                                        : ''
+                                                                    }
+                                                                >    
+                                                                    CADASTRAR
+                                                                </button>
+                                    
                                                         </div>
                                                     </form>
                                     </div>

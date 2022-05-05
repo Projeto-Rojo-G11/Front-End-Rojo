@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from 'react';
+import {useNavigate} from 'react-router-dom';
 import axios from 'axios';
 import _ from 'lodash';
 import { Form } from 'react-bootstrap';
@@ -7,9 +8,12 @@ import AutoComplete from './AutoComplete';
 import useOutsideClick from '../custom-hooks/useOutsideClick';
 
 const InputControl = ({ name, label, placeholder }) => {
+
+  var navigate = useNavigate();
+
   const [documentRef, isVisible, setIsVisible] = useOutsideClick();
   const [suggestions, setSuggestions] = useState([]);
-  const [selectedCountry, setSelectedCountry] = useState('');
+  const [selectedEquipamento, setSelectedCountry] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
   const ref = useRef();
@@ -19,12 +23,16 @@ const InputControl = ({ name, label, placeholder }) => {
   }, []);
 
   function processRequest(searchValue) {
+
+    let usuario = localStorage.getItem('usuario-login')
+
     axios
-      .get('/countries.json')
+      .get('http://localhost:5000/api/Equipamento/listar-meus-equipamentos',
+      usuario,{})
       .then((response) => {
-        const countries = response.data;
-        const result = countries.filter((country) =>
-          country.toLowerCase().includes(searchValue.toLowerCase())
+        const equipamentos = response.data;
+        const result = equipamentos.filter((equipamento) =>
+          equipamento.toLowerCase().includes(searchValue.toLowerCase())
         );
         setSuggestions(result);
         if (result.length > 0) {
@@ -34,7 +42,7 @@ const InputControl = ({ name, label, placeholder }) => {
         }
         setErrorMsg('');
       })
-      .catch(() => setErrorMsg('Nenhum resultado encontrado'));
+      .catch(() => console.log('Nenhum resultado encontrado'));
   }
 
   function handleSearch(event) {
@@ -70,9 +78,9 @@ const InputControl = ({ name, label, placeholder }) => {
           />
         )}
       </div>
-      {selectedCountry && (
+      {selectedEquipamento && (
         <div className="selected-country">
-          Your selected country: {selectedCountry}
+          navigate("/Equipamento/{selectedEquipamento}") 
         </div>
       )}
       {errorMsg && <p className="errorMsg">{errorMsg}</p>}

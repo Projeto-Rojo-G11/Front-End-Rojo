@@ -28,7 +28,7 @@ import '../../assets/css/bem-vindo.css';
 import '../../assets/css/animation__input.css';
 import '../../assets/css/cadastroEquipamento.css';
 import '../../assets/css/style_search.css';
-import '../../assets/css/listaEquipamento.css'
+import '../../assets/css/listaEquipamento.css';
 
 
 export default function ListaEquipamento (){
@@ -107,7 +107,7 @@ export default function ListaEquipamento (){
                         <div className="box-container-link">
                             <nav className="funcao-superior">
                                 <p className="fp">GESTAO DE INFRAESTRUTURA</p>
-                                <Link className= "funcao" to="/Listar Equipamento">
+                                <Link className= "funcao" to="/ListaEquipamento">
                                     <img src={la} alt="Icone de listagem"/>
                                     <p>Listar Equipamentos</p>
                                 </Link>
@@ -217,60 +217,84 @@ export default function ListaEquipamento (){
                     <div className="container-info-equipamento">  
                     {
                         
-                        // foreach (var item in listEqui) {
-                            // }
-                            <div clasName="box-lista">
+                     
+                            <div className="box-lista">
                                 <div className="box-head-lista">
-                                    <div><p>{listEq.idEquipamento} </p></div>
+                                    <div><p>#{listEq.idEquipamento} </p></div>
                                 </div>
                                 <div className="box-body-lista">
                                         <div className="ob1-info">
                                             <div className="ob1-info-input">
                                                     <div className="form__div">                       
-                                                                        <input 
-                                                                            className="form__input"
-                                                                            value={idTipoEquipamento}
-                                                                        />
+                                                                        <div
+                                                                            className="-lista"
+                                                                        >
+                                                                            {idTipoEquipamento}
+                                                                        </div>
+                                                                        <label className="label">
+                                                                            Tipo Equipamento
+                                                                        </label>
                                                     </div>
                                                     <div className="form__div">                       
-                                                                        <input 
-                                                                            className="form__input"
-                                                                            value={modelo}
-                                                                        />
+                                                                        <div 
+                                                                            className="-lista"
+                                                                        >
+                                                                            {modelo}
+                                                                        </div>
+                                                                        <label className="label">
+                                                                            Modelo
+                                                                        </label>
                                                     </div>
                                             </div>
-                                            <div>
+                                            <div className="ob1-info-input-2">
                                                     <div className="form__div">                       
-                                                                        <input 
-                                                                            className="form__input"
-                                                                            value={numeroSerie}
-                                                                        /> 
+                                                                        <div 
+                                                                            className="-lista"
+                                                                        >{numeroSerie}</div> 
+                                                                        <label className="label">
+                                                                            Numero de Serie
+                                                                        </label>
                                                                         
                                                     </div>
                                             </div>
                                         </div>
                                         <div className="ob2-status">
-                                            STATUS 
-                                            <div>
-                                                {
-                                                statusOn === true && (
-                                                    <div className="on-off">
-                                                        <div className="circle"/>
-                                                        <p>Ligado</p>
-                                                    </div>
-                                                )}
-                                                {
-                                                statusOn === false && (
-                                                    <div className="off-on">
-                                                        <div className="circle"/>
-                                                        <p>Desligado</p>
-                                                    </div>
-                                                )}
+                                            <div className="status">
 
+                                                STATUS 
+                                                <div>
+                                                    {
+                                                    statusOn === true && (
+                                                        <div className="on-off">
+                                                            <div className="circle1"/>
+                                                            <p>Ligado</p>
+                                                        </div>
+                                                    )}
+                                                    {
+                                                    statusOn === false && (
+                                                        <div className="on-off">
+                                                            <div className="circle2"/>
+                                                            <p>Desligado</p>
+                                                        </div>
+                                                    )}
+
+                                                </div>
                                             </div>
                                             <div>
-
-                                            </div>
+                                                ALERTAS
+                                                <div className="box-alerta">
+                                                    <div className="alerta">
+                                                        <div className="alerta1"/>
+                                                        <p>0</p>
+                                                        </div>
+                                            
+                                            
+                                                    <div className="alerta">
+                                                        <div className="alerta2"/>
+                                                        <p>0</p>
+                                                    </div>
+                                                    </div>               
+                                                </div> 
                                         </div>
                                         <div className="ob3-img"/>
                                 </div>

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import Logo from "../../assets/img/logoRojo2.png";
@@ -7,6 +7,9 @@ import Logo from "../../assets/img/logoRojo2.png";
 import "../../assets/css/cadastroUsuario.css";
 
 export default function CadastroUsuario() {
+  
+  var navigate = useNavigate();
+
   //States Usuario
   const [nome, setNome] = useState("");
   const [emailUsuario, setEmailUsuario] = useState("");
@@ -14,17 +17,11 @@ export default function CadastroUsuario() {
   const [contato, setContato] = useState(0);
   const [cargo, setCargo] = useState("");
   const [razaoSocial, setRazaoSocial] = useState("");
-  const [tipoUsuario, setTipoUsuario] = useState(1);
+  const [tipoUsuario] = useState(1);
   const [loading, setLoading] = useState(false);
-  
-  //States Img
-  const [imgBool, setImgBool] = useState(false);
-  const [img64, setImg64] = useState('');
-  const [arquivo, setArquivo] = useState(null); 
-
-  var navigate = useNavigate();
 
   const FazerCadastroUsuario = (event) => {
+
     event.preventDefault();
 
     setLoading(true);
@@ -51,21 +48,6 @@ export default function CadastroUsuario() {
       })
       .catch((erro) => console.log(erro));
   };
-
-  function LerOCR (event)
-  {
-    event.preventDefault();
-
-    let formData = new FormData();
-
-    const element = document.getElementById("codigo");
-    const file = element.files[0];
-
-    formData.append("url", file, file.name);
-
-    // let resultado_OCR = LerConteudoDaImagem(formData);
-    // resultado_OCR.then(res => setDescricao(img))
-  } 
 
   return (
     <div className="container-cadastrar">
@@ -164,25 +146,12 @@ export default function CadastroUsuario() {
                   />
                 </div>
               </div>
-              {
-                imgBool === false && (
-
-                  <div className="container-usuario">
-                    <input
-                      className="box-img-user"
-                      type="file"
-                      onChange={(e) => LerOCR(e)}
-                    />
-                                            
-                  </div>
-
-                )
-              }
-              {
-                imgBool === true && (
-                  <div className="container-usuario-imagem"/>
-                )
-              }
+          
+              <div className="container-usuario">
+                <div
+                  className="box-img-user"
+                />                
+              </div>
             </div>
 
             <div className="box-button-cadastrar">

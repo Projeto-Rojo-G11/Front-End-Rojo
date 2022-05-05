@@ -53,13 +53,34 @@ export default function Equipamento(){
     const [condicao, setCondicao] =useState('');
     const [atualizar, setAtualizar]= useState(false);
     const [alterarCondicaoAtualizar, setAlterarCondicaoAtualizar] = useState(false)
+    const [tipoEquipamento, setTipoEquipamento] = useState(null);
     
     //Listas 
-    const [dadoTipoEquipamento, setDadoTipoEquipamento] = useState([]);
+    const [dadoEquipamento, setDadoEquipamento] = useState([]);
 
     // const [listaEquipamento, setListaEquipamento] = useState([]);  
     
     var navigate = useNavigate();
+
+    function listarMeusEquipamentos()
+    {
+        axios
+        .post('http://localhost:5000/api/Equipamento/listar-meus-equipamentos')
+        
+        .then((response) => {
+            console.log(response.status)
+        })
+
+        .then((response) => {
+            setDadoEquipamento(response.data);
+        })
+
+        .catch((erro) => {
+            console.log(erro);
+        })
+    }
+
+    useEffect(()=> (listarMeusEquipamentos()),[])
 
     const realizarLogout = async () => {
         try {
@@ -133,10 +154,6 @@ export default function Equipamento(){
         .catch(erro => console.log(erro))
     }
 
-    const atualizaState = (event) => {
-        setArquivo( event.target.files[0]
-        )
-    }
 
     const buscarTipoEquipamento = () =>
     {
@@ -144,12 +161,36 @@ export default function Equipamento(){
         .get('http://localhost:5000/api/TipoEquipamento/lista')
 
         .then(function (response) {
-            setDadoTipoEquipamento(response.data)
+            setTipoEquipamento(response.data)
         })
         .catch((erro)=> console.log(erro))
     }
 
     useEffect(() => (buscarTipoEquipamento()),[])
+
+    function upload(){
+       
+        var formData = new FormData();
+
+        formData.append(
+            'arquivo', arquivo
+        );
+        
+        axios({
+            method: "post",
+            url: "http://localhost:5000/api/Equipamento",
+            data: formData,
+            headers: {
+            "Content-Type": "multipart/form-data",
+            "Authorization" : 'Bearer' + localStorage.getItem('usuario-login') }
+        } )
+        .catch((erro) => console.log(erro))
+    }
+    
+    const atualizaState = (event) => {
+        setArquivo( event.target.files[0]
+        )
+    }
     
     return(   
         <div className="container-cadastro-equipamento">
@@ -172,7 +213,7 @@ export default function Equipamento(){
                         <div className="box-container-link">
                             <nav className="funcao-superior">
                                 <p className="fp">GESTAO DE INFRAESTRUTURA</p>
-                                <Link className= "funcao" to="/Listar Equipamento">
+                                <Link className= "funcao" to="/ListaEquipamento">
                                     <img src={la} alt="Icone de listagem"/>
                                     <p>Listar Equipamentos</p>
                                 </Link>
@@ -184,7 +225,7 @@ export default function Equipamento(){
                                     <img src={ta} alt="Icone de topologia"/>
                                     <p>Topologia</p>
                                 </Link>
-                                <Link className= "funcao" to="/Alertas">
+                                <Link className= "funcao" to="/Alerta">
                                     <img src={aa} alt="Icone de topologia"/>
                                     <p>Alerta</p>
                                 </Link>
@@ -294,7 +335,7 @@ export default function Equipamento(){
                                                                         value={idTipoEquipamento}   
                                                                         id="form__input_tipoEquipamento"      
                                                                         onChange={(event) => setIdTipoEquipamento(event.target.value)}>
-                                                                            {dadoTipoEquipamento.map((event) => {
+                                                                            {tipoEquipamento.map((event) => {
                                                                                 return (
 
                                                                                     <option key={event.idTipoEquipamento} value={event.idTipoEquipamento}>{event.equipamento}

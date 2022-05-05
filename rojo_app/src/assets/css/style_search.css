@@ -29,8 +29,15 @@ h1 {
 
 .suggestion-box li {
   border-bottom: 1px solid black;
+  border-width: 1.5px;
   padding: 4px;
   cursor: pointer;
+  border-color: #C4C4C4;
+  font-size: 14px;
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
 .suggestion-box li:last-child {
@@ -43,6 +50,17 @@ h1 {
 
 .show {
   display: block;
+}
+
+.show.suggestion-box{
+  width: 324px;
+  height: auto;
+  left:0%;
+  border:0;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  overflow: hidden;
+  top: 35px;
+
 }
 
 .hide {
@@ -59,13 +77,6 @@ h1 {
 }
 
 
-
-
-
-
-
-
-
 .search-form{
   margin: 0;
   padding:0 1em 0 1em;
@@ -77,7 +88,7 @@ h1 {
   align-items: center;
   background: white;
   border-radius:5px;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .lupa{

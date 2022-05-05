@@ -35,7 +35,6 @@ routing.render(
           <Route path="/ListaEquipamento" element={<ListaEquipamento/>}/>
           <Route path="/Topologia" element={<Topologia/>}/>
           <Route path="/Historico" element={<Historico/>}/>
-          <Route path="/ListaEquipamento" element={<Alerta/>}/>
 
         <Route path="/Login" element={<Login />}/>
         <Route path="/CadastrarUsuario" element={<CadastrarUsuario/>}/>

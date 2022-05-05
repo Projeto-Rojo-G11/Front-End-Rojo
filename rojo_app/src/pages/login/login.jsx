@@ -1,13 +1,10 @@
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from 'react';
-
-import { buscarUsuarioPorId } from '../../services/auth';
+import { useState } from 'react';
 
 import Logo from '../../assets/img/logoRojo2.png';
 
 import '../../assets/css/login.css';
-
 
 export default function Login() {
     const [emailUsuario, setEmailUsuario] = useState('');
@@ -17,7 +14,8 @@ export default function Login() {
 
     var navigate = useNavigate();
 
-    const FazerLogin = (event) => {    
+    const FazerLogin = (event) => 
+    {   
         event.preventDefault();
 
         setErroMensagem(null);
@@ -36,40 +34,39 @@ export default function Login() {
             headers : { "Content-Type" : "application/json"}
         })
                
-            .then( function (response) 
+        .then( function (response) 
+        {
+
+            if (response.status === 200)
             {
+                localStorage.setItem('usuario-login', response.data.token)
 
-                if (response.status === 200)
-                {
-                    localStorage.setItem('usuario-login', response.data.token)
-
-                    setIsLoading(false)
-
-                    navigate('/BemVindo')
-                    console.log(`login realizado` )  
-                }
-                else {
-                    navigate('/Login');
-                    isLoading(false)
-                
-                 }
-            })        
-    
-            .catch(erro => {
-                erro = (' Email ou senha incorretos')
-                setErroMensagem(erro)
                 setIsLoading(false)
-            })
+
+                navigate('/BemVindo')
+                console.log(`login realizado` )  
+            }
+            else {
+                navigate('/Login');
+                isLoading(false)
+            
+                }
+        })        
+    
+        .catch(erro => {
+            erro = (' Email ou senha incorretos')
+            setErroMensagem(erro)
+            setIsLoading(false)
+        })
     }
 
-
     return (
-
         <div className="container-login">
+
             <header className='container-header'>
                 <div className="logo-header">
                     <nav>
-                        <Link to="/"><img src={Logo} /></Link>
+                        <Link to="/"><img src={Logo} alt="Imagem logo Rojo Infraestrutura"/></Link>
                     </nav>
                 </div>
             </header>
@@ -144,8 +141,6 @@ export default function Login() {
                                 </button>
                             )
                         }
-
-
 
                     </form>
                 </div>
