@@ -6,6 +6,7 @@ import _ from 'lodash';
 import { Form } from 'react-bootstrap';
 import AutoComplete from './AutoComplete';
 import useOutsideClick from '../custom-hooks/useOutsideClick';
+import {parseJwt} from '../../services/auth';
 
 const InputControl = ({ name, label, placeholder }) => {
 
@@ -24,11 +25,11 @@ const InputControl = ({ name, label, placeholder }) => {
 
   function processRequest(searchValue) {
 
-    let usuario = localStorage.getItem('usuario-login')
+    let usuario = parseJwt().jti
 
     axios
       .get('http://localhost:5000/api/Equipamento/listar-meus-equipamentos',
-      usuario,{})
+      usuario)
       .then((response) => {
         const equipamentos = response.data;
         const result = equipamentos.filter((equipamento) =>
@@ -83,7 +84,8 @@ const InputControl = ({ name, label, placeholder }) => {
           navigate("/Equipamento/{selectedEquipamento}") 
         </div>
       )}
-      {errorMsg && <p className="errorMsg">{errorMsg}</p>}
+      {console.log(errorMsg)}
+      {/* {errorMsg && <p className="errorMsg">{errorMsg}</p>} */}
     </Form.Group>
   );
 };

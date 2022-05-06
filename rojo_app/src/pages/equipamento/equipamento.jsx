@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams} from "react-router-dom";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React,{ useEffect, useState} from "react";
 import { Form } from 'react-bootstrap';
@@ -22,6 +22,7 @@ import la from '../../assets/icon/lista.png';
 import ta from '../../assets/icon/topologia.png';
 import aa from '../../assets/icon/alerta.png';
 
+import '../../assets/css/equipamento.css';
 import '../../assets/css/barra-esquerda.css';
 import '../../assets/css/animation__input.css';
 import '../../assets/css/cadastroEquipamento.css';
@@ -30,7 +31,10 @@ import '../../assets/css/style_search.css';
 
 
 export default function Equipamento(){
-    
+
+    // let id = this.props.match.params.id;
+    let id = useParams();    
+
     const [isLoading, setIsLoading] = useState(false);
     const [condicaoAtualizar, setCondicaoAtualizar] = useState(false);
 
@@ -65,11 +69,13 @@ export default function Equipamento(){
 
     function listarMeusEquipamentos()
     {
+        let usuario = parseJwt().jti
+
         axios
-        .post('http://localhost:5000/api/Equipamento/listar-meus-equipamentos')
+        .post('http://localhost:5000/api/Equipamento/listar-meus-equipamentos',usuario,{})
         
         .then((response) => {
-            console.log(response.status)
+            console.log(response.data)
         })
 
         .then((response) => {
@@ -263,7 +269,7 @@ export default function Equipamento(){
 
             
                 </div>
-            <div className="conteudo-equipamento">
+            <div className="conteudo-equipamento" id="cont-equipamento">
 
                 <header>
                     <h2 className="titulo"> EQUIPAMENTO</h2>
@@ -282,7 +288,10 @@ export default function Equipamento(){
                 
 
                 <section>
-                        
+                <div className="container-button">
+                    <button className="box-button1">
+                    </button>
+                </div>
                 <div className="container-info-equipamento">    
                 <div className="container-info-equipamento-h3"><h3>Dados {setModelo}</h3></div>
                                     
