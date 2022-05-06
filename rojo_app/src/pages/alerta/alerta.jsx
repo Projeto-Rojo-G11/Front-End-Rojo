@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Form } from 'react-bootstrap';
-import InputControl from '../../additional/components/InputControl';
 import { parseJwt } from "../../services/auth";
 
 import Grafana from '../../assets/icon/icon-grafana.png';
@@ -200,7 +199,7 @@ export default function ListaEquipamento (){
                     <div className="search-form">
                         <div className="lupa"/>
                         <Form>
-                        <InputControl
+                        < input
                             name="country"
                             label=" "
                             placeholder="Procure por um equipamento"

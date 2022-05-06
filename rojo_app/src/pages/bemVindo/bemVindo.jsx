@@ -4,8 +4,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Form } from 'react-bootstrap';
 import axios from 'axios';
 
-import InputControl from '../../../src/additional/components/InputControl';
-
 import Grafana from '../../assets/icon/icon-grafana.png';
 import DataDog from '../../assets/icon/data.png';
 import Zabbix from '../../assets/icon/icon-zabbix.png';
@@ -22,6 +20,7 @@ import '../../assets/css/animation__input.css';
 import '../../assets/css/cadastroEquipamento.css';
 import '../../assets/css/style_search.css';
 import { parseJwt } from "../../services/auth";
+import { useMemo } from "react";
 // import { parseJwt } from "../../services/auth";
 
 
@@ -32,6 +31,28 @@ export default function BemVindo()
     //States Usuario
     const [nome, setNome] = useState(parseJwt().nome);
     const [cargo, setCargo] = useState(parseJwt().cargo);
+
+    //Lista
+    const[listaEquipamento, setListaEquipamento] = useState([]);
+    const[busca, setBusca] = useState("");
+
+    function realizarListagem (){
+        let usuario = parseJwt().jti;
+        axios
+        .get('http://localhost:5000/api/Equipamento/listar-meus-equipamentos/' + usuario)
+        .then((response ) => {
+            console.log(response.data );
+            setListaEquipamento((response.data));
+            setListaEquipamento.toString();
+        })
+        .catch((erro) => console.log(erro));
+    }
+
+    useEffect(() => (realizarListagem()), [])        
+    
+    const equipamentoFiltrado = useMemo(() => {
+        return listaEquipamento.filter( (equipamento) => equipamento.modelo.toLowerCase().includes(busca.toLowerCase()));        
+    },[busca]) 
     
     const realizarLogout = async () => {
         try {
@@ -57,7 +78,6 @@ export default function BemVindo()
                             <Link to="/CadastrarEquipamento">
                                 <p className="cadastro-texto">
                                     CADASTRAR EQUIPAMENTO
-
                                 </p>
                                 <div className="cadastro-box-anime"/>         
                             </Link>
@@ -157,14 +177,23 @@ export default function BemVindo()
                     <h2 className="titulo">SEJA BEM VINDO</h2>
                     <div className="search-form">
                         <div className="lupa"/>
-                        <Form>
-                        <InputControl
+                    
+                        <input
                             name="country"
-                            label=" "
+                            value = {busca}
+                            onChange = {(evento) => setBusca(evento.target.value)}
                             placeholder="Procure por um equipamento"
                         />
-                     
-                        </Form>
+                        <ul>
+                            {
+                                equipamentoFiltrado.map((equipamento) => (
+                                    <li
+                                    onClick={navigate('/Equipamento/' + equipamento.idEquipamento)}
+                                    key={equipamento.idEquipamento}>{equipamento.modelo}</li>
+                                ))
+                            }
+                        </ul>
+                        
                     </div>
                 </header>
             

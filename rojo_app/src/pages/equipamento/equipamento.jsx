@@ -5,8 +5,6 @@ import React,{ useEffect, useState} from "react";
 import { Form } from 'react-bootstrap';
 
 import { parseJwt } from "../../services/auth";
-import InputControl from '../../additional/components/InputControl.js';
-
 
 import Filtro from '../../assets/icon/icon-filtro.png';
 import Editar from '../../assets/icon/icon-editar.png';
@@ -61,33 +59,25 @@ export default function Equipamento(){
     const [tipoEquipamento, setTipoEquipamento] = useState(null);
     
     //Listas 
-    const [dadoEquipamento, setDadoEquipamento] = useState([]);
+    const [listaEquipamento, setListaEquipamento] = useState([]);
 
     // const [listaEquipamento, setListaEquipamento] = useState([]);  
     
     var navigate = useNavigate();
 
-    function listarMeusEquipamentos()
-    {
-        let usuario = parseJwt().jti
-
+    function realizarListagem (){
+        let usuario = parseJwt().jti;
         axios
-        .post('http://localhost:5000/api/Equipamento/listar-meus-equipamentos',usuario,{})
-        
-        .then((response) => {
-            console.log(response.data)
+        .get('http://localhost:5000/api/Equipamento/listar-meus-equipamentos/' + usuario)
+        .then((response ) => {
+            console.log(response.data );
+            setListaEquipamento((response.data).filter((evento) => evento.idEquipamento.include(id)));
+            // listaEquipamento.();
         })
-
-        .then((response) => {
-            setDadoEquipamento(response.data);
-        })
-
-        .catch((erro) => {
-            console.log(erro);
-        })
+        .catch((erro) => console.log(erro));
     }
 
-    useEffect(() => (listarMeusEquipamentos()),[])
+    useEffect(() => (realizarListagem()), [])   
 
     const realizarLogout = async () => {
         try {
@@ -275,7 +265,7 @@ export default function Equipamento(){
                     <h2 className="titulo"> EQUIPAMENTO</h2>
                     <div className="search-form">
                         <Form>
-                        <InputControl
+                        <input
                             name="country"
                             label="Enter Country"
                             placeholder="Procure por um equipamento"
@@ -301,30 +291,56 @@ export default function Equipamento(){
                                                         <div className="box-1">
                                                             <div className="box-1-1">
                                                                 
-                                                                <div className="form__div">
-                                                                    <select
-                                                                        name="idTipoEquipamento"  
-                                                                        disabled = {condicaoAtualizar === true ? 'none' : ''}
-                                                                        value={idTipoEquipamento}   
-                                                                        id="form__input_tipoEquipamento"      
-                                                                        onChange={(event) => setIdTipoEquipamento(event.target.value)}>
-                                                                            {tipoEquipamento.map((event) => {
-                                                                                return (
+                                                                {
 
-                                                                                    <option key={event.idTipoEquipamento} value={event.idTipoEquipamento}>{event.equipamento}
-                                                                                    </option>
-                                                                                );
-                                                                            })}                                 
-                                                                            <option  value="#">Tipo de Equipamento </option>
-                                                                    </select>                        
+                                                                    <div className="form__div">
+                                                                
+                                                                                <select
+                                                                                    name="idTipoEquipamento"  
+                                                                                    disabled = {condicaoAtualizar === true ? 'none' : ''}
+                                                                                    value={listaEquipamento.idTipoEquipamento}   
+                                                                                    id="form__input_tipoEquipamento"      
+                                                                                    onChange={(event) => setIdTipoEquipamento(event.target.value)}>
+                                                                                        {tipoEquipamento.map((event) => {
+                                                                                            return (
+                                                                                                <option key={event.idTipoEquipamento} value={event.idTipoEquipamento}>{event.equipamento}
+                                                                                                </option>
+                                                                                            );
+                                                                                        })}                                 
+                                                                                        <option  value="#">Tipo de Equipamento </option>
+                                                                                </select>                        
+
+        
+                                                                    </div>
+                                                                }
+                                                                {
+                                                                    <div className="form__div">
+
+                                                                        <input
+                                                                            name="idTipoEquipamento"  
+                                                                            disabled = {condicaoAtualizar === true ? 'none' : ''}
+                                                                            value={listaEquipamento.idTipoEquipamento}   
+                                                                            id="form__input_tipoEquipamento"      
+                                                                            onChange={(event) => setIdTipoEquipamento(event.target.value)}
+                                                                        >
+                                                                                {tipoEquipamento.map((event) => {
+                                                                                    return (
+                                                                                        <option key={event.idTipoEquipamento} value={event.idTipoEquipamento}>{event.equipamento}
+                                                                                        </option>
+                                                                                    );
+                                                                                })}                                 
+                                                                        </input>
+                                                                        <label  className="form__label"> {listaEquipamento.idEquipamento} </label>
+                                                                    </div>
+                                                                }
                                                                     
-                                                                </div>
+    
                                                                 <div className="form__div">                       
                                                                     <input 
                                                                         className="form__input"
                                                                         type="text"
                                                                         name="Modelo"
-                                                                        value={modelo}
+                                                                        value={listaEquipamento.modelo}
                                                                         autoComplete='off'
                                                                         placeholder=" "
                                                                         onChange={(event) => setModelo(event.target.value)}
@@ -342,7 +358,7 @@ export default function Equipamento(){
                                                                     className="form__input"
                                                                     type="text"
                                                                     name="NumeroSerie"
-                                                                    value={numeroSerie}
+                                                                    value={listaEquipamento.numeroSerie}
                                                                     placeholder=" "
                                                                     onChange={(event) => setNumeroSerie(event.target.value)}
                                                                     disabled = {condicaoAtualizar === true ? 'none' : ''}
@@ -364,7 +380,7 @@ export default function Equipamento(){
                                                                     className="form__input"
                                                                     type="text"
                                                                     name="Gateway"
-                                                                    value={gateWay}
+                                                                    value={listaEquipamento.gateWay}
                                                                     placeholder=" "
                                                                     onChange={(event) => setGateWay(event.target.value)}
                                                                     disabled = {condicaoAtualizar === true ? 'none' : ''}
@@ -379,7 +395,7 @@ export default function Equipamento(){
                                                                     className="form__input"
                                                                     type="text"
                                                                     name="IP"
-                                                                    value={ip}
+                                                                    value={listaEquipamento.ip}
                                                                     placeholder=" "
                                                                     onChange={(event) => setIp(event.target.value)}
                                                                     disabled = {condicaoAtualizar === true ? 'none' : ''}
@@ -394,7 +410,7 @@ export default function Equipamento(){
                                                                     className="form__input"
                                                                     type="text"
                                                                     name="DNS"
-                                                                    value={dns}
+                                                                    value={listaEquipamento.dns}
                                                                     placeholder=" "
                                                                     onChange={(event) => setDns(event.target.value)}
                                                                     disabled = {condicaoAtualizar === true ? 'none' : ''}
@@ -409,7 +425,7 @@ export default function Equipamento(){
                                                                     className="form__input"
                                                                     type="text"
                                                                     name="Porta"
-                                                                    value={porta}
+                                                                    value={listaEquipamento.porta}
                                                                     placeholder=" "
                                                                     onChange={(event) => setDescricao(event.target.value)}
                                                                     disabled = {condicaoAtualizar === true ? 'none' : ''}

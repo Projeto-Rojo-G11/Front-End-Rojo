@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { Form } from 'react-bootstrap';
-import InputControl from '../../../src/additional/components/InputControl';
 import { parseJwt } from "../../services/auth";
 
 import Grafana from '../../assets/icon/icon-grafana.png';
@@ -46,28 +45,26 @@ export default function ListaEquipamento (){
     const [numeroSerie, setNumeroSerie] = useState(0);
 
     //Listas
-    const [listEq, setListEq] = useState([]);
+    const [ listaEquipamento, setListaEquipamento ] = useState([])
 
     //States status
     const [statusOn, setStatusOn] = useState(false)
 
     const [isLoading, setIsLoading] = useState('');
-    const [ listaEquipamento, setListaEquipamento ] = useState([])
 
-    function buscarMeusEquipamentos(){
-        let idUsuario =  parseJwt().jti
-
-        axios.get('http://localhost:5000/api/Equipamento/listar-meus-equipamentos')
-        .then(response => {
-            if (response.status === 200) {
-                console.log(response.data)
-                setListEq( response.data );
-            }
+    function realizarListagem (){
+        let usuario = parseJwt().jti;
+        axios
+        .get('http://localhost:5000/api/Equipamento/listar-meus-equipamentos/' + usuario)
+        .then((response ) => {
+            console.log(response.data );
+            setListaEquipamento((response.data));
+            // listaEquipamento.();
         })
-        .catch( erro => console.log(erro) );
+        .catch((erro) => console.log(erro));
     };
     
-    useEffect( () => buscarMeusEquipamentos(), [] );
+    useEffect( () => realizarListagem(), [] );
     
     const realizarLogout = async () => {
         try {
@@ -187,7 +184,7 @@ export default function ListaEquipamento (){
                     <div className="search-form">
                         <div className="lupa"/>
                         <Form>
-                        <InputControl
+                        <input
                             name="country"
                             label=" "
                             placeholder="Procure por um equipamento"
@@ -202,10 +199,10 @@ export default function ListaEquipamento (){
                         
                     <div className="container-info-equipamento">  
                             {
-                            listEq.map(item => {
+                            listaEquipamento.map(item => {
                                 <div className="box-lista">
                                     <div className="box-head-lista">
-                                        <div><p>#{listEq.idEquipamento} </p></div>
+                                        <div><p>#{item.idEquipamento} </p></div>
                                     </div>
                                     <div className="box-body-lista">
                                             <div className="ob1-info">
@@ -214,7 +211,7 @@ export default function ListaEquipamento (){
                                                                             <div
                                                                                 className="-lista"
                                                                             >
-                                                                                {}
+                                                                                {item.idTipoEquipamento}
                                                                             </div>
                                                                             <label className="label">
                                                                                 Tipo Equipamento
@@ -224,7 +221,7 @@ export default function ListaEquipamento (){
                                                                             <div 
                                                                                 className="-lista"
                                                                             >
-                                                                                {modelo}
+                                                                                {item.modelo}
                                                                             </div>
                                                                             <label className="label">
                                                                                 Modelo
@@ -235,7 +232,7 @@ export default function ListaEquipamento (){
                                                         <div className="form__div">                       
                                                                             <div 
                                                                                 className="-lista"
-                                                                            >{numeroSerie}</div> 
+                                                                            >{item.numeroSerie}</div> 
                                                                             <label className="label">
                                                                                 Numero de Serie
                                                                             </label>
