@@ -54,7 +54,7 @@ export default function ListaEquipamento (){
 
 
     function buscarMeusEquipamentos(){
-        axios('http://localhost:5000/api/Equipamento/listar-meus-equipamentos', {
+        axios('http://100.26.2.205/api/Equipamento/listar-meus-equipamentos', {
             headers : {
                 'Authorization' : 'Bearer ' + localStorage.getItem('usuario-login')
             }
@@ -70,7 +70,7 @@ export default function ListaEquipamento (){
     useEffect( buscarMeusEquipamentos, [] );
 
     function listaTipoequipamento(){
-        axios.get('http://localhost:5000/api/Usuario/',{})
+        axios.get('http://100.26.2.205/api/Usuario/',{})
 
         .then(resposta => resposta.status === 201)
     }

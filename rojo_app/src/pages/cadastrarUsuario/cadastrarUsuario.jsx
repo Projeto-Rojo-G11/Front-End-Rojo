@@ -37,7 +37,7 @@ export default function CadastroUsuario() {
     };
 
     axios
-      .post("http://localhost:5000/api/Usuario/cadastro-usuario", usuario, {})
+      .post("http://100.26.2.205/api/Usuario/cadastro-usuario", usuario, {})
 
       .then((response) => {
         if (response.status === 201) {

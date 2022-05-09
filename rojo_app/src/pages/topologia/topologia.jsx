@@ -34,7 +34,7 @@ export default function BemVindo()
     const buscarUsuario = () =>
     {
         axios
-        .get('http://localhost:5000/api/usuario/token')
+        .get('http://100.26.2.205/api/usuario/token')
 
         .then(function (response) {
             console.log('resposta' + response.data);

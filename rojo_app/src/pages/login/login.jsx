@@ -29,7 +29,7 @@ export default function Login() {
 
         axios({
             method: "post",
-            url: "http://localhost:5000/api/Login", 
+            url: "http://100.26.2.205/api/Login", 
             data : usuarioLogin,
             headers : { "Content-Type" : "application/json"}
         })

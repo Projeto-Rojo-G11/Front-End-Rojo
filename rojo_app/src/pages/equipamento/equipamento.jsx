@@ -22,8 +22,9 @@ import '../../assets/css/barra-esquerda.css';
 import '../../assets/css/animation__input.css';
 import '../../assets/css/cadastroEquipamento.css';
 import '../../assets/css/style_search.css';
-import './../../component_recycling/barwork/style.css'
-import './../../component_recycling/barwork/BarWork.css'
+import '../../component_recycling/barwork/BarWork.css';
+import '../../component_recycling/barwork/style.css';
+
 
 
 // import '../../assets/css/'
@@ -73,42 +74,35 @@ export default function CadastroEquipamento() {
     const modal_reboot = document.getElementById('reboot');
     const close = document.getElementById('close');
     
-    reboot.addEventListener('click', () => {
-        modal_reboot.classList.add('show');
-    });
-
-    close.addEventListener('click', () => {
-        modal_reboot.classList.remove('show')
-    }); 
-
+    
     const buscarTipoEquipamento = () =>
     {
         axios
-        .get('http://localhost:5000/api/TipoEquipamento/lista')
-
+        .get('http://100.26.2.205/api/TipoEquipamento/lista')
+        
         .then(function (response) {
             setDadoTipoEquipamento(response.data)
         })
         .catch((erro)=> console.log(erro))
     }
-
+    
     const realizarLogout = async () => {
         try {
           await AsyncStorage.removeItem('userToken');
           navigate('/'); 
         } catch (error) {
-          console.warn(error);
+            console.warn(error);
         }
       };
-    
-    const cadastroEquipamento = (event) => 
-    {
-        event.preventDefault();
-
+      
+      const cadastroEquipamento = (event) => 
+      {
+          event.preventDefault();
+          
         let equipamento = {
-        idUsuario: idUsuario,
-        idTipoEquipamento: parseInt(idTipoEquipamento),
-        numeroDeSerie: numeroDeSerie,
+            idUsuario: idUsuario,
+            idTipoEquipamento: parseInt(idTipoEquipamento),
+            numeroDeSerie: numeroDeSerie,
         modelo: modelo,
         gateWay: parseInt(gateWay),
         mask: parseInt(ip),
@@ -116,17 +110,17 @@ export default function CadastroEquipamento() {
         porta: parseInt(porta),
         dataEntrada : new Date(data),
         descricao: descricao,
-        };
-
-        axios
-        .post("http://localhost:5000/api/Equipamento/cadastro-equipamento", equipamento
-        )   
-        
-        .then( function (response){
-            setDadoEquipamento(response.data);
-        })
-
-        .then( function (resposta) {
+    };
+    
+    axios
+    .post("http://100.26.2.205/api/Equipamento/cadastro-equipamento", equipamento
+    )   
+    
+    .then( function (response){
+        setDadoEquipamento(response.data);
+    })
+    
+    .then( function (resposta) {
             console.log(resposta);
             navigate('/ListaEquipamento')
         })
@@ -135,45 +129,22 @@ export default function CadastroEquipamento() {
             console.log(erro);
         });
     }
-
-
+    
+    
     useEffect(() => (buscarTipoEquipamento()),[])
+    
+    // reboot.addEventListener('click', () => {
+    //     modal_reboot.classList.add('show');
+    // });
 
+    // close.addEventListener('click', () => {
+    //     modal_reboot.classList.remove('show')
+    // }); 
+    
     return(   
-            <div className="container-cadastro-equipamento">
+        <div className="container-cadastro-equipamento">
                     
-                <div className="sidebar">
-                    <div className="s-c">
-                        <button id="btn-reboot"><RestartAltIcon/></button>
-                        <button id="#configuration"><Settings/></button>
-                        <button id="#connection"><PlayCircleIcon/></button>
-                        <button id="#extra"><SettingsInputHdmiIcon/></button>
-                    </div>
-                </div>
-                <div id="reboot" className="modal_container">
-                    <div id="box-modal">
-                            <div className="img-modal"/>
-                            <div id="info-modal">
-                                <h2>INICIAR REBOOT</h2>
-                                <h4>DO EQUIPAMENTO :</h4>
-                                <div id="text">
-                                    <p>modelo :{}</p>
-                                    <p>ip :{}</p>
-
-                                </div>
-                                <p>Tem certeza que deseja continuar?</p>
-                                <div id="btn">
-                                <button className="btn-reboot-s">
-                                    <p>sim, estou ciente</p>
-                                </button>
-                                <button className="btn-reboot-n">
-                                    <p>não,cancelar</p>
-                                </button>
-                            </div>
-                        </div>
-                        <button id="close"><CloseIcon/></button>
-                    </div>
-                </div>
+                
                     <div className="container-barra-esquerda">
                         <div className="barra-superior">
                             <nav  className="Logo">
@@ -458,6 +429,38 @@ export default function CadastroEquipamento() {
                                     </div>
                     </section>
         
+                </div>
+                <div className="sidebar">
+                    <div className="s-c">
+                        <button id="btn-reboot"><RestartAltIcon/></button>
+                        <button id="#configuration"><Settings/></button>
+                        <button id="#connection"><PlayCircleIcon/></button>
+                        <button id="#extra"><SettingsInputHdmiIcon/></button>
+                    </div>
+                </div>
+                <div id="reboot" className="modal_container">
+                    <div id="box-modal">
+                            <div className="img-modal"/>
+                            <div id="info-modal">
+                                <h2>INICIAR REBOOT</h2>
+                                <h4>DO EQUIPAMENTO :</h4>
+                                <div id="text">
+                                    <p>modelo :{}</p>
+                                    <p>ip :{}</p>
+
+                                </div>
+                                <p>Tem certeza que deseja continuar?</p>
+                                <div id="btn">
+                                <button className="btn-reboot-s">
+                                    <p>sim, estou ciente</p>
+                                </button>
+                                <button className="btn-reboot-n">
+                                    <p>não,cancelar</p>
+                                </button>
+                            </div>
+                        </div>
+                        <button id="close"><CloseIcon/></button>
+                    </div>
                 </div>
             </div>
         );

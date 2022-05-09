@@ -54,7 +54,7 @@ export default function ListaEquipamento (){
     function realizarListagem (){
         let usuario = parseJwt().jti;
         axios
-        .get('http://localhost:5000/api/Equipamento/listar-meus-equipamentos/' + usuario)
+        .get('http://100.26.2.205/api/Equipamento/listar-meus-equipamentos/' + usuario)
         .then((response ) => {
             console.log(response.data );
             setListaEquipamento((response.data));

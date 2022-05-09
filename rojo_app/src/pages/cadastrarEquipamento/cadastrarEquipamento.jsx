@@ -57,7 +57,7 @@ export default function CadastroEquipamento() {
     const buscarTipoEquipamento = () =>
     {
         axios
-        .get('http://localhost:5000/api/TipoEquipamento/lista')
+        .get('http://100.26.2.205/api/TipoEquipamento/lista')
 
         .then(function (response) {
             setDadoTipoEquipamento(response.data)
@@ -92,7 +92,7 @@ export default function CadastroEquipamento() {
         };
 
         axios
-        .post("http://localhost:5000/api/Equipamento/cadastro-equipamento", equipamento
+        .post("http://100.26.2.205/api/Equipamento/cadastro-equipamento", equipamento
         )   
         
         .then( function (response){
