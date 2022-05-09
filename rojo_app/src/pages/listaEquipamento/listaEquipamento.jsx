@@ -9,13 +9,10 @@ import { parseJwt } from "../../services/auth";
 import Grafana from '../../assets/icon/icon-grafana.png';
 import DataDog from '../../assets/icon/data.png';
 import Zabbix from '../../assets/icon/icon-zabbix.png';
-import Filtro from '../../assets/icon/icon-filtro.png';
 import Editar from '../../assets/icon/icon-editar.png';
-import Ferramenta from '../../assets/icon/icon-ferramenta.png';
 
 import Logo from '../../assets/img/logoRojo2.png';
 import Sair from '../../assets/icon/icon-sair.png';
-import Linq from '../../assets/icon/icon-link.png';
 
 import ho from '../../assets/icon/historico.png';
 import la from '../../assets/icon/lista.png';
@@ -29,6 +26,8 @@ import '../../assets/css/cadastroEquipamento.css';
 import '../../assets/css/style_search.css';
 import '../../assets/css/listaEquipamento.css';
 import { map } from "lodash";
+import SearchBar  from '../../component_recycling/SearchBar';
+
 
 
 export default function ListaEquipamento (){
@@ -179,19 +178,13 @@ export default function ListaEquipamento (){
                 </div>
             <div className="conteudo-equipamento">
 
-                <header>
-                    <h2 className="titulo">SEUS EQUIPAMENTOS </h2>
-                    <div className="search-form">
-                        <div className="lupa"/>
-                        <Form>
-                        <input
-                            name="country"
-                            label=" "
-                            placeholder="Procure por um equipamento"
-                        />
-                        </Form>
-                    </div>
-                </header>
+            <header>
+                <h2 className="titulo">NOVO EQUIPAMENTO</h2>
+                <div className="search-form">
+                <div className="lupa"/>
+                    <SearchBar/>
+                </div>
+            </header>
             
                 
 
@@ -199,7 +192,8 @@ export default function ListaEquipamento (){
                         
                     <div className="container-info-equipamento">  
                             {
-                            listaEquipamento.map(item => {
+                            listaEquipamento.map((item) => {
+                                return(
                                 <div className="box-lista">
                                     <div className="box-head-lista">
                                         <div><p>#{item.idEquipamento} </p></div>
@@ -232,7 +226,7 @@ export default function ListaEquipamento (){
                                                         <div className="form__div">                       
                                                                             <div 
                                                                                 className="-lista"
-                                                                            >{item.numeroSerie}</div> 
+                                                                            >{item.numeroDeSerie}</div> 
                                                                             <label className="label">
                                                                                 Numero de Serie
                                                                             </label>
@@ -281,8 +275,8 @@ export default function ListaEquipamento (){
                                             <div className="ob3-img"/>
                                     </div>
                                 </div>
-
-                            })
+                                )
+                            })  
                         }
                     </div>
                 </section>

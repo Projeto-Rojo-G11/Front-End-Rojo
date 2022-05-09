@@ -1,16 +1,13 @@
 import axios from "axios";
-import { Link, useNavigate, useParams} from "react-router-dom";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import React,{ useEffect, useState} from "react";
+import { Link, useNavigate } from "react-router-dom";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Form } from 'react-bootstrap';
 
 import { parseJwt } from "../../services/auth";
+// import BarWork  from '../../component_recycling/barwork/BarWork';
 
-import Filtro from '../../assets/icon/icon-filtro.png';
-import Editar from '../../assets/icon/icon-editar.png';
-import Ferramenta from '../../assets/icon/icon-ferramenta.png';
-
-import Logo from '../../assets/img/logoRojo.png';
+import Logo from '../../assets/img/logoRojo2.png';
 import Sair from '../../assets/icon/icon-sair.png';
 import Grafana from '../../assets/icon/icon-grafana.png';
 import DataDog from '../../assets/icon/data.png';
@@ -20,64 +17,80 @@ import la from '../../assets/icon/lista.png';
 import ta from '../../assets/icon/topologia.png';
 import aa from '../../assets/icon/alerta.png';
 
-import '../../assets/css/equipamento.css';
+
 import '../../assets/css/barra-esquerda.css';
 import '../../assets/css/animation__input.css';
 import '../../assets/css/cadastroEquipamento.css';
 import '../../assets/css/style_search.css';
+import './../../component_recycling/barwork/style.css'
+import './../../component_recycling/barwork/BarWork.css'
+
+
+// import '../../assets/css/'
+// import './BarWork.css';
+
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import SettingsInputHdmiIcon from '@mui/icons-material/SettingsInputHdmi';
+import { Settings } from "@mui/icons-material";
+import CloseIcon from '@mui/icons-material/Close';
+import SearchBar  from '../../component_recycling/SearchBar';
 
 
 
-export default function Equipamento(){
+export default function CadastroEquipamento() {
 
-    // let id = this.props.match.params.id;
-    let id = useParams();    
+    var navigate = useNavigate();
 
+    
+    
     const [isLoading, setIsLoading] = useState(false);
-    const [condicaoAtualizar, setCondicaoAtualizar] = useState(false);
-
+    // const [boolPut, setBoolPut] = useState(false);
 
     //States Usuario
+    const [idUsuario, setIdUsuario] = useState(parseJwt().jti)
     const [nome, setNome] = useState(parseJwt().nome);
     const [cargo, setCargo] = useState(parseJwt().cargo);
 
     //States Equipamento
-    const [idEquipamento, setIdEquipamento] = useState(0);
-    const [idTipoEquipamento, setIdTipoEquipamento] = useState(0);
-    const [modelo, setModelo] = useState(0);
-    const [numeroSerie, setNumeroSerie] = useState(0);
-    const [gateWay, setGateWay] = useState(0);
-    const [ip, setIp] = useState(0);
-    const [dns, setDns] = useState(0);
-    const [porta, setPorta] = useState(0);
-    const [img64, setImg64] = useState(0);
-    const [arquivo, setArquivo] = useState('');
+    const [idTipoEquipamento, setIdTipoEquipamento] = useState(null);
+    const [numeroDeSerie, setNumeroDeSerie] = useState('');
+    const [modelo, setModelo] = useState('');
+    const [gateWay, setGateWay] = useState('');
+    const [ip, setIp] = useState('');
+    const [dns, setDns] = useState('');
+    const [porta, setPorta] = useState('');
     const [descricao, setDescricao] = useState('');
-    const [condicao, setCondicao] =useState('');
-    const [atualizar, setAtualizar]= useState(false);
-    const [alterarCondicaoAtualizar, setAlterarCondicaoAtualizar] = useState(false)
-    const [tipoEquipamento, setTipoEquipamento] = useState(null);
-    
-    //Listas 
-    const [listaEquipamento, setListaEquipamento] = useState([]);
+    const [data, setData] = useState(new Date())
+    const [condicao, setCondicao] = useState('');
 
-    // const [listaEquipamento, setListaEquipamento] = useState([]);  
-    
-    var navigate = useNavigate();
+    const [tipo, setTipo] = useState(null);
+    const [dadoEquipamento, setDadoEquipamento] =useState([]);
+    const [dadoTipoEquipamento, setDadoTipoEquipamento] = useState([]);
 
-    function realizarListagem (){
-        let usuario = parseJwt().jti;
+
+    const reboot = document.getElementById('btn-reboot');
+    const modal_reboot = document.getElementById('reboot');
+    const close = document.getElementById('close');
+    
+    reboot.addEventListener('click', () => {
+        modal_reboot.classList.add('show');
+    });
+
+    close.addEventListener('click', () => {
+        modal_reboot.classList.remove('show')
+    }); 
+
+    const buscarTipoEquipamento = () =>
+    {
         axios
-        .get('http://localhost:5000/api/Equipamento/listar-meus-equipamentos/' + usuario)
-        .then((response ) => {
-            console.log(response.data );
-            setListaEquipamento((response.data).filter((evento) => evento.idEquipamento.include(id)));
-            // listaEquipamento.();
-        })
-        .catch((erro) => console.log(erro));
-    }
+        .get('http://localhost:5000/api/TipoEquipamento/lista')
 
-    useEffect(() => (realizarListagem()), [])   
+        .then(function (response) {
+            setDadoTipoEquipamento(response.data)
+        })
+        .catch((erro)=> console.log(erro))
+    }
 
     const realizarLogout = async () => {
         try {
@@ -87,406 +100,348 @@ export default function Equipamento(){
           console.warn(error);
         }
       };
-
-    function atualizarEquipamento(event)
+    
+    const cadastroEquipamento = (event) => 
     {
         event.preventDefault();
 
         let equipamento = {
-            Modelo : modelo,
-            NumeroSerie : numeroSerie,
-            GateWay : gateWay,
-            Mask : ip,
-            Dns : dns,
-            Porta : porta,
-            Condicao : condicao,
-            Descricao : descricao,
+        idUsuario: idUsuario,
+        idTipoEquipamento: parseInt(idTipoEquipamento),
+        numeroDeSerie: numeroDeSerie,
+        modelo: modelo,
+        gateWay: parseInt(gateWay),
+        mask: parseInt(ip),
+        dns: parseInt(dns),
+        porta: parseInt(porta),
+        dataEntrada : new Date(data),
+        descricao: descricao,
+        };
 
-        }
-
-        axios.put('http://localhost:5000/api/Equipamento' + idEquipamento, {equipamento})
-        .then((resposta) => {
-            if(resposta.status === 201)
-            {
-                return console.log('Atualização realizada')
-            }
-        })
-        .catch(erro => console.log(erro))
-    }
-
-
-    const buscarTipoEquipamento = () =>
-    {
         axios
-        .get('http://localhost:5000/api/TipoEquipamento/lista')
-
-        .then(function (response) {
-            setTipoEquipamento(response.data)
+        .post("http://localhost:5000/api/Equipamento/cadastro-equipamento", equipamento
+        )   
+        
+        .then( function (response){
+            setDadoEquipamento(response.data);
         })
-        .catch((erro)=> console.log(erro))
+
+        .then( function (resposta) {
+            console.log(resposta);
+            navigate('/ListaEquipamento')
+        })
+        
+        .catch( function (erro) {
+            console.log(erro);
+        });
     }
+
 
     useEffect(() => (buscarTipoEquipamento()),[])
 
-    function upload(){
-       
-        var formData = new FormData();
-
-        formData.append(
-            'arquivo', arquivo
-        );
-        
-        axios({
-            method: "post",
-            url: "http://localhost:5000/api/Equipamento",
-            data: formData,
-            headers: {
-            "Content-Type": "multipart/form-data",
-            "Authorization" : 'Bearer' + localStorage.getItem('usuario-login') }
-        } )
-        .catch((erro) => console.log(erro))
-    }
-    
-    const atualizaState = (event) => {
-        setArquivo( event.target.files[0]
-        )
-    }
-    
     return(   
-        <div className="container-cadastro-equipamento">
-            
-                <div className="container-barra-esquerda">
-                    <div className="barra-superior">
-                        <nav  className="Logo">
-                            <Link to="/"><img src={Logo} alt="Logo da Rojo"/></Link>
-                        </nav>
-                        <div className= "cadastro">
-                            <Link to="/CadastrarEquipamento">
-                                <p className="cadastro-texto">
-                                    CADASTRAR EQUIPAMENTO
-
-                                </p>
-                                <div className="cadastro-box-anime"/>         
-                            </Link>
-
-                        </div>
-                        <div className="box-container-link">
-                            <nav className="funcao-superior">
-                                <p className="fp">GESTAO DE INFRAESTRUTURA</p>
-                                <Link className= "funcao" to="/ListaEquipamento">
-                                    <img src={la} alt="Icone de listagem"/>
-                                    <p>Listar Equipamentos</p>
-                                </Link>
-                                <Link className= "funcao" to="/Historico">
-                                    <img src={ho} alt="Icone de histórico"/>
-                                    <p>Histórico</p>
-                                </Link>
-                                <Link className= "funcao" to="/Topologia">
-                                    <img src={ta} alt="Icone de topologia"/>
-                                    <p>Topologia</p>
-                                </Link>
-                                <Link className= "funcao" to="/Alerta">
-                                    <img src={aa} alt="Icone de topologia"/>
-                                    <p>Alerta</p>
-                                </Link>
-
-
-                            </nav>
-                            <div className="funcao-inferior">
-                                <p className="fp">SERVICOS DE MONITORAMENTO</p>
-                                <Link className="container-link" to="/grafana">
-                                    <div className="btn-link">
-                                        <img src={Grafana} alt="Logo do Grafana"></img>
-                                    </div>
-                                    <p>GRAFANA</p>
-                                </Link>
-
-                                <Link className="container-link" to="/graylog">
-                                    <div className="btn-link">
-                                        <img src={DataDog} alt="Logo da DataDog"></img>
-                                    </div>
-                                    <p>DATADOG</p>
-                                </Link>
-
-                                <Link className="container-link" to="/zabbix">
-                                    <div className="btn-link">
-                                        <img src={Zabbix} alt="Logo do Zabbix"></img>
-                                    </div>
-                                    <p>ZABBIX </p>
-                                </Link>
-                            </div>
-
-                        </div>
-                        <div className="btn-container-mode">
-                                <p> MODO ESCURO</p>
-                                <button className="btn-mode">
-                                    <div className="btn-mode-interruptor">
-                                        <div className="btn-mode-bola">
-                                        </div>
-                                    </div>
-                                </button>
-                        </div>
-
-
-
-                    </div>
-                    <div className="barra-inferior">
-                            <div className="container-perfil">
-                                    <div
-                                        className="perfil-imagem"
-                                        
-                                    />
-                                    <div className="perfil-texto">
-                                        <p
-                                        className="perfil-nome">{nome}</p>
-                                                           
-                                        <p
-                                        className="perfil-cargo">
-                                            {cargo}
-                                        </p>
-                                        
-                                    </div>
-                                    <div>
-
-                                        <button
-                                            onClick={realizarLogout}
-                                        >
-                                            <img src={Sair} alt="icone sair"/>
-                                        </button>
-                                    </div>
-                            </div>
-                    </div>
-
-            
-                </div>
-            <div className="conteudo-equipamento" id="cont-equipamento">
-
-                <header>
-                    <h2 className="titulo"> EQUIPAMENTO</h2>
-                    <div className="search-form">
-                        <Form>
-                        <input
-                            name="country"
-                            label="Enter Country"
-                            placeholder="Procure por um equipamento"
-                        />
+            <div className="container-cadastro-equipamento">
                     
-                        </Form>
+                <div className="sidebar">
+                    <div className="s-c">
+                        <button id="btn-reboot"><RestartAltIcon/></button>
+                        <button id="#configuration"><Settings/></button>
+                        <button id="#connection"><PlayCircleIcon/></button>
+                        <button id="#extra"><SettingsInputHdmiIcon/></button>
                     </div>
-                </header>
-            
-                
-
-                <section>
-                <div className="container-button">
-                    <button className="box-button1">
-                    </button>
                 </div>
-                <div className="container-info-equipamento">    
-                <div className="container-info-equipamento-h3"><h3>Dados {setModelo}</h3></div>
-                                    
-            
-                                                <form className="form-cadastro-equipamento" onSubmit={(event) => atualizarEquipamento(event)}>
-                                                    <div className="dados">
-                                                        <div className="box-1">
-                                                            <div className="box-1-1">
-                                                                
-                                                                {
+                <div id="reboot" className="modal_container">
+                    <div id="box-modal">
+                            <div className="img-modal"/>
+                            <div id="info-modal">
+                                <h2>INICIAR REBOOT</h2>
+                                <h4>DO EQUIPAMENTO :</h4>
+                                <div id="text">
+                                    <p>modelo :{}</p>
+                                    <p>ip :{}</p>
 
+                                </div>
+                                <p>Tem certeza que deseja continuar?</p>
+                                <div id="btn">
+                                <button className="btn-reboot-s">
+                                    <p>sim, estou ciente</p>
+                                </button>
+                                <button className="btn-reboot-n">
+                                    <p>não,cancelar</p>
+                                </button>
+                            </div>
+                        </div>
+                        <button id="close"><CloseIcon/></button>
+                    </div>
+                </div>
+                    <div className="container-barra-esquerda">
+                        <div className="barra-superior">
+                            <nav  className="Logo">
+                                <Link to="/"><img src={Logo} alt="Logo da Rojo"/></Link>
+                            </nav>
+                            <div className= "cadastro">
+                                <Link to="/CadastrarEquipamento">
+                                    <p className="cadastro-texto">
+                                        CADASTRAR EQUIPAMENTO
+
+                                    </p>
+                                    <div className="cadastro-box-anime"/>         
+                                </Link>
+
+                            </div>
+                            <div className="box-container-link">
+                                <nav className="funcao-superior">
+                                    <p className="fp">GESTAO DE INFRAESTRUTURA</p>
+                                    <Link className= "funcao" to="/ListaEquipamento">
+                                        <img src={la} alt="Icone de listagem"/>
+                                        <p>Listar Equipamentos</p>
+                                    </Link>
+                                    <Link className= "funcao" to="/Historico">
+                                        <img src={ho} alt="Icone de histórico"/>
+                                        <p>Histórico</p>
+                                    </Link>
+                                    <Link className= "funcao" to="/Topologia">
+                                        <img src={ta} alt="Icone de topologia"/>
+                                        <p>Topologia</p>
+                                    </Link>
+                                    <Link className= "funcao" to="/Alertas">
+                                        <img src={aa} alt="Icone de topologia"/>
+                                        <p>Alerta</p>
+                                    </Link>
+
+
+                                </nav>
+                                <div className="funcao-inferior">
+                                    <p className="fp">SERVICOS DE MONITORAMENTO</p>
+                                    <Link className="container-link" to="/grafana">
+                                        <div className="btn-link">
+                                            <img src={Grafana} alt="Logo do Grafana"></img>
+                                        </div>
+                                        <p>GRAFANA</p>
+                                    </Link>
+
+                                    <Link className="container-link" to="/graylog">
+                                        <div className="btn-link">
+                                            <img src={DataDog} alt="Logo da DataDog"></img>
+                                        </div>
+                                        <p>DATADOG</p>
+                                    </Link>
+
+                                    <Link className="container-link" to="/zabbix">
+                                        <div className="btn-link">
+                                            <img src={Zabbix} alt="Logo do Zabbix"></img>
+                                        </div>
+                                        <p>ZABBIX </p>
+                                    </Link>
+                                </div>
+
+                            </div>
+                            <div className="btn-container-mode">
+                                    <p> MODO ESCURO</p>
+                                    <button className="btn-mode">
+                                        <div className="btn-mode-interruptor">
+                                            <div className="btn-mode-bola">
+                                            </div>
+                                        </div>
+                                    </button>
+                            </div>
+
+
+
+                        </div>
+                        <div className="barra-inferior">
+                                <div className="container-perfil">
+                                        <div
+                                            className="perfil-imagem"
+                                            
+                                        />
+                                        <div className="perfil-texto">
+                                            <p
+                                            className="perfil-nome">{nome}</p>
+                                                               
+                                            <p
+                                            className="perfil-cargo">
+                                                {cargo}
+                                            </p>
+                                            
+                                        </div>
+                                        <div>
+
+                                            <button
+                                                onClick={realizarLogout}
+                                            >
+                                                <img src={Sair} alt="icone sair"/>
+                                            </button>
+                                        </div>
+                                </div>
+                        </div>
+    
+                
+                    </div>
+                <div className="conteudo-equipamento">
+
+                    <header>
+                        <h2 className="titulo">NOVO EQUIPAMENTO</h2>
+                        <div className="search-form">
+                        <div className="lupa"/>
+                            <SearchBar/>
+                        </div>
+                    </header>
+                
+                    
+
+                    <section>
+                            
+                    <div className="container-info-equipamento">    
+                    <div className="container-info-equipamento-h3"><h3>Dados Equipamento</h3></div>
+                                        
+                
+                                                    <form className="form-cadastro-equipamento" onSubmit={(event) => cadastroEquipamento(event)}>
+                                                        <div className="dados">
+                                                            <div className="box-1">
+                                                                <div className="box-1-1">
+                                                                    
                                                                     <div className="form__div">
-                                                                
-                                                                                <select
-                                                                                    name="idTipoEquipamento"  
-                                                                                    disabled = {condicaoAtualizar === true ? 'none' : ''}
-                                                                                    value={listaEquipamento.idTipoEquipamento}   
-                                                                                    id="form__input_tipoEquipamento"      
-                                                                                    onChange={(event) => setIdTipoEquipamento(event.target.value)}>
-                                                                                        {tipoEquipamento.map((event) => {
-                                                                                            return (
-                                                                                                <option key={event.idTipoEquipamento} value={event.idTipoEquipamento}>{event.equipamento}
-                                                                                                </option>
-                                                                                            );
-                                                                                        })}                                 
-                                                                                        <option  value="#">Tipo de Equipamento </option>
-                                                                                </select>                        
-
-        
-                                                                    </div>
-                                                                }
-                                                                {
-                                                                    <div className="form__div">
-
-                                                                        <input
+                                                                        <select
                                                                             name="idTipoEquipamento"  
-                                                                            disabled = {condicaoAtualizar === true ? 'none' : ''}
-                                                                            value={listaEquipamento.idTipoEquipamento}   
+                                                                            value={idTipoEquipamento}   
                                                                             id="form__input_tipoEquipamento"      
                                                                             onChange={(event) => setIdTipoEquipamento(event.target.value)}
                                                                         >
-                                                                                {tipoEquipamento.map((event) => {
+                                                                                {dadoTipoEquipamento.map((event) => {
                                                                                     return (
+
                                                                                         <option key={event.idTipoEquipamento} value={event.idTipoEquipamento}>{event.equipamento}
                                                                                         </option>
                                                                                     );
                                                                                 })}                                 
-                                                                        </input>
-                                                                        <label  className="form__label"> {listaEquipamento.idEquipamento} </label>
+                                                                                <option value="#">Tipo de Equipamento </option>
+                                                                        </select>                        
+                                                                        
                                                                     </div>
-                                                                }
-                                                                    
-    
-                                                                <div className="form__div">                       
-                                                                    <input 
+                                                                    <div className="form__div">                       
+                                                                        <input 
+                                                                            className="form__input"
+                                                                            type="text"
+                                                                            name="Modelo"
+                                                                            value={modelo}
+                                                                            autoComplete='off'
+                                                                            placeholder=" "
+                                                                            onChange={(event) => setModelo(event.target.value)}
+                                                                        /> 
+                                                                        <label className="form__label">
+                                                                            Modelo
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+
+
+                                                                <div className="form__div">                   
+                                                                    <input
                                                                         className="form__input"
                                                                         type="text"
-                                                                        name="Modelo"
-                                                                        value={listaEquipamento.modelo}
-                                                                        autoComplete='off'
+                                                                        name="NumeroSerie"
+                                                                        value={numeroDeSerie}
                                                                         placeholder=" "
-                                                                        onChange={(event) => setModelo(event.target.value)}
-                                                                        disabled = {condicaoAtualizar === true ? 'none' : ''}
-                                                                    /> 
+                                                                        onChange={(event) => setNumeroDeSerie(event.target.value)}
+                                                                    />  
                                                                     <label className="form__label">
-                                                                        Modelo
+                                                                        Numero de Série
+                                                                    </label>
+                                                                </div> 
+
+
+                                                            </div>
+                                                            <div className="divisor">
+                                                                <p>Informações para consultas básicas do sistema</p>
+                                                                <div className="palito-divisor"/>
+                                                            </div>
+                                                            <div className="box-2">
+                                                                <div className="form__div">                        
+                                                                    <input
+                                                                        className="form__input"
+                                                                        type="text"
+                                                                        name="Gateway"
+                                                                        value={gateWay}
+                                                                        placeholder=" "
+                                                                        onChange={(event) => setGateWay(event.target.value)}
+                                                                    />
+                                                                    <label className="form__label">
+                                                                        GateWay
                                                                     </label>
                                                                 </div>
-                                                            </div>
 
-
-                                                            <div className="form__div">                   
-                                                                <input
-                                                                    className="form__input"
-                                                                    type="text"
-                                                                    name="NumeroSerie"
-                                                                    value={listaEquipamento.numeroSerie}
-                                                                    placeholder=" "
-                                                                    onChange={(event) => setNumeroSerie(event.target.value)}
-                                                                    disabled = {condicaoAtualizar === true ? 'none' : ''}
-                                                                />  
-                                                                <label className="form__label">
-                                                                    Numero de Série
-                                                                </label>
-                                                            </div> 
-
-
-                                                        </div>
-                                                        <div className="divisor">
-                                                            <p>Informações para consultas básicas do sistema</p>
-                                                            <div className="palito-divisor"/>
-                                                        </div>
-                                                        <div className="box-2">
-                                                            <div className="form__div">                        
-                                                                <input
-                                                                    className="form__input"
-                                                                    type="text"
-                                                                    name="Gateway"
-                                                                    value={listaEquipamento.gateWay}
-                                                                    placeholder=" "
-                                                                    onChange={(event) => setGateWay(event.target.value)}
-                                                                    disabled = {condicaoAtualizar === true ? 'none' : ''}
-                                                                />
-                                                                <label className="form__label">
-                                                                    GateWay
-                                                                </label>
-                                                            </div>
-
-                                                            <div className="form__div">                        
-                                                                <input
-                                                                    className="form__input"
-                                                                    type="text"
-                                                                    name="IP"
-                                                                    value={listaEquipamento.ip}
-                                                                    placeholder=" "
-                                                                    onChange={(event) => setIp(event.target.value)}
-                                                                    disabled = {condicaoAtualizar === true ? 'none' : ''}
-                                                                />
-                                                                <label className="form__label">
-                                                                    Mask
-                                                                </label>
-                                                            </div>
-
-                                                            <div className="form__div">                      
-                                                                <input
-                                                                    className="form__input"
-                                                                    type="text"
-                                                                    name="DNS"
-                                                                    value={listaEquipamento.dns}
-                                                                    placeholder=" "
-                                                                    onChange={(event) => setDns(event.target.value)}
-                                                                    disabled = {condicaoAtualizar === true ? 'none' : ''}
-                                                                />
-                                                                <label className="form__label">
-                                                                    DNS
-                                                                </label> 
-                                                            </div> 
-
-                                                            <div className="form__div">                        
-                                                                <input
-                                                                    className="form__input"
-                                                                    type="text"
-                                                                    name="Porta"
-                                                                    value={listaEquipamento.porta}
-                                                                    placeholder=" "
-                                                                    onChange={(event) => setDescricao(event.target.value)}
-                                                                    disabled = {condicaoAtualizar === true ? 'none' : ''}
-                                                                />
-                                                                <label className="form__label">
-                                                                    Porta
-                                                                </label>
-                                                            </div>
-
-                                                            
-                                                            </div>
-
-                                                    </div>
-                                                    <div className="container-img">
-                                                        <div className="box-img" alt="imagem do perfil"/>
-
-                                                        <input 
-                                                        type="file"
-                                                        accept="image/png, image/jpeg"
-                                                        onChange={(e) => atualizaState(e)}
-                                                        />
-                                                       
-                                                        {/* <button onClick={upload()}>Enviar</button>   */}
-
-                                                            <div className="form__div">    
-                                                                <textarea rows="6" cols="20" wrap="hard"
+                                                                <div className="form__div">                        
+                                                                    <input
                                                                         className="form__input"
-                                                                        id="form__input_descricao"
-                                                                        type="text"                                                                        value={descricao}
+                                                                        type="text"
+                                                                        name="IP"
+                                                                        value={ip}
                                                                         placeholder=" "
-                                                                        onChange={(event) => setDescricao(event.target.value)}
-                                                                        disabled = {condicaoAtualizar === true ? 'none' : ''}
-                                                                />                   
-                                                             
-                                                                <label className="form__label">
-                                                                    Descrição
-                                                                </label>
-                                                            </div> 
-                                                        
-                                                        {
-                                                            isLoading === true && (
+                                                                        onChange={(event) => setIp(event.target.value)}
+                                                                    />
+                                                                    <label className="form__label">
+                                                                        Mask
+                                                                    </label>
+                                                                </div>
 
-                                                                <button
-                                                                type="submit"
-                                                                disabled
-                                                                className="btn__login"
-                                                                id="btn__login"
-                                                                >
-                                                                Loading...
-                                                                </button>
-                                                        )
+                                                                <div className="form__div">                      
+                                                                    <input
+                                                                        className="form__input"
+                                                                        type="text"
+                                                                        name="DNS"
+                                                                        value={dns}
+                                                                        placeholder=" "
+                                                                        onChange={(event) => setDns(event.target.value)}
+                                                                    />
+                                                                    <label className="form__label">
+                                                                        DNS
+                                                                    </label> 
+                                                                </div> 
 
-                                                        }
-                                                        {
-                                                            isLoading === false &&(
+                                                                <div className="form__div">                        
+                                                                    <input
+                                                                        className="form__input"
+                                                                        type="text"
+                                                                        name="Porta"
+                                                                        value={porta}
+                                                                        placeholder=" "
+                                                                        onChange={(event) => setPorta(event.target.value)}
+                                                                    />
+                                                                    <label className="form__label">
+                                                                        Porta
+                                                                    </label>
+                                                                </div>
+
+                                                                
+                                                                </div>
+
+                                                        </div>
+                                                        <div className="container-img">
+                                                            <div className="box-img" alt="imagem do perfil"/>
+
+                                                                <div className="form__div">    
+                                                                    <textarea rows="6" cols="20" wrap="hard"
+                                                                            className="form__input"
+                                                                            id="form__input_descricao"
+                                                                            type="text"                                                                        value={descricao}
+                                                                            placeholder=" "                                                                        
+                                                                            onChange={(event) => setDescricao(event.target.value)}
+                                                                    />                   
+                                        
+                                                                    <label className="form__label">
+                                                                        Descrição
+                                                                    </label>
+                                                                </div> 
+                                                            
+                                        
                                                                 <button
                                                                     type="submit"
                                                                     className="btn__login-2"
                                                                     disabled={
+                                                                        idTipoEquipamento === '' ||
                                                                         modelo === '' || 
-                                                                        numeroSerie === '' |
+                                                                        numeroDeSerie === '' |
                                                                         gateWay === '' ||
                                                                         dns === ''||
                                                                         ip === ''||
@@ -497,17 +452,16 @@ export default function Equipamento(){
                                                                 >    
                                                                     CADASTRAR
                                                                 </button>
-                                                            )
-                                                        }
-                                                    </div>
-                                                </form>
-                                </div>
-                </section>
-    
+                                    
+                                                        </div>
+                                                    </form>
+                                    </div>
+                    </section>
+        
+                </div>
             </div>
-        </div>
-    );
+        );
     
 
 }
-                   
+              

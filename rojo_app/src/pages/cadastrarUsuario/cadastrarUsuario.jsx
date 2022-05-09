@@ -43,7 +43,7 @@ export default function CadastroUsuario() {
         if (response.status === 201) {
           setLoading(false);
           console.log("Usuario Cadastrado !");
-          navigate("/BemVindo");
+          navigate("/");
         }
       })
       .catch((erro) => console.log(erro));

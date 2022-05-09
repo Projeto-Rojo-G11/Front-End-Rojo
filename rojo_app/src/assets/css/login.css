@@ -42,7 +42,8 @@
   background-image: url(../../assets/img/pilula.png);
   background-position: center;
   background-size: cover;
-  margin-left: 1200px;
+  right: 50px;
+  /* margin-left: 1200px; */
   margin-top: -110px;
   transform: rotate(0deg)
 }

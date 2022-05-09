@@ -185,8 +185,13 @@ h2.titulo{
   position: absolute;
   padding: 0 2em 0 10px;
   border-radius: 5px;
+  border-color: #DADCE0;
+  outline: none;
 }
 
+.i{
+  padding-left: 10px;
+}
 
 .btn__login, .btn__login-2{
   width: 50xp;

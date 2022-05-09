@@ -1,7 +1,6 @@
 import React,{ useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Form } from 'react-bootstrap';
 import axios from 'axios';
 
 import Grafana from '../../assets/icon/icon-grafana.png';
@@ -19,9 +18,10 @@ import '../../assets/css/bem-vindo.css';
 import '../../assets/css/animation__input.css';
 import '../../assets/css/cadastroEquipamento.css';
 import '../../assets/css/style_search.css';
+import '../../../src/component_recycling/barwork/BarWork.css';
+
 import { parseJwt } from "../../services/auth";
-import { useMemo } from "react";
-// import { parseJwt } from "../../services/auth";
+import SearchBar  from '../../component_recycling/SearchBar';
 
 
 export default function BemVindo() 
@@ -29,8 +29,8 @@ export default function BemVindo()
     var navigate = useNavigate();
     
     //States Usuario
-    const [nome, setNome] = useState(parseJwt().nome);
-    const [cargo, setCargo] = useState(parseJwt().cargo);
+    const [nome] = useState(parseJwt().nome);
+    const [cargo] = useState(parseJwt().cargo);
 
     //Lista
     const[listaEquipamento, setListaEquipamento] = useState([]);
@@ -41,18 +41,15 @@ export default function BemVindo()
         axios
         .get('http://localhost:5000/api/Equipamento/listar-meus-equipamentos/' + usuario)
         .then((response ) => {
-            console.log(response.data );
+            // console.log(response.data );
             setListaEquipamento((response.data));
-            setListaEquipamento.toString();
+            // setListaEquipamento.toString();
+            console.log(listaEquipamento);
         })
         .catch((erro) => console.log(erro));
     }
 
     useEffect(() => (realizarListagem()), [])        
-    
-    const equipamentoFiltrado = useMemo(() => {
-        return listaEquipamento.filter( (equipamento) => equipamento.modelo.toLowerCase().includes(busca.toLowerCase()));        
-    },[busca]) 
     
     const realizarLogout = async () => {
         try {
@@ -67,7 +64,7 @@ export default function BemVindo()
 
 
     return(   
-        <div className="container-cadastro-equipamento">
+        <div id="bem-vindo" className="container-cadastro-equipamento">
             
                 <div className="container-barra-esquerda">
                     <div className="barra-superior">
@@ -176,23 +173,7 @@ export default function BemVindo()
                 <header>
                     <h2 className="titulo">SEJA BEM VINDO</h2>
                     <div className="search-form">
-                        <div className="lupa"/>
-                    
-                        <input
-                            name="country"
-                            value = {busca}
-                            onChange = {(evento) => setBusca(evento.target.value)}
-                            placeholder="Procure por um equipamento"
-                        />
-                        <ul>
-                            {
-                                equipamentoFiltrado.map((equipamento) => (
-                                    <li
-                                    onClick={navigate('/Equipamento/' + equipamento.idEquipamento)}
-                                    key={equipamento.idEquipamento}>{equipamento.modelo}</li>
-                                ))
-                            }
-                        </ul>
+                        <SearchBar placeholder="Pesquise um modelo " data={listaEquipamento}/>
                         
                     </div>
                 </header>

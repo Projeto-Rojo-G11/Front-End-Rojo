@@ -14,6 +14,7 @@ import CadastrarUsuario from './pages/cadastrarUsuario/cadastrarUsuario';
 import CadastrarEquipamento from './pages/cadastrarEquipamento/cadastrarEquipamento';
 import Topologia from './pages/topologia/topologia';
 import BemVindo from './pages/bemVindo/bemVindo';
+import Zabbix from './pages/zabbix/zabbix.jsx';
 
 
 import reportWebVitals from './reportWebVitals';
@@ -29,7 +30,7 @@ routing.render(
       <Routes>
         <Route exact path="/" element={<Home/>}/>
         {/* <Route element={<PrivateRoute/>}> */}
-          <Route path="/Equipamento/:id" element={<Equipamento/>}/>
+          <Route path="/Equipamento" element={<Equipamento/>}/>
         {/* </Route> */}
           <Route path="/Alerta" element={<Alerta/>}/>
           <Route path="/ListaEquipamento" element={<ListaEquipamento/>}/>
@@ -40,6 +41,7 @@ routing.render(
         <Route path="/CadastrarUsuario" element={<CadastrarUsuario/>}/>
         <Route path="/CadastrarEquipamento" element={<CadastrarEquipamento/>}/>
         <Route path="/BemVindo" element={<BemVindo/>}/>
+        <Route path="/Zabbix" element={<Zabbix/>}/>
         <Route path="/Erro" element={<Erro/>} />
 
         <Route

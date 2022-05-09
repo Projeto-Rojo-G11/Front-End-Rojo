@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oxygen+Mono&display=swap');
+
+.modulo-modal{
+    width: 100vh;
+    height: 100vh;
+    background: none;
+    position: absolute;
+    z-index: 2;
+}
+
+.modal_container{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.66);
+    /* display: none; */
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal_container.show {
+    pointer-events: auto;
+    opacity: 1;
+}
+
+#box-modal{
+    width: 450px;
+    height: 300px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.img-modal{
+    width: 116px;
+    height: 100%;
+    background-image: url(../../assets/img/J.png);
+}
+#info-modal{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2em 1em 2em 1em;
+}
+
+#info-modal p {
+    color: black;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+#text{
+    margin-bottom: 40px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+h3{
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 20px
+}
+
+#text p {
+    color: black;
+    font-family: 'Oxygen Mono', monospace;
+
+}
+
+#close{
+    border: 0;
+    outline: none;
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+    margin-top: 10px;
+    background: 0;
+}
+
+#btn{
+    width: 260px;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+#btn p {
+    color: white;
+
+}
+
+.btn-reboot-n{
+    width: 112px;
+    height: 33px;
+    font-size: 12px;
+    border-radius: 5px;
+    background: red;
+    border-color: red;
+}
+
+.btn-reboot-s{
+    width: 140px;
+    height: 33px;
+    font-size: 12px;
+    border-radius: 5px;
+    background-color: grey;
+    border-color: greenyellow;
+}

@@ -2,7 +2,6 @@ import axios from "axios";
 import React,{ useEffect, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 import { Form } from 'react-bootstrap';
 import { parseJwt } from "../../services/auth";
 
@@ -20,6 +19,7 @@ import la from '../../assets/icon/lista.png';
 import ta from '../../assets/icon/topologia.png';
 import aa from '../../assets/icon/alerta.png';
 
+
 import '../../assets/css/barra-esquerda.css';
 import '../../assets/css/animation__input.css';
 import '../../assets/css/cadastroEquipamento.css';
@@ -28,8 +28,8 @@ import '../../assets/css/style_search.css';
 
 export default function CadastroEquipamento() {
 
-    var navigate = useNavigate();
-    
+    var navigate = useNavigate();   
+
     const [isLoading, setIsLoading] = useState(false);
     // const [boolPut, setBoolPut] = useState(false);
 
@@ -40,8 +40,8 @@ export default function CadastroEquipamento() {
 
     //States Equipamento
     const [idTipoEquipamento, setIdTipoEquipamento] = useState(null);
+    const [numeroDeSerie, setNumeroDeSerie] = useState('');
     const [modelo, setModelo] = useState('');
-    const [numeroSerie, setNumeroSerie] = useState('');
     const [gateWay, setGateWay] = useState('');
     const [ip, setIp] = useState('');
     const [dns, setDns] = useState('');
@@ -50,14 +50,9 @@ export default function CadastroEquipamento() {
     const [data, setData] = useState(new Date())
     const [condicao, setCondicao] = useState('');
 
-    const [dadoUsuario, setDadoUsuario] = useState([]);
+    const [tipo, setTipo] = useState(null);
     const [dadoEquipamento, setDadoEquipamento] =useState([]);
     const [dadoTipoEquipamento, setDadoTipoEquipamento] = useState([]);
-    const [dadoModelo, setDadoModelo] =useState([]);
-
-    // //States Imagem Equipamento
-    // const [img64, setImg64] = useState('');
-    const [arquivo, setArquivo] = useState(null);
 
     const buscarTipoEquipamento = () =>
     {
@@ -86,13 +81,12 @@ export default function CadastroEquipamento() {
         let equipamento = {
         idUsuario: idUsuario,
         idTipoEquipamento: parseInt(idTipoEquipamento),
+        numeroDeSerie: numeroDeSerie,
         modelo: modelo,
-        numeroSerie: parseInt(numeroSerie),
         gateWay: parseInt(gateWay),
         mask: parseInt(ip),
         dns: parseInt(dns),
         porta: parseInt(porta),
-        condicao: parseInt(condicao),
         dataEntrada : new Date(data),
         descricao: descricao,
         };
@@ -120,7 +114,7 @@ export default function CadastroEquipamento() {
 
     return(   
             <div className="container-cadastro-equipamento">
-                
+                  
                     <div className="container-barra-esquerda">
                         <div className="barra-superior">
                             <nav  className="Logo">
@@ -247,7 +241,7 @@ export default function CadastroEquipamento() {
                     <section>
                             
                     <div className="container-info-equipamento">    
-                    <div className="container-info-equipamento-h3"><h3>Dados {setModelo}</h3></div>
+                    <div className="container-info-equipamento-h3"><h3>Dados Equipamento</h3></div>
                                         
                 
                                                     <form className="form-cadastro-equipamento" onSubmit={(event) => cadastroEquipamento(event)}>
@@ -260,7 +254,8 @@ export default function CadastroEquipamento() {
                                                                             name="idTipoEquipamento"  
                                                                             value={idTipoEquipamento}   
                                                                             id="form__input_tipoEquipamento"      
-                                                                            onChange={(event) => setIdTipoEquipamento(event.target.value)}>
+                                                                            onChange={(event) => setIdTipoEquipamento(event.target.value)}
+                                                                        >
                                                                                 {dadoTipoEquipamento.map((event) => {
                                                                                     return (
 
@@ -268,7 +263,7 @@ export default function CadastroEquipamento() {
                                                                                         </option>
                                                                                     );
                                                                                 })}                                 
-                                                                                <option  value="#">Tipo de Equipamento </option>
+                                                                                <option value="#">Tipo de Equipamento </option>
                                                                         </select>                        
                                                                         
                                                                     </div>
@@ -294,9 +289,9 @@ export default function CadastroEquipamento() {
                                                                         className="form__input"
                                                                         type="text"
                                                                         name="NumeroSerie"
-                                                                        value={numeroSerie}
+                                                                        value={numeroDeSerie}
                                                                         placeholder=" "
-                                                                        onChange={(event) => setNumeroSerie(event.target.value)}
+                                                                        onChange={(event) => setNumeroDeSerie(event.target.value)}
                                                                     />  
                                                                     <label className="form__label">
                                                                         Numero de Série
@@ -394,7 +389,7 @@ export default function CadastroEquipamento() {
                                                                     disabled={
                                                                         idTipoEquipamento === '' ||
                                                                         modelo === '' || 
-                                                                        numeroSerie === '' |
+                                                                        numeroDeSerie === '' |
                                                                         gateWay === '' ||
                                                                         dns === ''||
                                                                         ip === ''||
