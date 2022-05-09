@@ -19,6 +19,12 @@ jobs:
           node-version: 16.0.x
 
       - name: Install dependencies
-        run: cd /projetorojo/rojo_app; npm ci
-      - run: npm run build
-      - run: mv build/ /var/www/webappFront
+        run: cd /git/Front-End-Rojo/; npm i
+      - name: build
+        run: cd /git/Front-End-Rojo/; npm run build
+      - name: implement
+        run: rm -rf /var/www/webappFront/build/
+      - name: mv directory
+        run: mv /git/Front-End-Rojo/build /var/www/webappFront
+      - name: restart nginx
+        run: systemctl restart nginx; systemctl status nginx
