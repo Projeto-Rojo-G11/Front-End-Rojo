@@ -4,13 +4,13 @@ import CloseIcon from '@mui/icons-material/Close';
 
 
 export default function Reboot({modelo, ip}){
-    // const reboot = document.getElementById('btn-reboot');
+    const reboot = document.getElementById('btn-reboot');
     const modal_reboot = document.getElementById('reboot');
     const close = document.getElementById('close');
 
-    // reboot.addEventListener('click', () => {
-    //     modal_reboot.classList.add('show');
-    // });
+    reboot.addEventListener('click', () => {
+        modal_reboot.classList.add('show');
+    });
 
     close.addEventListener('click', () => {
         modal_reboot.classList.remove('show')

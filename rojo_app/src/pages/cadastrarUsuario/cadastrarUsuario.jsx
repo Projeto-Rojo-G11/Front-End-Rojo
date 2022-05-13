@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import Logo from "../../assets/img/logoRojo2.png";
 
-import "../../assets/css/cadastroUsuario.css";
+import "./cadastroUsuario.css";
 
 export default function CadastroUsuario() {
   
@@ -37,7 +37,7 @@ export default function CadastroUsuario() {
     };
 
     axios
-      .post("http://100.26.2.205/api/Usuario/cadastro-usuario", usuario, {})
+      .post("http://localhost:5000/api/Usuario/cadastro-usuario", usuario, {})
 
       .then((response) => {
         if (response.status === 201) {

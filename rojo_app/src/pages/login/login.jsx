@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import Logo from '../../assets/img/logoRojo2.png';
 
-import '../../assets/css/login.css';
+import '../../pages/login/login.css';
 
 export default function Login() {
     const [emailUsuario, setEmailUsuario] = useState('');
@@ -29,7 +29,7 @@ export default function Login() {
 
         axios({
             method: "post",
-            url: "http://100.26.2.205/api/Login", 
+            url: "http://localhost:5000/api/Login", 
             data : usuarioLogin,
             headers : { "Content-Type" : "application/json"}
         })

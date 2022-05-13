@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 import Logo from '../../assets/img/logoRojo.png';
 
-import '../../assets/css/erro.css';
+import './erro.css';
 
 function Erro() {
     return (

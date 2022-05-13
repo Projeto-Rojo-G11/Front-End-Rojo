@@ -1,0 +1,186 @@
+.box-topologia{
+    /* background-color: blue; */
+    width: 100%;
+    height: auto;
+}
+
+.cabecalho{
+    width: 100%;
+    height: 2.5em;
+    background-color: rgba(184, 0, 0, 0.8);
+    padding: 10px 20px 10px 30px;
+    color: white;
+    font-size: 16px;
+    font-weight: 300;
+    border-radius: 5px;
+    letter-spacing: 0.05em;
+    margin-bottom: 2em;
+
+}
+
+.corpo{
+    /* background-color: aqua; */
+    height: auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.texto-topologia{
+    width: 505px;
+    height: auto; 
+    /* background-color: bisque; */
+    display: flex;
+    justify-content: space-between;
+}
+
+.des{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.texto-topologia input{
+    width:450px;
+    height: 35px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    border-radius: 5px;
+    border: 1px solid #B6B6B6;
+    padding-left: 20px;
+    outline: 0;
+}
+
+.img-topologia{
+    height: 195px;
+    width: 400px;
+    border: 2px dashed #C4C4C4;
+    background: none;
+    border-radius: 10px;
+
+}
+
+.btn-alterar{
+    background-image: url(../../assets/img/editar.png);
+    background-color: #CC2323;
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    background-repeat: no-repeat;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+    background-position: center;
+}
+
+.btn-salvar{
+    background-image: url(../../assets/img/save.png);
+    background-color: #CC2323;
+    width: 35px;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+
+.wrapper{
+    display: flex;
+    padding-top: 50px;
+    justify-content: center;
+}
+
+.collapsible{
+    max-width: 450px;
+    overflow: hidden;
+    font-weight: 500;
+}
+
+.collapsible input{
+    display: none;
+}
+
+.collapsible label{
+    position: relative;
+    font-weight: 600;
+    background-color: white;
+    box-shadow: 0 5px 11px 0 rgba(0,0,0, .1), 0 4px 11px 0 rgba(0, 0, 0, .08);
+    color: #1c1c6b;
+    display: block;
+    margin-bottom: 10px;
+    cursor: pointer;
+    padding: 15px ;
+    border-radius: 4px;
+    z-index: 1;
+}
+
+.collapsible label:after {
+    content: "";
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    width: 18px;
+    height: 18px;
+    background: url(../../assets/img/mais.png) no-repeat 0 0;
+    transition: all 0.3s ease;
+}
+
+.collapsible input:checked + label:after{
+    transform: rotate(90deg);
+}
+
+.collapsible-text {
+    max-height: 1px;
+    overflow: hidden;
+    border-radius: 4px;
+    line-height: 1.4;
+    position: relative;
+    top: -100%;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+}
+
+.collapsible .collapsible-text{
+    max-height: 300px;
+    padding-bottom: 25px;
+    background: #fff;
+    box-shadow: 0 5px 11px 0 rgba(0,0,0, .1), 0 4px 11px 0 rgba(0, 0, 0, .08);
+}
+
+.collapsible-text h2{
+    margin-bottom: 10px;
+    padding: 15px 15px 0;
+    color: #1c1c6b;
+}
+
+.collapsible-text p{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.box-btn-img{
+    height: 47px;
+    width: 66px;
+    position: absolute;
+    z-index: 3;
+    top: 325px;
+    left: 770px;
+}
+
+.btn-img-topo{
+    width: 100%;
+    height: 100%;
+    background-image: url(../../assets/img/topo-img.png);
+}
+.btn-topologia{
+    margin-top: 20px;
+    background-image: url(../../assets/img/mais.png);
+    background-position: no-repeat;
+    background-size: 10px;
+    background-position: center;
+    background-size: cover;
+    width: 35px;
+    height: 35px;
+    border-radius: 20px;
+}

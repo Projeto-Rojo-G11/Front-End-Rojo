@@ -54,7 +54,7 @@
     height: 100%;
     background-color: white;
     border-radius: 10px;
-    background-image: url(../icon/palito.png);
+    background-image: url(../../assets/icon/palito.png);
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -222,7 +222,7 @@
 .perfil-imagem {
     height: 50px;
     width: 50px;
-    background-image: url(../img/ex.png);
+    background-image: url(../../assets/img/ex.png);
     background-repeat: no-repeat;
     background-size: cover;
 }

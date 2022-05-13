@@ -18,7 +18,7 @@
 .box-top{
   width: 100%;
   height: 28px;
-  background-image: url(../img/img-header.png);
+  background-image: url(../../assets/img/img-header.png);
   background-size: cover;
 
   padding-left: 84em;
@@ -60,7 +60,7 @@
 .icon-suporte{
   width: 20px;
   height: 20px;
-  background-image: url(../icon/icon-suporte.png);
+  background-image: url(../../assets/icon/icon-suporte.png);
   margin-right: 10px;
 }
 
@@ -173,7 +173,7 @@
 .img-zabbix{
   width: 927px;
   height: 100%;
-  background-image: url(../img/img-zabbix.png );
+  background-image: url(../../assets/img/img-zabbix.png );
   background-size: cover;
   background-position:right;
 }
@@ -181,13 +181,13 @@
 .img-text-zabbix{
   width: 927px;
   height: 100%;
-  background-image: url(../img/img-text-zabbix.png);
+  background-image: url(../../assets/img/img-text-zabbix.png);
 }
 
 .img-grafana{
   width: 927px;
   height: 100%;
-  background-image: url(../img/img-grafana.png);
+  background-image: url(../../assets/img/img-grafana.png);
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -195,7 +195,7 @@
 .img-text-grafana{
   width: 927px;
   height: 100%;
-  background-image: url(../img/img-text-grafana.png);
+  background-image: url(../../assets/img/img-text-grafana.png);
 }
 
 .footer{
@@ -211,7 +211,7 @@
 }
 
 .back-text{
-  background-image: url(../img/back-text.png);
+  background-image: url(../../assets/img/back-text.png);
   width: 509px;
   height: 225px;
   position: absolute;
@@ -221,7 +221,7 @@
 }
 
 .back-vermelho{
-  background-image: url(../img/back-vermelho.png);
+  background-image: url(../../assets/img/back-vermelho.png);
   width: 1000px;
   height: 570px;
   position: absolute;
