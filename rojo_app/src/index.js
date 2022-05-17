@@ -15,7 +15,7 @@ import CadastrarEquipamento from './pages/cadastrarEquipamento/cadastrarEquipame
 import Topologia from './pages/topologia/topologia';
 import BemVindo from './pages/bemVindo/bemVindo';
 import Zabbix from './pages/zabbix/zabbix.jsx';
-
+import Grafana from './pages/grafana/grafana.jsx';
 
 import reportWebVitals from './reportWebVitals';
 import PrivateRoute  from './services/protected';
@@ -42,6 +42,7 @@ routing.render(
         <Route path="/CadastrarEquipamento" element={<CadastrarEquipamento/>}/>
         <Route path="/BemVindo" element={<BemVindo/>}/>
         <Route path="/Zabbix" element={<Zabbix/>}/>
+        <Route path="/Grafana" element={<Grafana/>}/>
         <Route path="/Erro" element={<Erro/>} />
 
         <Route

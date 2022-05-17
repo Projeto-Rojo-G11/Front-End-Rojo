@@ -4,16 +4,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Form } from 'react-bootstrap';
 import axios from 'axios';
 
-import '../../assets/css/bem-vindo.css';
+
+import BarraLateral from "../../component_recycling/barraLateral/barraLateral";
+import '../bemVindo/bemVindo.css';
 import '../../assets/css/animation__input.css';
-import '../../assets/css/cadastroEquipamento.css';
+import '../cadastrarEquipamento/cadastroEquipamento.css';
 import '../../assets/css/style_search.css';
+import '../listaEquipamento/listaEquipamento.css';
 import { parseJwt } from "../../services/auth";
 import { useMemo } from "react";
-import BarraLateral from "../../component_recycling/barraLateral/barraLateral";
+// import BarraLateral from "../../component_recycling/barraLateral/barraLateral";
 
 
-export default function BemVindo() 
+export default function Grafana() 
 {
     var navigate = useNavigate();
     
@@ -47,45 +50,11 @@ export default function BemVindo()
     return(   
         <div className="container-cadastro-equipamento">
             
-            <BarraLateral/>
+            {/* <BarraLateral/> */}
 
             <div className="conteudo-equipamento">
 
-                <header>
-                    <h2 className="titulo">SEJA BEM VINDO</h2>
-                    <div className="search-form">
-                        <div className="lupa"/>
-                    
-                        <input
-                            name="country"
-                            value = {busca}
-                            onChange = {(evento) => setBusca(evento.target.value)}
-                            placeholder="Procure por um equipamento"
-                        />
-                        <ul>
-                            {
-                                equipamentoFiltrado.map((equipamento) => (
-                                    <li
-                                    onClick={navigate('/Equipamento/' + equipamento.idEquipamento)}
-                                    key={equipamento.idEquipamento}>{equipamento.modelo}</li>
-                                ))
-                            }
-                        </ul>
-                        
-                    </div>
-                </header>
-            
-                
-
-                <section>
-                        
-                <div className="container-info-equipamento">    
-                                    
-                    
-                                
-                                                
-                </div>
-                </section>
+            <iframe src="http://18.205.127.50:3000/d-solo/000000098/zabbix-server-dashboard?orgId=1&refresh=1m&from=1652815474184&to=1652817274185&var-group=Zabbix%20servers&var-host=Zabbix%20server&panelId=2" width="450" height="200" frameborder="0"></iframe>
     
             </div>
         </div>
