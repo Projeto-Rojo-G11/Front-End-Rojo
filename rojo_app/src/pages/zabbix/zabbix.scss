@@ -1,0 +1,225 @@
+
+.table-host{
+    width: 900px;
+    height: auto;
+    background-color: aqua;
+}
+
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+.styled-table thead tr {
+    background-color: red;
+    color: #ffffff;
+    text-align: left;
+    width: 100% ;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.styled-table tbody tr.active-row {
+    font-weight: bold;
+    color: #009879;
+}
+
+
+
+/*   color variables */
+$clr-primary: #81d4fa;
+$clr-primary-light: #e1f5fe;
+$clr-primary-dark: #4fc3f7;
+$clr-gray100: #f9fbff;
+$clr-gray150: #f4f6fb;
+$clr-gray200: #eef1f6;
+$clr-gray300: #e1e5ee;
+$clr-gray400: #767b91;
+$clr-gray500: #4f546c;
+$clr-gray600: #2a324b;
+$clr-gray700: #161d34;
+$clr-pending: #fff0c2;
+$clr-pending-font: #a68b00;
+$clr-unpaid: #ffcdd2;
+$clr-unpaid-font: #c62828;
+$clr-paid: #c8e6c9;
+$clr-paid-font: #388e3c;
+$clr-link: #2962ff;
+
+/*   border radius */
+$radius: 0.2rem;
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+
+table{
+  border-collapse: collapse;
+  box-shadow: 0 5px 10px $clr-gray300;
+  background-color: white;
+  text-align: left;
+  overflow: hidden;
+
+  thead {
+    box-shadow: 0 5px 10px $clr-gray300;
+  }
+
+  th {
+    padding: 1rem 2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1rem;
+    font-size: 0.7rem;
+    font-weight: 900;
+  }
+
+  td {
+    padding: 1rem 2rem;
+  }
+
+  a {
+    text-decoration: none;
+    color: $clr-link;
+  }
+
+  .status {
+    border-radius: $radius;
+    background-color: red;
+    padding: 0.2rem 1rem;
+    text-align: center;
+
+    &-pending {
+      background-color: $clr-pending;
+      color: $clr-pending-font;
+    }
+
+    &-paid {
+      background-color: $clr-paid;
+      color: $clr-paid-font;
+    }
+
+    &-unpaid {
+      background-color: $clr-unpaid;
+      color: $clr-unpaid-font;
+    }
+  }
+
+  .amount {
+    text-align: right;
+  }
+
+  //Color alternating rows
+  tr:nth-child(even) {
+    background-color: $clr-gray150;
+  }
+}
+
+// ========================== Table 2
+
+
+.table-table-2{
+  width:100%;
+  table-layout: fixed;
+}
+.tbl-header{
+  background-color: rgba(255,255,255,0.3);
+ }
+.tbl-content{
+  height:auto;
+  overflow-x:auto;
+  margin-top: 0px;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+.th-table-2{
+  padding: 20px 15px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 12px;
+  // color: #fff;
+  color: black;
+  text-transform: uppercase;
+}
+.td-table-2{
+  padding: 15px;
+  text-align: left;
+  vertical-align:middle;
+  font-weight: 300;
+  font-size: 12px;
+  // color: #fff;
+  color: black;
+  border-bottom: solid 1px rgba(255,255,255,0.1);
+}
+
+
+/* demo styles */
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+body{
+  background: -webkit-linear-gradient(left, #25c481, #25b7c4);
+  background: linear-gradient(to right, #25c481, #25b7c4);
+  font-family: 'Roboto', sans-serif;
+}
+section{
+  margin: 50px;
+}
+
+
+/* follow me template */
+.made-with-love {
+  margin-top: 40px;
+  padding: 10px;
+  clear: left;
+  text-align: center;
+  font-size: 10px;
+  font-family: arial;
+  color: #fff;
+}
+.made-with-love i {
+  font-style: normal;
+  color: #F50057;
+  font-size: 14px;
+  position: relative;
+  top: 2px;
+}
+.made-with-love a {
+  color: #fff;
+  text-decoration: none;
+}
+.made-with-love a:hover {
+  text-decoration: underline;
+}
+
+
+/* for custom scrollbar for webkit browser*/
+
+::-webkit-scrollbar {
+    width: 6px;
+} 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+} 
+::-webkit-scrollbar-thumb {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+}

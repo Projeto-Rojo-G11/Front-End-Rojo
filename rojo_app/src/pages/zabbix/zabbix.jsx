@@ -2,7 +2,7 @@ import React,{ useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import './zabbix.css';
+import './zabbix.scss';
 
 import '../../component_recycling/barraLateral/barraLateral.css';
 import '../bemVindo/bemVindo.css';
@@ -13,7 +13,6 @@ import { parseJwt } from "../../services/auth";
 import { useMemo } from "react";
 import SearchBar  from '../../component_recycling/SearchBar';
 
-import '../../pages/zabbix/zabbix.css';
 import BarraLateral from "../../component_recycling/barraLateral/barraLateral";
 
 export default function BemVindo() 
@@ -80,60 +79,67 @@ export default function BemVindo()
                     <div className="container-info-equipamento">   
                          <div className="table-host">
                             
-                            <div className="head-host">TEMPLATES</div>
-                            <table className="styled-table">
+                            <div className="head-host">HOSTS ZABBIX</div>
+                            <table>
                                 <thead>
-                                    <tr>
-                                        <th className="hi">ID</th>
-                                        <th className="hv">Nome do host</th>
-                                        <th className="hs">Status</th>
-                                        <th className="hd">Descrição</th>
-                                    </tr>  
+                                <tr>
+                                    <th>Invoice</th>
+                                    <th>Company</th>
+                                    <th>Due Date</th>
+                                    <th>Status</th>
+                                    <th>Amount</th>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    {
-                                        meusHosts.map( (host) => {
-                                            return(
-                                                <tr key={host.hostid}>
-                                                    <td>{host.host}</td>
-                                                    <td>{host.status}</td>
-                                                    <td>{host.description}</td>
-                                                </tr>
-                                            )
-                                        } )                                
-                                    } 
+                                <tr>
+                                    <td><a href="#">INV__1001</a></td>
+                                    <td>Paragon</td>
+                                    <td>1/5/2021</td>
+                                    <td>
+                                    <p class="status status-unpaid">Unpaid</p>
+                                    </td>
+                                    <td class="amount">$520.18</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td><a href="#">INV__1005</a></td>
+                                    <td>Highlander</td>
+                                    <td>12/18/2020</td>
+                                    <td>
+                                    <p class="status status-paid">Paid</p>
+                                    </td>
+                                    <td class="amount">$1152.35</td>
+                                </tr>
                                 </tbody>
-                            </table>            
+                            </table>
 
-                         </div>
-
-
-                        <div className="table-host">
-                            
-                            <div className="head-host">HOST LISTADOS</div>
-                            <table className="styled-table">
+                            <div class="tbl-header">
+                              <table className="table-table-2" cellpadding="0" cellspacing="0" border="0">
                                 <thead>
-                                    <tr>
-                                        <th className="hi">ID</th>
-                                        <th className="hv">Nome do host</th>
-                                        <th className="hs">Status</th>
-                                        <th className="hd">Descrição</th>
-                                    </tr>  
+                                  <tr>
+                                    <th className="th-table-2">Code</th>
+                                    <th className="th-table-2">Company</th>
+                                    <th className="th-table-2">Price</th>
+                                    <th className="th-table-2">Change</th>
+                                    <th className="th-table-2">Change %</th>
+                                  </tr>
                                 </thead>
+                              </table>
+                            </div>
+                            <div className="tbl-content">
+                              <table className="table-table-2" cellpadding="0" cellspacing="0" border="0">
                                 <tbody>
-                                    {
-                                        meusHosts.map( (host) => {
-                                            return(
-                                                <tr key={host.hostid}>
-                                                    <td>{host.host}</td>
-                                                    <td>{host.status}</td>
-                                                    <td>{host.description}</td>
-                                                </tr>
-                                            )
-                                        } )                                
-                                    } 
+                                  <tr>
+                                    <td className="td-table-2">AAC</td>
+                                    <td className="td-table-2">AUSTRALIAN COMPANY </td>
+                                    <td className="td-table-2">$1.38</td>
+                                    <td className="td-table-2">+2.01</td>
+                                    <td className="td-table-2">-0.36%</td>
+                                  </tr>
+                             
                                 </tbody>
-                            </table>            
+                              </table>
+                            </div>           
 
                          </div>
                     </div>           
