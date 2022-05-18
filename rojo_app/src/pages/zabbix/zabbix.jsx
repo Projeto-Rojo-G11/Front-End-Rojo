@@ -19,11 +19,21 @@ export default function BemVindo()
 {
     var navigate = useNavigate();
     
+    //States Host
+    const [nomeHost, setNomeHost] = useState();
+    const [hostGroup, setHostGroup] = useState();
+    const [tipo, setTipo] = useState();
+    const [main, setmain] =useState();
+    const [ip, setIp] = useState();
+    const [dns, setDns] = useState();
+    const [porta, serPorta] = useState();
+
     //States Usuario
     const [nome] = useState(parseJwt().nome);
     const [cargo] = useState(parseJwt().cargo);
 
     //Lista
+    const[listaDispositivo, setListaDispositivo]= useState([]);
     const[listaEquipamento, setListaEquipamento] = useState([]);
     const[busca, setBusca] = useState("");
     const[meusHosts, setMeusHosts] = useState([]);
@@ -37,6 +47,22 @@ export default function BemVindo()
     }
 
     useEffect(() => (realizarListHost()),[])
+
+    function novoHost(){
+      host = {
+        nomeHost: nomeHost,
+        hostGroup: hostGroup,
+        tipo: tipo,
+        main: main,
+        ip: ip,
+        dns: dns,
+        porta: porta,
+      }
+
+      new file(host, "temporario.json");
+      
+    }
+
 
     function realizarListagem (){
         let usuario = parseJwt().jti;
@@ -76,72 +102,85 @@ export default function BemVindo()
 
                 <section>
                         
-                    <div className="container-info-equipamento">   
-                         <div className="table-host">
+                    <div className="container-info-equipamento"> 
+                          <div className="add-host">
+                            <div className="h-add-host"> NOVO TEMPLATE</div>
+                            <div className="b-add-host"> 
+                              <div id="box-input">
+                                <p>NOME DO HOST</p>
+                                <input 
+                                  type="text"
+                                  onChange={(event) => (set)}
+                                />
+                              </div>
+                            </div>
+                          </div>  
+                         <div className="container-host">
                             
                             <div className="head-host">HOSTS ZABBIX</div>
-                            <table>
-                                <thead>
+                            <table className="table-table-1">
+                                <thead className="thead-table-1">
                                 <tr>
-                                    <th>Invoice</th>
-                                    <th>Company</th>
-                                    <th>Due Date</th>
-                                    <th>Status</th>
-                                    <th>Amount</th>
+                                    <th className="th-table-1">ID HOST</th>
+                                    <th className="th-table-1">HOST</th>
+                                    <th className="th-table-1">DESCRIÇÃO</th>
+                                    <th className="th-table-1">STATUS</th>
+                                    <th className="th-table-1">GRAVIDADE</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td><a href="#">INV__1001</a></td>
-                                    <td>Paragon</td>
-                                    <td>1/5/2021</td>
-                                    <td>
-                                    <p class="status status-unpaid">Unpaid</p>
-                                    </td>
-                                    <td class="amount">$520.18</td>
-                                </tr>
-                                
-                                <tr>
-                                    <td><a href="#">INV__1005</a></td>
-                                    <td>Highlander</td>
-                                    <td>12/18/2020</td>
-                                    <td>
-                                    <p class="status status-paid">Paid</p>
-                                    </td>
-                                    <td class="amount">$1152.35</td>
-                                </tr>
+                                {
+                                  listaDispositivo.map((item) => {
+                                    return(
+                                      <tr>
+                                        <td className="td-table-1\\\\"><a href="#">{item.hostid}</a></td>
+                                        <td className="td-table-1">Paragon</td>
+                                        <td className="td-table-1">1/5/2021</td>
+                                        <td className="td-table-1">
+                                        <p class="status status-unpaid">Unpaid</p>
+                                        </td>
+                                        <td class="td-table-1 amount">$520.18</td>
+                                    </tr>
+                                    )
+                                  })
+                                }
+                            
                                 </tbody>
                             </table>
-
-                            <div class="tbl-header">
-                              <table className="table-table-2" cellpadding="0" cellspacing="0" border="0">
-                                <thead>
-                                  <tr>
-                                    <th className="th-table-2">Code</th>
-                                    <th className="th-table-2">Company</th>
-                                    <th className="th-table-2">Price</th>
-                                    <th className="th-table-2">Change</th>
-                                    <th className="th-table-2">Change %</th>
-                                  </tr>
-                                </thead>
-                              </table>
                             </div>
-                            <div className="tbl-content">
-                              <table className="table-table-2" cellpadding="0" cellspacing="0" border="0">
-                                <tbody>
-                                  <tr>
-                                    <td className="td-table-2">AAC</td>
-                                    <td className="td-table-2">AUSTRALIAN COMPANY </td>
-                                    <td className="td-table-2">$1.38</td>
-                                    <td className="td-table-2">+2.01</td>
-                                    <td className="td-table-2">-0.36%</td>
-                                  </tr>
-                             
-                                </tbody>
-                              </table>
-                            </div>           
+                            <div className="container-template">
 
-                         </div>
+                              <div class="tbl-header">
+                                <table className="table-table-2" cellpadding="0" cellspacing="0" border="0">
+                                  <thead>
+                                    <tr>
+                                      <th className="th-table-2">ID TEMPLATE</th>
+                                      <th className="th-table-2">TEMPLATE</th>
+                                      <th className="th-table-2">CHAVE</th>
+                                      <th className="th-table-2">DESCRICAO</th>
+                                      <th className="th-table-2"></th>
+                                    </tr>
+                                  </thead>
+                                </table>
+                              </div>
+                              <div className="tbl-content">
+                                <table className="table-table-2" cellpadding="0" cellspacing="0" border="0">
+                                  <tbody>
+                                    <tr>
+                                      <td className="td-table-2">AAC</td>
+                                      <td className="td-table-2">AUSTRALIAN COMPANY </td>
+                                      <td className="td-table-2">$1.38</td>
+                                      <td className="td-table-2">-0.36%</td>
+                                      <td className="td-table-2"><input type="select" ></input></td>
+
+                                    </tr>
+                              
+                                  </tbody>
+                                </table>
+                              </div>           
+                            </div>
+
+                        
                     </div>           
                 </section>
     
