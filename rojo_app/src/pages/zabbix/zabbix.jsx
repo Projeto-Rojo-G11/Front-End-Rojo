@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import './zabbix.scss';
+import * as fs from 'fs';
 
 import '../../component_recycling/barraLateral/barraLateral.css';
 import '../bemVindo/bemVindo.css';
@@ -15,7 +16,7 @@ import SearchBar  from '../../component_recycling/SearchBar';
 
 import BarraLateral from "../../component_recycling/barraLateral/barraLateral";
 
-export default function BemVindo() 
+export default function Zabbix() 
 {
     var navigate = useNavigate();
     
@@ -38,6 +39,40 @@ export default function BemVindo()
     const[busca, setBusca] = useState("");
     const[meusHosts, setMeusHosts] = useState([]);
 
+    //States Zabbix
+    const[login] = useState(false);
+    const[usuario, setUsuario] = useState('');
+    const[senha, setSenha] = useState('');
+    const[server, setServer] = useState('');
+    const modalZabbix = document.querySelector('#modalZabbix');
+    
+    if(login === false){
+      this.divRef.classList.add('.show');
+    }
+     
+    
+    var httpRequest = new XMLHttpRequest();
+    httpRequest.onreadystatechange = function(){};
+
+    var fs = require('fs');
+    var ini = require('ini');
+
+    const config = ini.parse(fs.readFileSync('../../connection_py/apizabbix/config.ini', {encoding:'utf-8'}));
+
+    function logar(){
+      config.zabbix.server = server;
+      config.zabbix.user = usuario;
+      config.zabbix.password = senha;
+      // fs.readFileSync('../../connection_py/apizabbix/config.ini', ini.stringify(config));
+
+      fetch("/connect")
+      .then((response) => {
+        if(response != null){
+          modalZabbix.classList.remove('.show');      
+        }
+    })
+    }
+
     function realizarListHost()
     {
         axios.get('./temporario')
@@ -48,20 +83,20 @@ export default function BemVindo()
 
     useEffect(() => (realizarListHost()),[])
 
-    function novoHost(){
-      host = {
-        nomeHost: nomeHost,
-        hostGroup: hostGroup,
-        tipo: tipo,
-        main: main,
-        ip: ip,
-        dns: dns,
-        porta: porta,
-      }
+    // function novoHost(){
+    //   host = {
+    //     nomeHost: nomeHost,
+    //     hostGroup: hostGroup,
+    //     tipo: tipo,
+    //     main: main,
+    //     ip: ip,
+    //     dns: dns,
+    //     porta: porta,
+    //   }
 
-      new file(host, "temporario.json");
+    //   new file(host, "temporario.json");
       
-    }
+    // }
 
 
     function realizarListagem (){
@@ -102,7 +137,8 @@ export default function BemVindo()
 
                 <section>
                         
-                    <div className="container-info-equipamento"> 
+                    <div className="container-info-equipamento">
+                        <div ref={this.divRef}/> 
                           <div className="add-host">
                             <div className="h-add-host"> NOVO TEMPLATE</div>
                             <div className="b-add-host"> 
@@ -110,7 +146,7 @@ export default function BemVindo()
                                 <p>NOME DO HOST</p>
                                 <input 
                                   type="text"
-                                  onChange={(event) => (set)}
+                                  onChange={(event) => (setNomeHost(event))}
                                 />
                               </div>
                             </div>
