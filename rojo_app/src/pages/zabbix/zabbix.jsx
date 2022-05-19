@@ -15,6 +15,7 @@ import { useMemo } from "react";
 import SearchBar  from '../../component_recycling/SearchBar';
 
 import BarraLateral from "../../component_recycling/barraLateral/barraLateral";
+import { useRef } from "react";
 
 export default function Zabbix() 
 {
@@ -45,10 +46,14 @@ export default function Zabbix()
     const[senha, setSenha] = useState('');
     const[server, setServer] = useState('');
     const modalZabbix = document.querySelector('#modalZabbix');
+    const fooBarRef = useRef(null);
+    
     
     if(login === false){
-      this.divRef.classList.add('.show');
-    }
+        modalZabbix.classList.add('.show');
+     }
+
+    
      
     
     var httpRequest = new XMLHttpRequest();
@@ -68,7 +73,7 @@ export default function Zabbix()
       fetch("/connect")
       .then((response) => {
         if(response != null){
-          modalZabbix.classList.remove('.show');      
+          fooBarRef.current.classList.remove('.show');      
         }
     })
     }
@@ -138,7 +143,39 @@ export default function Zabbix()
                 <section>
                         
                     <div className="container-info-equipamento">
-                        <div ref={this.divRef}/> 
+                          <div className="modalZabbix"  ref={fooBarRef}> 
+                            <div className="box-input-login">
+                              <p className="box-input-login-p">Usuario</p>
+                              <input
+                                  className="input-login"
+                                  type="email"
+                                  value={usuario}
+                                  onChange={(event) => setUsuario(event.target.value)}
+                                  placeholder="example@email.com"
+                              />
+                            </div>
+                            <div className="box-input-login">
+                                <p className="box-input-login-p">Senha</p>
+                                <input
+                                    className="input-login input-login-senha"
+                                    type="password"
+                                    value={senha}
+                                    onChange={(event) => setSenha(event.target.value)}
+                                    placeholder="*****"
+                                />
+                            </div>
+                            <div className="box-input-login">
+                              <p className="box-input-login-p">Usuario</p>
+                              <input
+                                  className="input-login"
+                                  type="text"
+                                  value={server}
+                                  onChange={(event) => setServer(event.target.value)}
+                                  placeholder="000.000.00"
+                              />
+                            </div>
+                          </div>
+                           
                           <div className="add-host">
                             <div className="h-add-host"> NOVO TEMPLATE</div>
                             <div className="b-add-host"> 
