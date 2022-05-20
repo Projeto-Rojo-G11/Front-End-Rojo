@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import './zabbix.scss';
-import * as fs from 'fs';
+import { existsSync } from 'fs';
 
 import '../../component_recycling/barraLateral/barraLateral.css';
 import '../bemVindo/bemVindo.css';
@@ -25,20 +25,22 @@ export default function Zabbix()
     const [nomeHost, setNomeHost] = useState();
     const [hostGroup, setHostGroup] = useState();
     const [tipo, setTipo] = useState();
-    const [main, setmain] =useState();
+    const [main, setMain] =useState();
     const [ip, setIp] = useState();
     const [dns, setDns] = useState();
-    const [porta, serPorta] = useState();
+    const [porta, setPorta] = useState();
+    const [template, setTemplate] = useState();
 
     //States Usuario
     const [nome] = useState(parseJwt().nome);
     const [cargo] = useState(parseJwt().cargo);
 
     //Lista
-    const[listaDispositivo, setListaDispositivo]= useState([]);
+    const[listaDispositivo, setListaDispositivo]= useState([{"host":"teste","hostgroup": "teste", "descricao":"teste", "status":"teste", "gravidade":"teste"}]);
     const[listaEquipamento, setListaEquipamento] = useState([]);
+    const[listaTemplate, setListaTemplate] = useState([{"templateId":"1","template":"Linux", "key":"1317", "description":"Linux Server"},{"templateId":"1","template":"Linux", "key":"1317", "description":"Linux Server"},{"templateId":"1","template":"Linux", "key":"1317", "description":"Linux Server"}]);
     const[busca, setBusca] = useState("");
-    const[meusHosts, setMeusHosts] = useState([]);
+    const[listaHost, setListaHost] = useState([]);
 
     //States Zabbix
     const[login] = useState(false);
@@ -49,60 +51,91 @@ export default function Zabbix()
     const fooBarRef = useRef(null);
     
     
-    if(login === false){
-        modalZabbix.classList.add('.show');
+    if(login === true){
+        modalZabbix.classList.add('.hidden');
      }
+    
+    // var httpRequest = new XMLHttpRequest();
+    // httpRequest.onreadystatechange = function(){};
+
+    // var fs = require('fs') , ini = require('ini');
 
     
-     
-    
-    var httpRequest = new XMLHttpRequest();
-    httpRequest.onreadystatechange = function(){};
-
-    var fs = require('fs');
-    var ini = require('ini');
-
-    const config = ini.parse(fs.readFileSync('../../connection_py/apizabbix/config.ini', {encoding:'utf-8'}));
-
     function logar(){
-      config.zabbix.server = server;
-      config.zabbix.user = usuario;
-      config.zabbix.password = senha;
-      // fs.readFileSync('../../connection_py/apizabbix/config.ini', ini.stringify(config));
+        // const config = ini.parse(existsSync.readFileSync('../../pages/zabbix/apizabbix/config.ini', {encoding:'utf-8'}));
+        // config.zabbix.server = server;
+        // config.zabbix.user = usuario;
+        // config.zabbix.password = senha;
+        // existsSync.writeFileSync('../../connection_py/apizabbix/config.ini', ini.stringify(config));
+        console.log("funciona")
+        
+        // let user = {
+        //   user: usuario,
+        //   password: senha,
+        //   server:server
+        // }
+        // fetch("/connect", {
+        //   'method':'POST',
+        //   headers : {'Content-Type': 'application/json'},
+        //   body:JSON.stringify(user)
+        // })
+        // .then((response) => {
+        //   if(response != null){
+        //     fooBarRef.current.classList.remove('.show');      
+        //   }
+        // })
+        // .then((response) => {
+        //   listarHost()
+        //   listarTemplate()
+        // })
+      }
 
-      fetch("/connect")
+    function novoHost(){
+      let host = {
+        nomeHost: nomeHost,
+        hostGroup: hostGroup,
+        tipo: tipo,
+        main: main,
+        ip: ip,
+        dns: dns,
+        porta: porta,
+        template: template
+      }
+
+      fetch("/createHost", {
+        'method':'POST',
+          headers : {'Content-Type': 'application/json'},
+          body:JSON.stringify(host)
+      })
+
+      listarHost()
+    }
+
+    function listarHost(){
+      fetch("/getHost", {
+        'method':'GET',
+          headers : {'Content-Type': 'application/json'},
+      })
+      .then((response) =>{
+        setListaHost(response)
+      })
+    }
+
+    function listarTemplate(){
+      fetch("/getTemplate", {
+        'method':'GET',
+          headers : {'Content-Type': 'application/json'},
+      })
       .then((response) => {
-        if(response != null){
-          fooBarRef.current.classList.remove('.show');      
-        }
-    })
+        setListaTemplate(response)
+      })
     }
 
-    function realizarListHost()
-    {
-        axios.get('./temporario')
-        .then((response) => {
-            setMeusHosts(response.data);
-        })
+    function escolhido(event){
+      event.preventDefault()
+
+      setTemplate(event);
     }
-
-    useEffect(() => (realizarListHost()),[])
-
-    // function novoHost(){
-    //   host = {
-    //     nomeHost: nomeHost,
-    //     hostGroup: hostGroup,
-    //     tipo: tipo,
-    //     main: main,
-    //     ip: ip,
-    //     dns: dns,
-    //     porta: porta,
-    //   }
-
-    //   new file(host, "temporario.json");
-      
-    // }
-
 
     function realizarListagem (){
         let usuario = parseJwt().jti;
@@ -143,59 +176,162 @@ export default function Zabbix()
                 <section>
                         
                     <div className="container-info-equipamento">
-                          <div className="modalZabbix"  ref={fooBarRef}> 
-                            <div className="box-input-login">
-                              <p className="box-input-login-p">Usuario</p>
-                              <input
-                                  className="input-login"
-                                  type="email"
-                                  value={usuario}
-                                  onChange={(event) => setUsuario(event.target.value)}
-                                  placeholder="example@email.com"
-                              />
-                            </div>
-                            <div className="box-input-login">
-                                <p className="box-input-login-p">Senha</p>
+
+                          <div id="modalZabbix"  ref={fooBarRef}> 
+                            <div id="box-">LOGIN ZABBIX</div>
+                            <div id="box--">
+                              <div id="box--1">
+                                <div className="ii">
+                                  <input
+                                      className="input-login b"
+                                      type="email"
+                                      value={usuario}
+                                      onChange={(event) => setUsuario(event.target.value)}
+                                      placeholder="USUARIO"
+                                  />
+                                </div>
+                                <div className="ii">
+                                    <input
+                                        className="input-login input-login-senha b"
+                                        type="password"
+                                        value={senha}
+                                        onChange={(event) => setSenha(event.target.value)}
+                                        placeholder="SENHA"
+                                    />
+                                </div>
+
+                              </div>
+                              <div className="ii">
                                 <input
-                                    className="input-login input-login-senha"
-                                    type="password"
-                                    value={senha}
-                                    onChange={(event) => setSenha(event.target.value)}
-                                    placeholder="*****"
+                                    className="input-login c"
+                                    type="text"
+                                    value={server}
+                                    onChange={(event) => setServer(event.target.value)}
+                                    placeholder="SERVER"
                                 />
-                            </div>
-                            <div className="box-input-login">
-                              <p className="box-input-login-p">Usuario</p>
-                              <input
-                                  className="input-login"
-                                  type="text"
-                                  value={server}
-                                  onChange={(event) => setServer(event.target.value)}
-                                  placeholder="000.000.00"
-                              />
+                              </div>
+                              <button id="btn-za" onClick={logar}/>
+                              
                             </div>
                           </div>
                            
                           <div className="add-host">
-                            <div className="h-add-host"> NOVO TEMPLATE</div>
-                            <div className="b-add-host"> 
-                              <div id="box-input">
-                                <p>NOME DO HOST</p>
-                                <input 
-                                  type="text"
-                                  onChange={(event) => (setNomeHost(event))}
-                                />
+                            <div className="h-add-host"> NOVO HOST</div>
+                            <div className="b-add-host">
+                              <div id="box-text">
+                                <div id="box-t1">
+                                  <div id="box-input">
+                                    <p>HOST</p>
+                                    <input 
+                                      type="text"
+                                      onChange={(event) => (setNomeHost(event))}
+                                    />
+                                  
+                                  </div>
+                                  <div id="box-input">
+                                    <p>HOST GROUP</p>
+                                    <input 
+                                      type="text"
+                                      onChange={(event) => (setHostGroup(event))}
+                                    />
+                                  
+                                  </div> 
+
+                                </div>
+                                <div id="box-t1">
+                                  <div id="box-input">
+                                    <p>TIPO</p>
+                                    <input 
+                                      type="text"
+                                      onChange={(event) => (setTipo(event))}
+                                    />
+                                  
+                                  </div>
+                                  <div id="box-input">
+                                    <p>PORTA</p>
+                                    <input 
+                                      type="text"
+                                      onChange={(event) => (setPorta(event))}
+                                    />
+                                  
+                                  </div> 
+
+                                </div>
+                                <div id="box-t1">
+                                  <div id="box-input">
+                                    <p>MAIN</p>
+                                    <input 
+                                      type="text"
+                                      onChange={(event) => (setMain(event))}
+                                    />
+                                  
+                                  </div>
+                                  <div id="box-input">
+                                    <p>DNS</p>
+                                    <input 
+                                      type="text"
+                                      onChange={(event) => (setDns(event))}
+                                    />
+                                  
+                                  </div> 
+
+                                </div>
+                                <button id="btn-new">ENVIAR</button>
+                                
+                              </div>
+                              <div id="box-template">
+                              <p>TEMPLATE</p>
+                              <div className="container-template">
+                                <div class="tbl-header">
+                                  <table className="table-table-2" cellpadding="0" cellspacing="0" border="0">
+                                    <thead>
+                                      <tr>
+                                        <th className="th-table-2">ID TEMPLATE</th>
+                                        <th className="th-table-2">TEMPLATE</th>
+                                        <th className="th-table-2">CHAVE</th>
+                                        <th className="th-table-2">DESCRICAO</th>
+                                        <th className="th-table-2"></th>
+                                      </tr>
+                                    </thead>
+                                  </table>
+                                </div>
+                                <div className="tbl-content">
+                                  <table className="table-table-2" cellpadding="0" cellspacing="0" border="0">
+                                    <tbody>
+                                      {
+                                        listaTemplate.map(item => {
+                                          return(
+                                            <tr>
+                                              <td className="td-table-2">{item.templateId}</td>
+                                              <td className="td-table-2">{item.template} </td>
+                                              <td className="td-table-2">{item.key}</td>
+                                              <td className="td-table-2">{item.description}</td>
+                                              <td className="td-table-2"><button onClick={(event) => escolhido(event.target.item.templateId)} ></button></td>
+
+                                            </tr>
+  
+                                          )
+                                        })
+
+                                      }
+
+                                    </tbody>
+                                  </table>
+                                </div>           
+                                </div>
                               </div>
                             </div>
                           </div>  
+
+
                          <div className="container-host">
-                            
+                         <div className="h-add-host"> SEUS HOSTS</div>
                             <div className="head-host">HOSTS ZABBIX</div>
                             <table className="table-table-1">
                                 <thead className="thead-table-1">
                                 <tr>
-                                    <th className="th-table-1">ID HOST</th>
                                     <th className="th-table-1">HOST</th>
+                                    <th className="th-table-1">HOST GROUP</th>
                                     <th className="th-table-1">DESCRIÇÃO</th>
                                     <th className="th-table-1">STATUS</th>
                                     <th className="th-table-1">GRAVIDADE</th>
@@ -206,13 +342,13 @@ export default function Zabbix()
                                   listaDispositivo.map((item) => {
                                     return(
                                       <tr>
-                                        <td className="td-table-1\\\\"><a href="#">{item.hostid}</a></td>
-                                        <td className="td-table-1">Paragon</td>
-                                        <td className="td-table-1">1/5/2021</td>
+                                        <td className="td-table-1"><a href="#">{item.host}</a></td>
+                                        <td className="td-table-1">{item.hostgroup}</td>
+                                        <td className="td-table-1">{item.descricao}</td>
                                         <td className="td-table-1">
-                                        <p class="status status-unpaid">Unpaid</p>
+                                        <p class="status status-unpaid">{item.status}</p>
                                         </td>
-                                        <td class="td-table-1 amount">$520.18</td>
+                                        <td class="td-table-1 amount">{item.gravidade}</td>
                                     </tr>
                                     )
                                   })
@@ -221,37 +357,7 @@ export default function Zabbix()
                                 </tbody>
                             </table>
                             </div>
-                            <div className="container-template">
-
-                              <div class="tbl-header">
-                                <table className="table-table-2" cellpadding="0" cellspacing="0" border="0">
-                                  <thead>
-                                    <tr>
-                                      <th className="th-table-2">ID TEMPLATE</th>
-                                      <th className="th-table-2">TEMPLATE</th>
-                                      <th className="th-table-2">CHAVE</th>
-                                      <th className="th-table-2">DESCRICAO</th>
-                                      <th className="th-table-2"></th>
-                                    </tr>
-                                  </thead>
-                                </table>
-                              </div>
-                              <div className="tbl-content">
-                                <table className="table-table-2" cellpadding="0" cellspacing="0" border="0">
-                                  <tbody>
-                                    <tr>
-                                      <td className="td-table-2">AAC</td>
-                                      <td className="td-table-2">AUSTRALIAN COMPANY </td>
-                                      <td className="td-table-2">$1.38</td>
-                                      <td className="td-table-2">-0.36%</td>
-                                      <td className="td-table-2"><input type="select" ></input></td>
-
-                                    </tr>
-                              
-                                  </tbody>
-                                </table>
-                              </div>           
-                            </div>
+                            
 
                         
                     </div>           

@@ -1,20 +1,23 @@
+from crypt import methods
 from flask import Flask
 from flask import Flask
 from pyzabbix import ZabbixAPI
 import configparser
 
+from requests import request
+
 app = Flask(__name__)
-config = configparser.ConfigParser()
-config.read("config.ini")
+# config = configparser.ConfigParser()
+# config.read("config.ini")
 
 zapi = None
 
-@app.route("/connect")
+@app.route("/connect", methods=["POST"])
 def connect():
     
-    user = config.get('zabbix', 'user')
-    password = config.get('zabbix', 'password')
-    server = config.get('zabbix', 'server')
+    user = request.json['user']
+    password = request.json['password']
+    server = request.json['server']
 
     zapi = ZabbixAPI(server)
     # zapi.session.verify = False
@@ -22,36 +25,61 @@ def connect():
     
     return zapi
 
-@app.route("/getHost")
-def getHost():
+hostgroup = None
 
-    host = config.get('zabbix', 'server')
-
-    hosts = zapi.host.get({
-        "output": [
-            "hostid",
-            "host",
-            "status"
-        ],
-        "sortfield": "status",
-        "sortorder": "DESC",
+@app.route("/getHostGroup", methods=["GET"])
+def getHostGroup():
+    hostgroup = zapi.hostgroup.get({
+        "output":"extend",
     })
+    # hostgroup_id = hostgroup[0]['groupid']
+    
+
+
+def get_hostgroup(hostgroup_name):
+    hostgroup = zapi.hostgroup.get({
+        "output" : "extend",
+        "filter": {"name": hostgroup_name}
+    })
+    hostgroup_id = hostgroup[0]['groupid']
+    hostgroup_name = hostgroup[0]['name']
+    temp_dict = {}
+    temp_dict['hostgroup_id'] = hostgroup_id
+    temp_dict['hostgroup_name'] = hostgroup_name
+    return temp_dict
+
+@app.route("/getHost", methods=["GET"])
+def getHost():
+    for host in hostgroup:
+        hostgroup_name = host['name']
+        hostgroup_info = getHostGroup(hostgroup_name)
+        hostgroup_id = hostgroup_info['hostgroup_id']
+        
+            hosts = zapi.host.get({
+                "output": [
+                    "hostid",
+                    "host",
+                    "status",
+                ]
+                "groupids": hostgroup[0]['groupid']
+                "sortorder": "DESC",
+        })
     
     return hosts
 
-@app.route("/createHost")
-def createHost():
+@app.route("/createHost", methods=["POST"], strick_slashes=False)
+def createHost(host):
     hostcriado = zapi.host.crete({
-        "host": "Teste",
+        "host": host.get("host"),
         "status": 1,
         "interfaces" : [
             {
-                "type": 1, #agent
-                "main": 1, #interface principal
+                "type": host.get("type"), #agent
+                "main": host.get("main"), #interface principal
                 "useip": 1, #user conexao por IP
-                "ip": "192.0.23.23", #o endereco IP
-                "dns": "",
-                "port": 10050 #a porta de comunicacao
+                "ip": host.get("ip"), #o endereco IP
+                "dns": host.get('dns'),
+                "port": host.get('port') #a porta de comunicacao
             }
         ],
         "groups": [

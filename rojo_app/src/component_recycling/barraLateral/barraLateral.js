@@ -82,7 +82,7 @@ export default function BarraLateral () {
                                     <p>GRAFANA</p>
                                 </Link>
 
-                                <Link className="container-link" to="/graylog">
+                                <Link className="container-link" to="/datadog">
                                     <div className="btn-link">
                                         <img src={DataDog} alt="Logo da DataDog"></img>
                                     </div>

@@ -16,6 +16,7 @@ import Topologia from './pages/topologia/topologia';
 import BemVindo from './pages/bemVindo/bemVindo';
 import Zabbix from './pages/zabbix/zabbix.jsx';
 import Grafana from './pages/grafana/grafana.jsx';
+import DataDog from './pages/dataDog/datadog.jsx';
 
 import reportWebVitals from './reportWebVitals';
 import PrivateRoute  from './services/protected';
@@ -42,6 +43,7 @@ routing.render(
         <Route path="/CadastrarEquipamento" element={<CadastrarEquipamento/>}/>
         <Route path="/BemVindo" element={<BemVindo/>}/>
         <Route path="/Zabbix" element={<Zabbix/>}/>
+        <Route path="/DataDog" element={<DataDog/>}/>
         <Route path="/Grafana" element={<Grafana/>}/>
         <Route path="/Erro" element={<Erro/>} />
 
