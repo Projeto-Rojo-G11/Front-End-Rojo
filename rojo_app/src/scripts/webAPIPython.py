@@ -1,11 +1,15 @@
-from typing_extensions import Required
-from zabbix import apizabbix
-from apigrafana import apigrafana
-from apidatadog import apidatadog
+# from grafana import apigrafana
+import apizabbix
 from flask import Flask
-from flask_restful import Resource, APi, reqparse
+from flask_restful import reqparse
+# from pydantic import BaseModel
+    
+# class Sla(BaseModel):
+#     name: str
+#     interface: str
+
 from json import dumps
-import ast
+# import ast
 import pandas as pd
 
 app = Flask(__name__)
@@ -32,7 +36,7 @@ def connect(self):
         return(print(f'Falha ao conectar na API do Zabbix por usuario : {user} \n Erro: {err}'))
 
 @app.route("/getHostGroup", methods=["GET"])
-def getHostGroup():
+def getHostGroup(self):
     try:
         return(apizabbix.getHostGroup()),200
     except Exception as err:
@@ -67,14 +71,14 @@ def createHost(self):
         return(print(f'Falha na requisicao /createHost do ZabbixAPI \n Erro: {err}'))
 
 @app.route("/getAlert", methods=["GET"])
-def getAlert():
+def getAlert(self):
     try:
         return(apizabbix.getAlert())
     except Exception as err:
         return(print(f'Falha na requisicao /getAlert do ZabbixAPI \n Erro: {err}'))
 
 @app.route("/logout")
-def logout():
+def logout(self):
     apizabbix.logout()
 
 # Metodos Grafana

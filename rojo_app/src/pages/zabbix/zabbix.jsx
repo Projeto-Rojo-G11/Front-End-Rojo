@@ -21,14 +21,14 @@ export default function Zabbix()
     var navigate = useNavigate();
     
     //States Host
-    const [nomeHost, setNomeHost] = useState();
-    const [hostGroup, setHostGroup] = useState();
-    const [tipo, setTipo] = useState();
-    const [main, setMain] =useState();
-    const [ip, setIp] = useState();
-    const [dns, setDns] = useState();
-    const [porta, setPorta] = useState();
-    const [template, setTemplate] = useState();
+    const [host, setHost] = useState("teste");
+    const [type, setType] = useState(1);
+    const [main, setMain] =useState(1);
+    const [ip, setIp] = useState(111111);
+    const [dns, setDns] = useState(11);
+    const [port, setPort] = useState(11);
+    const [hostGroup, setHostGroup] = useState(0);
+    const [templatesid, setTemplatesId] = useState(1);
 
     //States Usuario
     const [nome] = useState(parseJwt().nome);
@@ -91,24 +91,24 @@ export default function Zabbix()
       }
 
     function novoHost(){
-      let host = {
-        nomeHost: nomeHost,
-        hostGroup: hostGroup,
-        tipo: tipo,
+      let newhost = {
+        host: host,
+        type: type,
         main: main,
         ip: ip,
         dns: dns,
-        porta: porta,
-        template: template
+        port: port,
+        groupid: hostGroup,
+        templatesid: templatesid
       }
 
       fetch("/createHost", {
         'method':'POST',
           headers : {'Content-Type': 'application/json'},
-          body:JSON.stringify(host)
+          body:JSON.stringify(newhost)
       })
-
-      listarHost()
+      .then(console.log("Sucessso"))
+      // listarHost()
     }
 
     function listarHost(){
@@ -131,11 +131,11 @@ export default function Zabbix()
       })
     }
 
-    function escolhido(event){
-      event.preventDefault()
+      // function escolhido(event){
+      //   event.preventDefault()
 
-      setTemplate(event);
-    }
+      //   setTemplate(event);
+      // }
 
     function realizarListagem (){
         let usuario = parseJwt().jti;
@@ -224,7 +224,7 @@ export default function Zabbix()
                                     <p>HOST</p>
                                     <input 
                                       type="text"
-                                      onChange={(event) => (setNomeHost(event))}
+                                      onChange={(event) => (setHost(event))}
                                     />
                                   
                                   </div>
@@ -243,7 +243,7 @@ export default function Zabbix()
                                     <p>TIPO</p>
                                     <input 
                                       type="text"
-                                      onChange={(event) => (setTipo(event))}
+                                      onChange={(event) => (setType(event))}
                                     />
                                   
                                   </div>
@@ -251,7 +251,7 @@ export default function Zabbix()
                                     <p>PORTA</p>
                                     <input 
                                       type="text"
-                                      onChange={(event) => (setPorta(event))}
+                                      onChange={(event) => (setPort(event))}
                                     />
                                   
                                   </div> 
@@ -276,7 +276,7 @@ export default function Zabbix()
                                   </div> 
 
                                 </div>
-                                <button id="btn-new">ENVIAR</button>
+                                <button id="btn-new" onClick={novoHost()}>ENVIAR</button>
                                 
                               </div>
                               <div id="box-template">
@@ -306,7 +306,7 @@ export default function Zabbix()
                                               <td className="td-table-2">{item.template} </td>
                                               <td className="td-table-2">{item.key}</td>
                                               <td className="td-table-2">{item.description}</td>
-                                              <td className="td-table-2"><button onClick={(event) => escolhido(event.target.item.templateId)} ></button></td>
+                                              <td className="td-table-2"><button onClick={{/*(event) => escolhido(event.target.item.templateId)*/}} ></button></td>
 
                                             </tr>
   
