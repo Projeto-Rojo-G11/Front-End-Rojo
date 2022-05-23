@@ -7,11 +7,11 @@ import { parseJwt } from "../../services/auth";
 
 
 import BarraLateral from "../../component_recycling/barraLateral/barraLateral";
+import SearchBar  from '../../component_recycling/barraPesquisa/SearchBar';
 
 
 import '../../assets/css/animation__input.css';
 import './cadastroEquipamento.css';
-import '../../assets/css/style_search.css';
 
 
 export default function CadastroEquipamento() {
@@ -23,6 +23,9 @@ export default function CadastroEquipamento() {
 
     //States Usuario
     const [idUsuario, setIdUsuario] = useState(parseJwt().jti)
+
+    //Listas
+    const[listaEquipamento, setListaEquipamento] = useState([]);
 
 
     //States Equipamento
@@ -49,6 +52,19 @@ export default function CadastroEquipamento() {
             setDadoTipoEquipamento(response.data)
         })
         .catch((erro)=> console.log(erro))
+    }
+
+    function realizarListagem (){
+        let usuario = parseJwt().jti;
+        axios
+        .get('http://localhost:5000/api/Equipamento/listar-meus-equipamentos/' + usuario)
+        .then((response ) => {
+            // console.log(response.data );
+            setListaEquipamento((response.data));
+            // setListaEquipamento.toString();
+            console.log(listaEquipamento);
+        })
+        .catch((erro) => console.log(erro));
     }
 
     const realizarLogout = async () => {
@@ -106,22 +122,13 @@ export default function CadastroEquipamento() {
                 <div className="conteudo-equipamento">
 
                     <header>
-                        <h2 className="titulo">NOVO EQUIPAMENTO</h2>
+                        <h2 className="titulo">NOVO DISPOSITIVO</h2>
                         <div className="search-form">
-                        <div className="lupa"/>
-                        <Form>
-                            <input
-                                name="country"
-                                label=" "
-                                placeholder="Procure por um equipamento"
-                            />
-                    
-                        </Form>
-                    </div>
+                            <SearchBar placeholder="Pesquise um modelo " data={listaEquipamento}/>
+                            
+                        </div>
                     </header>
-                
-                    
-
+            
                     <section>
                             
                     <div className="container-info-equipamento">    

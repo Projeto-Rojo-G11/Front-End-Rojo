@@ -1,15 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap');
 
 .container-barra-esquerda{
-      display: flex;
-      flex-direction: column;
-      justify-content:space-between;
-      width: 20%;
-      height: 100%;
-      background-color: black;
-
-      padding: 3em 2.5em 5.7em 3em;
-      position:relative;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-between;
+    width: 20%;
+    height: 100%;
+    background-color: black;
+    position:fixed;
+    /* left: 0;
+    bottom: 0; */
+    padding: 3em 2.5em 5.7em 3em;
+    /* position:relative; */
 }
 
 .barra-superior{

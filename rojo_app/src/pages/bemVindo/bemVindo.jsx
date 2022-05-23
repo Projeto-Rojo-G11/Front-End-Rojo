@@ -4,11 +4,10 @@ import axios from 'axios';
 import './bemVindo.css';
 import '../../assets/css/animation__input.css';
 import '../cadastrarEquipamento/cadastroEquipamento.css';
-import '../../assets/css/style_search.css';
 import '../../../src/component_recycling/barwork/BarWork.css';
 
 import { parseJwt } from "../../services/auth";
-import SearchBar  from '../../component_recycling/SearchBar';
+import SearchBar  from '../../component_recycling/barraPesquisa/SearchBar';
 import BarraLateral from "../../component_recycling/barraLateral/barraLateral";
 
 
@@ -36,8 +35,8 @@ export default function BemVindo()
 
     return(   
         <div id="bem-vindo" className="container-cadastro-equipamento">
-            <BarraLateral/>
         
+            <BarraLateral/>
             <div className="conteudo-equipamento">
 
                 <header>

@@ -8,10 +8,9 @@ import '../../component_recycling/barraLateral/barraLateral.css';
 import '../bemVindo/bemVindo.css';
 import '../../assets/css/animation__input.css';
 import '../cadastrarEquipamento/cadastroEquipamento.css';
-import '../../assets/css/style_search.css';
 import './listaEquipamento.css';
 import { map } from "lodash";
-import SearchBar  from '../../component_recycling/SearchBar';
+import SearchBar  from '../../component_recycling/barraPesquisa/SearchBar';
 import BarraLateral from "../../component_recycling/barraLateral/barraLateral";
 
 
@@ -54,16 +53,14 @@ export default function ListaEquipamento (){
 
             <div className="conteudo-equipamento">
 
-            <header>
-                <h2 className="titulo">SEUS DISPOSITIVOS</h2>
-                <div className="search-form">
-                <div className="lupa"/>
-                    <SearchBar/>
-                </div>
-            </header>
+                <header>
+                    <h2 className="titulo">SEJA BEM VINDO</h2>
+                    <div className="search-form">
+                        <SearchBar placeholder="Pesquise um modelo " data={listaEquipamento}/>
+                        
+                    </div>
+                </header>
             
-                
-
                 <section>
                         
                     <div className="container-info-equipamento">  

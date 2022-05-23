@@ -8,7 +8,7 @@ import BarraLateral from "../../component_recycling/barraLateral/barraLateral";
 import '../bemVindo/bemVindo.css';
 import '../../assets/css/animation__input.css';
 import '../cadastrarEquipamento/cadastroEquipamento.css';
-import '../../assets/css/style_search.css';
+import SearchBar  from '../../component_recycling/barraPesquisa/SearchBar';
 import '../listaEquipamento/listaEquipamento.css';
 
 import './alerta.css';
@@ -29,7 +29,7 @@ export default function Alerta (){
     const [statusOn, setStatusOn] = useState(false)
 
     const [isLoading, setIsLoading] = useState('');
-    const [ listaEquipamento, setListaEquipamento ] = useState([])
+    const [listaEquipamento, setListaEquipamento] = useState([])
 
     //States alerta
     const [error] = useState("400");
@@ -68,45 +68,36 @@ export default function Alerta (){
             <div className="conteudo-equipamento">
 
                 <header>
-                    <h2 className="titulo"> ALERTAS E AVISOS</h2>
+                    <h2 className="titulo">SEJA BEM VINDO</h2>
                     <div className="search-form">
-                        <div className="lupa"/>
-                        <Form>
-                        < input
-                            name="country"
-                            label=" "
-                            placeholder="Procure por um equipamento"
-                        />
-                    
-                        </Form>
+                        <SearchBar placeholder="Pesquise um modelo " data={listaEquipamento}/>
+                        
                     </div>
                 </header>
-            
-                
-
+        
                 <section>
                         
                     <div className="container-info-equipamento">  
-                        <div className="box-alerta">
+                        {/* <div className="box-alerta">
                             <div className="status">
                                 <div className="img-alerta"/>
                                 <p>{id}</p>
                             </div> 
-                            <div className="descricao">
+                            {/* <div className="descricao">
                                 <div className="head">
                                     <p>{idTipoEquipamento} {modelo}</p>    
                                     <p>ERRO : {error}</p>
                                 </div>
                                 <div className="body">
                                     <p>Lo laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptatpidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                </div>
-                            </div> 
-                        </div> 
+                                </div> */}
+                            {/* </div>  */}
+                        {/* </div>  */}
+                        <div id="box-nada"/>
                     </div>
                 </section>
     
             </div>
-                <div id="box-nada"/>
         </div>
     );
 }

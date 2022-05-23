@@ -9,10 +9,9 @@ import '../../component_recycling/barraLateral/barraLateral.css';
 import '../bemVindo/bemVindo.css';
 import '../../assets/css/animation__input.css';
 import '../cadastrarEquipamento/cadastroEquipamento.css';
-import '../../assets/css/style_search.css';
 import { parseJwt } from "../../services/auth";
 import { useMemo } from "react";
-import SearchBar  from '../../component_recycling/SearchBar';
+import SearchBar  from '../../component_recycling/barraPesquisa/SearchBar';
 import './datadog.scss';
 
 import BarraLateral from "../../component_recycling/barraLateral/barraLateral";

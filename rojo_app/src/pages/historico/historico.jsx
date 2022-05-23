@@ -9,8 +9,8 @@ import './historico.css'
 import '../../component_recycling/barraLateral/barraLateral.css';
 import '../../assets/css/animation__input.css';
 import '../cadastrarEquipamento/cadastroEquipamento.css';
-import '../../assets/css/style_search.css';
 import BarraLateral from "../../component_recycling/barraLateral/barraLateral";
+import SearchBar  from '../../component_recycling/barraPesquisa/SearchBar';
 
 
 export default function CadastroEquipamento() {
@@ -19,6 +19,8 @@ export default function CadastroEquipamento() {
     
     const [isLoading, setIsLoading] = useState(false);
     // const [boolPut, setBoolPut] = useState(false);
+
+    const[listaEquipamento, setListaEquipamento] = useState([]);
 
     //States Usuario
     const [nome, setNome] = useState('');
@@ -134,20 +136,13 @@ export default function CadastroEquipamento() {
                 
                 <div className="conteudo-equipamento">
 
-                    <header>
-                        <h2 className="titulo">HISTORIA DO DISPOSITIVO</h2>
-                        <div className="search-form">
-                        <div className="lupa"/>
-                        <Form>
-                            <input
-                                name="country"
-                                label=" "
-                                placeholder="Procure por um equipamento"
-                            />
-                    
-                        </Form>
+                <header>
+                    <h2 className="titulo">SEJA BEM VINDO</h2>
+                    <div className="search-form">
+                        <SearchBar placeholder="Pesquise um modelo " data={listaEquipamento}/>
+                        
                     </div>
-                    </header>
+                </header>
                 
                     
 

@@ -19,10 +19,12 @@
 /* ----------Header Equipamento */
 
 .conteudo-equipamento{
-  background-color: #E9EDFB;
-  height: AUTO;
+  /* background-color: orange; */
+  min-height: auto;
   width: 80%;
   padding: 3em 6.5em 3em 6.5em;
+  position: relative;
+  left:370px;
 }
 
 header{
@@ -52,15 +54,16 @@ h2.titulo{
 
 .container-cadastro-equipamento{
   width: 100%;
-  height: 100VH;
-  /* background-color: #E9EDFB; */
+  height: auto;
+  background-color: #E9EDFB;
   display: flex;
 }
 
 
 .container-info-equipamento{
   width: 100%;
-  height: 800px;
+  min-height: 780px;
+  /* height: auto; */
   background-color:white;
   border-radius:5px;
   display: flex;
@@ -125,7 +128,7 @@ h2.titulo{
 }
 
 .divisor{
-  height:20px;
+  height:30px;
   width: 100%;
   /* background-color: blueviolet; */
   font-size:12px;
@@ -137,13 +140,15 @@ h2.titulo{
   width: 100%;
   height:1px;
   background: rgba(0, 0, 0, 0.4);
+  margin-top: 10px;
 }
 
 .box-2{
   width: 100%;
-  height: 350px;
+  height: 370px;
   display: flex;
-  padding-bottom:88px;
+  margin-top: 1.5em;
+  padding-bottom:50npmpx;
   flex-direction: column;
   justify-content: space-between;
   /* background:blue; */
@@ -161,7 +166,7 @@ h2.titulo{
 }
 
 .box-img{
-  width: 100%;
+  width: 350px;
   height: 200px;
   background-image: url(../../assets/img/img-switch.jpg);
   background-size:cover;

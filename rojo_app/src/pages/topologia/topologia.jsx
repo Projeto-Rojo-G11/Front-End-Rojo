@@ -6,10 +6,11 @@ import axios from 'axios';
 
 
 import BarraLateral from "../../component_recycling/barraLateral/barraLateral";
+import SearchBar  from '../../component_recycling/barraPesquisa/SearchBar';
+
 import '../bemVindo/bemVindo.css';
 import '../../assets/css/animation__input.css';
 import '../cadastrarEquipamento/cadastroEquipamento.css';
-import '../../assets/css/style_search.css';
 import './topologia.css';
 
 
@@ -20,6 +21,8 @@ export default function Topologia()
     //States Topologia
     const [descricao, setDescricao] = useState('');
     const [alterar, setAlterar] = useState(true);
+
+    const[listaEquipamento, setListaEquipamento] = useState([]);
 
     function cadastrarTopologia(){
         // formData = Form
@@ -41,17 +44,10 @@ export default function Topologia()
             <div className="conteudo-equipamento">
 
                 <header>
-                    <h2 className="titulo">ESTRUTURACAO DE REDES</h2>
+                    <h2 className="titulo">SEJA BEM VINDO</h2>
                     <div className="search-form">
-                        <div className="lupa"/>
-                        <Form>
-                        <input
-                            name="country"
-                            label=" "
-                            placeholder="Procure por um equipamento"
-                        />
-                     
-                        </Form>
+                        <SearchBar placeholder="Pesquise um modelo " data={listaEquipamento}/>
+                        
                     </div>
                 </header>
             

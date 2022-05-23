@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 
 
 import { parseJwt } from "../../services/auth";
-import BarraLateral from "../../component_recycling/barraLateral/barraLateral";
+import BarraLateral from "../../component_recycling/barraLateral/barraLateral.js";
+import SearchBar  from '../../component_recycling/barraPesquisa/SearchBar';
 
 // import BarWork  from '../../component_recycling/barwork/BarWork';
 
@@ -12,7 +13,6 @@ import '../../component_recycling/barraLateral/barraLateral.css';
 import '../../assets/css/animation__input.css';
 import '../cadastrarEquipamento/cadastroEquipamento.css';
 import './equipamento.css';
-import '../../assets/css/style_search.css';
 import '../../component_recycling/barwork/BarWork.css';
 import '../../component_recycling/barwork/style.css';
 
@@ -26,7 +26,6 @@ import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import SettingsInputHdmiIcon from '@mui/icons-material/SettingsInputHdmi';
 import { Settings } from "@mui/icons-material";
 import CloseIcon from '@mui/icons-material/Close';
-import SearchBar  from '../../component_recycling/SearchBar';
 
 
 
