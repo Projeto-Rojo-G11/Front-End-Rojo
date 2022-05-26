@@ -6,14 +6,14 @@
     height: 100vh;
     background: none;
     position: absolute;
-    z-index: 2;
+    z-index: 13;
 }
 
 .modal_container{
     width: 100vw;
     height: 100vh;
     position: absolute;
-    z-index: 6;
+    z-index: 13;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -36,6 +36,7 @@
     border-radius: 10px;
     display: flex;
     justify-content: space-between;
+    position:relative;
 }
 
 .img-modal{
@@ -47,21 +48,23 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 2em 1em 2em 1em;
+    padding: 2em 0 2em 20px;
 }
 
 #info-modal p {
     color: black;
-    font-size: 14px;
     margin-bottom: 5px;
 }
 
 #text{
     margin-bottom: 40px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-radius: 5px;
+    font-size: 14px;
     padding: 5px;
-    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    padding-left: 15px; 
+    box-shadow: rgba(240, 46, 46, 0.479) -5px 5px, rgba(240, 46, 46, 0.3) -10px 10px, rgba(240, 46, 46, 0.2) -15px 15px, rgba(240, 46, 46, 0.1) -20px 20px, rgba(240, 46, 46, 0.05) -25px 25px;
+    /* box-shadow: rgba(240, 46, 46, 0.4) 0px 5px, rgba(240, 46, 46, 0.3) 0px 10px, rgba(240, 46, 46, 0.2) 0px 15px, rgba(240, 46, 170, 0.1) 0px 20px, rgba(240, 46, 170, 0.05) 0px 25px; */
 }
 
 h4{
@@ -103,7 +106,7 @@ h4{
     font-size: 12px;
     border-radius: 5px;
     background: red;
-    border-color: red;
+    border: none;
 }
 
 .btn-reboot-s{
@@ -111,6 +114,135 @@ h4{
     height: 33px;
     font-size: 12px;
     border-radius: 5px;
-    background-color: grey;
-    border-color: greenyellow;
+    background-color: rgba(75, 75, 75, 1)
+    ;
+    border:none
+}
+
+/* MODAL CONFIGURACAO */
+.co{
+    display: flex;
+    flex-direction: column;
+}
+
+#h-connection{
+    width: 100%;
+    height: 40%;
+    padding: 15px 25px;
+    background: linear-gradient(89.96deg, #C02626 -0.32%, #4E4B4B 100.34%);
+    display:flex;
+    justify-content: space-between;
+    border-radius: 10px 10px 0px 0px;
+}
+
+#h--1{
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    color: white;
+}
+
+#h--2{
+    width: 190px;
+    height: 65%;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    color: #70FF00;
+    font-size: 14px;
+    font-family: 'Oxygen Mono', monospace;
+}
+
+#b-connection{
+    width: 100%;
+    height: 60%;
+    padding: 25px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#b-global{
+    width:  400px;
+    height: 187px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
+    position: absolute;
+    border-radius: 5px;
+    padding: 20px;
+    top: 90px;
+    left: 23px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    font-family: 'Oxygen Mono', monospace;
+
+}
+
+#h{
+    font-family: 'Oxygen Mono', monospace;
+
+}
+
+#i--{
+    display: flex;
+    width: 240px;
+    justify-content: space-between;
+    margin-top: 0.5em;
+    font-size: 14px;
+    
+}
+
+#i-- p{
+    
+    font-family: 'Oxygen Mono', monospace;
+}
+
+#i-- input{
+    border: 0;
+    border-bottom: solid 1px black;
+    outline: none;
+
+}
+
+#p{
+    font-size: 12px;
+}
+
+/* MODAL CONFIGURATION */
+
+#h-configuration{
+    width: 100%;
+    height:25%;
+    padding: 15px 25px;
+    display:flex;
+    justify-content: space-between;
+    border-radius: 10px 10px 0px 0px;
+}
+
+#b-configuration{
+    color: white;
+    padding: 15px 25px;
+    display:flex;
+    justify-content: space-between;
+    width: 100%;
+    font-size: 14PX;
+    height: 15%;
+    background: linear-gradient(89.96deg, #C02626 -0.32%, #4E4B4B 100.34%);
+}
+
+#m-configuration{
+    width: 100%;
+    height: 60%;
+    padding: 25px;
+}
+
+#h--c{
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    color: black;
 }
