@@ -15,7 +15,7 @@ def connect(u,p,s):
     # zapi.session.verify = False
     zapi.login(user, password)
     
-    return zapi 
+    return {"Status":"Funfou"}
 
 
 hostgroup = None

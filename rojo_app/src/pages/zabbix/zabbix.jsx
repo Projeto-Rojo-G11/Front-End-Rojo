@@ -61,33 +61,27 @@ export default function Zabbix()
 
     
     function logar(){
-        // const config = ini.parse(existsSync.readFileSync('../../pages/zabbix/apizabbix/config.ini', {encoding:'utf-8'}));
-        // config.zabbix.server = server;
-        // config.zabbix.user = usuario;
-        // config.zabbix.password = senha;
-        // existsSync.writeFileSync('../../connection_py/apizabbix/config.ini', ini.stringify(config));
-        console.log("funciona")
         
         let user = {
           user: usuario,
           password: senha,
           server:server
         }
-        fetch("/connect", {
+
+        fetch("/connectZabbix", {
           'method':'POST',
           headers : {'Content-Type': 'application/json'},
           body:JSON.stringify(user)
         })
-        // .then((response) => {
-        //   if(response != null){
-        //     fooBarRef.current.classList.remove('.show');      
-        //   }
-        // })
-        // .then((response) => {
-        //   listarHost()
-        //   listarTemplate()
-        // })
-        console.log("logado com sucesso")
+        .then((response) =>{
+          console.log(response.status)
+        })
+        .then((response) => {
+            listarHost()
+            listarTemplate()
+          })
+  
+        
       }
 
     function novoHost(){
@@ -276,7 +270,7 @@ export default function Zabbix()
                                   </div> 
 
                                 </div>
-                                <button id="btn-new" onClick={novoHost()}>ENVIAR</button>
+                                <button id="btn-new" onClick={novoHost}>ENVIAR</button>
                                 
                               </div>
                               <div id="box-template">
@@ -299,16 +293,16 @@ export default function Zabbix()
                                   <table className="table-table-2" cellpadding="0" cellspacing="0" border="0">
                                     <tbody>
                                       {
-                                        listaTemplate.map(item => {
+                                        listaTemplate.map((item) => {
                                           return(
-                                            <tr>
-                                              <td className="td-table-2">{item.templateId}</td>
-                                              <td className="td-table-2">{item.template} </td>
-                                              <td className="td-table-2">{item.key}</td>
-                                              <td className="td-table-2">{item.description}</td>
-                                              <td className="td-table-2"><button onClick={{/*(event) => escolhido(event.target.item.templateId)*/}} ></button></td>
+                                              <tr key={item.templateId}>
+                                                <td className="td-table-2">{item.templateId}</td>
+                                                <td className="td-table-2">{item.template} </td>
+                                                <td className="td-table-2">{item.key}</td>
+                                                <td className="td-table-2">{item.description}</td>
+                                                <td className="td-table-2"><button onClick={{/*(event) => escolhido(event.target.item.templateId)*/}} ></button></td>
 
-                                            </tr>
+                                              </tr>
   
                                           )
                                         })

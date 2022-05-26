@@ -8,7 +8,7 @@ from flask_restful import reqparse
 #     name: str
 #     interface: str
 
-from json import dumps
+import json
 # import ast
 import pandas as pd
 
@@ -16,14 +16,14 @@ app = Flask(__name__)
 
 # Metodos Zabbix
 @app.route("/connectZabbix", methods=["POST"])
-def connect(self):
+def connect():
     parser = reqparse.RequestParser() #Inicialiazacao
 
     parser.add_argument('user', required=True) #Adiciona os argumentos
     parser.add_argument('password', required=True)
     parser.add_argument('server', required=True)
 
-    args = parser.parser_args() #Analisar argumentos para dicionário
+    args = parser.parse_args() #Analisar argumentos para dicionário
 
     user = args['user']
     password = args['password']
@@ -31,23 +31,26 @@ def connect(self):
    
     try:
         apizabbix.connect(user, password, server)
-        return 200
+        return {"Status":"Funfou"}
+        # return(print(f'Login com zabbix com sucesso')),200
     except Exception as err: 
-        return(print(f'Falha ao conectar na API do Zabbix por usuario : {user} \n Erro: {err}'))
+        return {"Status": f"Deu o erro: {err}"}
+        # return(print(f'Falha ao conectar na API do Zabbix por usuario : {user} \n Erro: {err}'))
 
 @app.route("/getHostGroup", methods=["GET"])
 def getHostGroup(self):
     try:
         return(apizabbix.getHostGroup()),200
     except Exception as err:
-        return(print(f'Falha na requisicao /getHostGroup do ZabbixAPI \n Erro: {err}'))
+        return('Falha na requisicao /getHostGroup do ZabbixAPI \n Erro: {err}')
 
 @app.route("/getHost", methods=["GET"])
 def getHost():
     try:
-        return(apizabbix.getHost())
+        hosts = apizabbix.getHost() 
+        return json.dumps(hosts)
     except Exception as err: 
-        return(print(f'Falha na requisicao /getHost do ZabbixAPI \n Erro: {err}'))
+        return('Falha na requisicao /getHost do ZabbixAPI \n Erro: {err}')
 
 @app.route("/createHost", methods=["POST"])
 def createHost(self):
@@ -75,7 +78,7 @@ def getAlert(self):
     try:
         return(apizabbix.getAlert())
     except Exception as err:
-        return(print(f'Falha na requisicao /getAlert do ZabbixAPI \n Erro: {err}'))
+        return('Falha na requisicao /getAlert do ZabbixAPI \n Erro: {err}')
 
 @app.route("/logout")
 def logout(self):
