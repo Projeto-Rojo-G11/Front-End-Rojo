@@ -98,8 +98,9 @@
 #box-text{
   width: 40%;
   // background-color: #2962ff;
-  height: 100%;
-  padding: 10px;
+  height: 200px;
+  padding-top: 10px;
+  margin-right: 60px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -112,6 +113,28 @@
   display: flex;
   justify-content: space-between;
   font-size: 12px;
+  p{
+    top: 4px;
+    position: absolute;
+    background: white;
+    left: 8px;
+    display: flex;
+    width: 45px;
+    align-items: center;
+    justify-content: center;
+  }
+  input{
+    outline: none;
+    height: 25px;
+
+  }
+}
+
+#box-input{
+  display: flex;
+  position: relative;
+  height: 40px;
+  align-items: end;
 }
 
 #box-template{
@@ -132,7 +155,7 @@
 
 .container-template{
   width: auto;
-  height: auto;
+  max-height: 130px;
   background-color: #c62828;
 }
 #box-template p{
@@ -225,6 +248,7 @@ $radius: 0.2rem;
     background-color: red;
     padding: 0.2rem 1rem;
     text-align: center;
+    margin-bottom: 0;
 
     &-pending {
       background-color: $clr-pending;
@@ -243,7 +267,7 @@ $radius: 0.2rem;
   }
 
   .amount {
-    text-align: right;
+    text-align: left;
   }
 
   //Color alternating rows
@@ -251,6 +275,7 @@ $radius: 0.2rem;
     background-color: $clr-gray150;
   }
 }
+
 
 // ========================== Table 2
 

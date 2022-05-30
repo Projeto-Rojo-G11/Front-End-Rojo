@@ -97,6 +97,13 @@
     width:100%;
 }
 
+#funcao-img{
+    width: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .funcao p{
     margin-left: 15px;
 }

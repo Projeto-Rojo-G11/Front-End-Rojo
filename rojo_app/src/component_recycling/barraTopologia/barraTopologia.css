@@ -1,0 +1,153 @@
+
+.container-barratopologia{
+    height:300px;
+    width: 100%;
+    /* padding: 0 0.5srem; */
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: space-between;
+    align-items: center;
+    /* padding: 20px; */
+}
+
+#form-topologia{
+    height: 100%;
+}
+
+#form-topologia img{
+    width: 200px;
+    height: 100%;
+    /* border-radius: 50%; */
+    cursor: pointer;
+}
+
+#form-topologia button{
+    width: 500px;
+    height: 100%;
+    /* border-radius: 50%; */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    border: none;
+    background: #D9D9D9;
+    color: #000;
+}
+
+#add-img{
+    background-image: url(../../assets/img/topo-img.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 20px;
+    width: 30px;
+}
+
+#novosectionbtn{
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  border-radius: 50%;
+  color: white;
+  font-weight: 500;
+  font-size: 20px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+/* DESIGN INPUT DESCRICAO */
+
+form{
+	width: auto;
+	height: auto;
+	padding-bottom: 20px;
+}
+textarea{
+	border: none;
+	outline: none;
+	resize: none;
+}
+
+label.labels{
+	font-weight: 600;
+	font-size: 12px;
+	color:#6B6B6B;
+}
+
+.textarea_style{
+	margin-top: 5px;
+	width: auto;
+	height: auto;
+	border: 1px solid #229CFF;
+	border-radius: 2px;
+	font-size: 16px;
+}
+.textarea_style:hover{
+	-moz-box-shadow: 0px 0px 10px 1px  #EBF6FF;
+	-webkit-box-shadow: 0px 0px 10px 1px  #EBF6FF;
+	box-shadow: 0px 0px 10px 1px  #EBF6FF;
+	border: 1px solid #229CFF;
+}
+.textarea_style:focus{
+	-moz-box-shadow: 0px 0px 5px 1px #EBF6FF;
+	-webkit-box-shadow: 0px 0px 5px 1px  #EBF6FF;
+	box-shadow: 0px 0px 5px 1px  #EBF6FF;
+	border: 1px solid #229CFF;
+}
+
+textarea::-webkit-scrollbar {
+	width: 3px;
+}
+
+textarea::-webkit-scrollbar-track {
+	-webkit-box-shadow:inset 0 0 10px #BDDAE0;
+}
+
+textarea::-webkit-scrollbar-thumb {
+	background-color: #0B8FF9;
+}
+
+/* DESEIGN INPUT ACCORDION */
+
+#container-descricao-topologia{
+  width: 100%;
+  height: 100%;
+  padding: 0 0px 0px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+#box-input-d{
+  width: 100%;
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+#box-input-d input{
+  color: #7E7E7E;
+  padding-left: 10px;
+  width: 90%;
+  height: 100%;
+  outline: none;
+  border: none;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+
+#btn-save, #btn-up{
+  height: 100%;
+  width: 30px;
+  border-radius: 5px;
+  background-color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  border: none;
+}

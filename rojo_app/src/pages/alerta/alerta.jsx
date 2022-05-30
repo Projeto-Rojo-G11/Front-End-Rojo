@@ -68,7 +68,7 @@ export default function Alerta (){
             <div className="conteudo-equipamento">
 
                 <header>
-                    <h2 className="titulo">SEJA BEM VINDO</h2>
+                    <h2 className="titulo">ALERTAS</h2>
                     <div className="search-form">
                         <SearchBar placeholder="Pesquise um modelo " data={listaEquipamento}/>
                         

@@ -6,82 +6,46 @@ import { useEffect } from "react";
 import axios from 'axios';
 import {parseJwt}from '../../services/auth';
 
-function SearchBar( {placeholder, data}) {
-    const [filteredData, setFilteredData] = useState([]);
+export default function SearchBar( {placeholder, data}) {
     const [listaEquipamento, setListaEquipamento] = useState([]);
 
-    const [searchInput, setSearchInput] = useState([]);
-    const [filteredResults, setFilteredResults] = useState([]);
+    const [search, setSearch] = useState([]);
 
-    function realizarListagem (){
+    useEffect(() => {
+        const params = {};
+        if(search) {
+            params.title_like = search;
+        }
+
         let usuario = parseJwt().jti;
         axios
-        .get('http://100.26.2.205/api/Equipamento/listar-meus-equipamentos/' + usuario)
-        .then((response ) => {
-            console.log(response.data );
-            setListaEquipamento((response.data));
-            // listaEquipamento.();
+        .get('http://100.26.2.205/api/Equipamento/listar-meus-equipamentos/' + usuario, {params})
+        .then((response) => {
+            setListaEquipamento(response.data);
         })
         .catch((erro) => console.log(erro));
-    };
 
-    useEffect(()=>(realizarListagem()),[])
-
-    const Redirect = (data) => {
-        useNavigate('/Equipamento'+ data)
-    }
-
-    // const handleFilter = (event) => {
-    //     const searchWord = event.target.value;
-    //     const newFilter = data.filter((value) => {
-    //         return value.modelo.toLowerCase().includes(searchWord.toLowerCase());
-    //     });
-    //     if (searchWord === "") {
-    //         setFilteredData([]);
-    //     } else {
-    //         setFilteredData(newFilter);
-    //     }
-    // }
-    // const equipamentoFiltrado = useMemo(() => {
-    //     return listaEquipamento.filter( (equipamento) => equipamento.modelo.toLowerCase().includes(busca.toLowerCase()));        
-    // },[busca]) 
-
-    
-    
-    const searchItems = (searchValue) => {
-        setSearchInput(searchValue)
-        if (searchInput !== '') {
-            const filteredResults = listaEquipamento.filter((item) => {
-                return Object.values(item.nomeCurso).join('').toLowerCase().includes(searchInput.toLowerCase())
-            })
-            setFilteredResults(filteredData)
-        } else {
-            setFilteredResults()
-        }
-    }
+    },[search]);
 
     return (
         <div className="search">
             <div className="searchInputs"> 
                 <div className="searchIcon"></div>
-                <input type="text" placeholder={placeholder} onchange={searchItems}/>
+                <input type="text" value={search} placeholder={"Busque por um dispositivo"} onChange={(event) => setSearch(event.target.value)}/>
             </div>
-            {filteredData.length !== 0 && (
-                <div className="dataResult">
-                    {filteredResults.map((value, key) => {
-                        return (
-                            <button className="dataItem" onClick={Redirect(value.idEquipamento)} target="_blank">
-                                <p>{value.modelo}</p>
-                                <p>{value.numeroDeSerie}</p>
-                            </button>
-                        )
-                    })}
-                </div>
+            <div>
+                {
+                    listaEquipamento.map((equipamento) => (
+                        <div>
 
-                )
-            }
+                        </div>
+                    ))
+                }
+            </div>
         </div>
+
+               
+ 
     );
   }
   
-export default SearchBar;

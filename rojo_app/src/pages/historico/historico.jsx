@@ -2,9 +2,11 @@ import axios from "axios";
 import React,{ useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 
+import z from '../../assets/img/unnamed.png';
+import d from '../../assets/img/unnamed (1).png';
 
 import { Form } from 'react-bootstrap';
-import './historico.css'
+import './historico.scss'
 
 import '../../component_recycling/barraLateral/barraLateral.css';
 import '../../assets/css/animation__input.css';
@@ -21,6 +23,7 @@ export default function CadastroEquipamento() {
     // const [boolPut, setBoolPut] = useState(false);
 
     const[listaEquipamento, setListaEquipamento] = useState([]);
+    const[listaHistoriaZabbix, setListaHistoriaZabbix] = useState([{}])
 
     //States Usuario
     const [nome, setNome] = useState('');
@@ -137,7 +140,7 @@ export default function CadastroEquipamento() {
                 <div className="conteudo-equipamento">
 
                 <header>
-                    <h2 className="titulo">SEJA BEM VINDO</h2>
+                    <h2 className="titulo">HISTÓRICO DOS DISPOSITIVOS</h2>
                     <div className="search-form">
                         <SearchBar placeholder="Pesquise um modelo " data={listaEquipamento}/>
                         
@@ -149,63 +152,65 @@ export default function CadastroEquipamento() {
                     <section>
                             
                         <div className="container-info-equipamento">    
-                            <div className="equipamento-his">
-                                <div className="section-1">
-                                    <div className="form__div">                       
-                                            <input 
-                                                className="form__input"
-                                                type="text"
-                                                name="Modelo"
-                                                value={modelo}
-                                                autoComplete='off'
-                                                placeholder=" "
-                                                onChange={(event) => setModelo(event.target.value)}
-                                            /> 
-                                            <label className="form__label">
-                                                Modelo
-                                            </label>
-                                        </div>
-                                    <div className="form__div">                   
-                                        <input
-                                            className="form__input"
-                                            type="text"
-                                            name="NumeroSerie"
-                                            value={numeroDeSerie}
-                                            placeholder=" "
-                                            onChange={(event) => setNumeroDeSerie(event.target.value)}
-                                        />  
-                                        <label className="form__label">
-                                            Numero de Série
-                                        </label>
-                                    </div> 
+                            <div class="container-hist">
+                                <h2>HISTÓRIA<small>do ZABBIX<img src={z} alt="icone zabbix"/></small></h2>
+                                <ul class="responsive-table">
+                                    <li class="table-header">
+                                    <div class="col col-1">Job Id</div>
+                                    <div class="col col-2">Customer Name</div>
+                                    <div class="col col-3">Amount Due</div>
+                                    <div class="col col-4">Payment Status</div>
+                                    </li>
+                                    {
+                                        listaHistoriaZabbix.map((item) => {
+                                            return(
+                                                <li class="table-row">
+                                                <div class="col col-1" data-label="Job Id">42235</div>
+                                                <div class="col col-2" data-label="Customer Name">John Doe</div>
+                                                <div class="col col-3" data-label="Amount">$350</div>
+                                                <div class="col col-4" data-label="Payment Status">Pending</div>
+                                                </li>
+                                            )
+                                        })
+                                    }
+                    
+                                </ul>
+                            </div>
+                            <div class="container-hist">
+                                <h2>HISTÓRIA<small>do DATADOG <img src={d} alt="icone datadog"/></small></h2>
+                                <ul class="responsive-table">
+                                    <li class="table-header">
+                                    <div class="col col-1">Job Id</div>
+                                    <div class="col col-2">Customer Name</div>
+                                    <div class="col col-3">Amount Due</div>
+                                    <div class="col col-4">Payment Status</div>
+                                    </li>
+                                    <li class="table-row">
+                                    <div class="col col-1" data-label="Job Id">42235</div>
+                                    <div class="col col-2" data-label="Customer Name">John Doe</div>
+                                    <div class="col col-3" data-label="Amount">$350</div>
+                                    <div class="col col-4" data-label="Payment Status">Pending</div>
+                                    </li>
+                                    <li class="table-row">
+                                    <div class="col col-1" data-label="Job Id">42442</div>
+                                    <div class="col col-2" data-label="Customer Name">Jennifer Smith</div>
+                                    <div class="col col-3" data-label="Amount">$220</div>
+                                    <div class="col col-4" data-label="Payment Status">Pending</div>
+                                    </li>
+                                    <li class="table-row">
+                                    <div class="col col-1" data-label="Job Id">42257</div>
+                                    <div class="col col-2" data-label="Customer Name">John Smith</div>
+                                    <div class="col col-3" data-label="Amount">$341</div>
+                                    <div class="col col-4" data-label="Payment Status">Pending</div>
+                                    </li>
+                                    <li class="table-row">
+                                    <div class="col col-1" data-label="Job Id">42311</div>
+                                    <div class="col col-2" data-label="Customer Name">John Carpenter</div>
+                                    <div class="col col-3" data-label="Amount">$115</div>
+                                    <div class="col col-4" data-label="Payment Status">Pending</div>
+                                    </li>
+                                </ul>
                                 </div>
-                                <div className="form__div">                   
-                                        <input
-                                            className="form__input"
-                                            type="text"
-                                            name="NumeroSerie"
-                                            value={numeroDeSerie}
-                                            placeholder=" "
-                                            onChange={(event) => setNumeroDeSerie(event.target.value)}
-                                        />  
-                                        <label className="form__label">
-                                            Numero de Série
-                                        </label>
-                                </div> 
-                                <div id="img-historia"/>                           
-                            </div> 
-                            <div className="historico">
-                                <div className="body-historico">
-                                    <p>
-                                        Entre as datas
-                                    </p>
-                                    <div>
-                                        <p>00/00/0000</p>
-                                        <p>00/00/0000</p>
-
-                                    </div>
-                                </div>
-                            </div>                       
                         </div>
                     </section>
         

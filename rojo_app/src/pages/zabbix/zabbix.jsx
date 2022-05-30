@@ -1,4 +1,4 @@
-import React,{ useState, useEffect } from "react";
+ import React,{ useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
@@ -223,7 +223,7 @@ export default function Zabbix()
                                   
                                   </div>
                                   <div id="box-input">
-                                    <p>HOST GROUP</p>
+                                    <p>GROUP</p>
                                     <input 
                                       type="text"
                                       onChange={(event) => (setHostGroup(event))}
@@ -303,7 +303,6 @@ export default function Zabbix()
                                                 <td className="td-table-2"><button onClick={{/*(event) => escolhido(event.target.item.templateId)*/}} ></button></td>
 
                                               </tr>
-  
                                           )
                                         })
 
@@ -320,7 +319,6 @@ export default function Zabbix()
 
                          <div className="container-host">
                          <div className="h-add-host"> SEUS HOSTS</div>
-                            <div className="head-host">HOSTS ZABBIX</div>
                             <table className="table-table-1">
                                 <thead className="thead-table-1">
                                 <tr>

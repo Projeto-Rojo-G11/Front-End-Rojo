@@ -50,8 +50,24 @@ export default function Grafana()
     const[server, setServer] = useState('');
     const modalZabbix = document.querySelector('#modalZabbix');
     const fooBarRef = useRef(null);
+
+    const[iframe, setIframe] = useState();
     
-    
+    var IframePequeno1
+    var IframePequeno2
+    var IframePequeno3
+    var IframePequeno4
+
+    var IframeMedio1;
+    var IframeMedio2;
+    var IframeMedio3;
+    var IframeMedio4;
+
+    var IframeGrande1;
+    var IframeGrande2;
+    var IframeGrande3;
+
+
     if(login === true){
         modalZabbix.classList.add('.hidden');
      }
@@ -151,7 +167,24 @@ export default function Grafana()
         .catch((erro) => console.log(erro));
     }
 
-    useEffect(() => (realizarListagem()), [])        
+    useEffect(() => (realizarListagem()), [])   
+    
+    function newIframe(){
+      // const g = document.querySelector('#frame-grande');
+      // const m = document.querySelector('#frame-medio');
+      // const p = document.querySelector("#frame-pequeno");
+
+      // if(iframe.width >= 250){
+      //   g.appendChild(iframe);
+      // }
+      // if(iframe.width >= 250){
+      //   m.appendChild(iframe);
+      // }
+      // if(iframe.width >= 250){
+      //   p.appendChild(iframe);
+      // }
+      console.log(iframe.width)
+    }
     
     const equipamentoFiltrado = useMemo(() => {
         return listaEquipamento.filter( (equipamento) => equipamento.modelo.toLowerCase().includes(busca.toLowerCase()));        
@@ -171,200 +204,27 @@ export default function Grafana()
                         
                     </div>
                 </header>
-            
-                
 
                 <section>
                         
-                    <div className="container-info-equipamento">
+                    <div className="container-info-equipamento grafana">
+                      <div>
+                        <input type="text" onChange={(event) => setIframe(event.target.value)}/>
+                        <button onClick={newIframe}>Enviar</button>
+                      </div>
+                      <div id="frame-pequeno">
 
-                          <div id="modalGrafana"  ref={fooBarRef}> 
-                            <div id="box-">LOGIN GRAFANA</div>
-                            <div id="box--">
-                              <div id="box--1">
-                                <div className="ii">
-                                  <input
-                                      className="input-login b"
-                                      type="email"
-                                      value={usuario}
-                                      onChange={(event) => setUsuario(event.target.value)}
-                                      placeholder="USUARIO"
-                                  />
-                                </div>
-                                <div className="ii">
-                                    <input
-                                        className="input-login input-login-senha b"
-                                        type="password"
-                                        value={senha}
-                                        onChange={(event) => setSenha(event.target.value)}
-                                        placeholder="SENHA"
-                                    />
-                                </div>
+                      </div>
+                      <div id="frame-medio">
 
-                              </div>
-                              <div className="ii">
-                                <input
-                                    className="input-login c"
-                                    type="text"
-                                    value={server}
-                                    onChange={(event) => setServer(event.target.value)}
-                                    placeholder="SERVER"
-                                />
-                              </div>
-                              <button id="btn-za" onClick={logar}/>
-                              
-                            </div>
-                          </div>
-                           
-                          <div className="add-host">
-                            <div className="h-add-host"> NOVO HOST</div>
-                            <div className="b-add-host">
-                              <div id="box-text">
-                                <div id="box-t1">
-                                  <div id="box-input">
-                                    <p>HOST</p>
-                                    <input 
-                                      type="text"
-                                      onChange={(event) => (setNomeHost(event))}
-                                    />
-                                  
-                                  </div>
-                                  <div id="box-input">
-                                    <p>HOST GROUP</p>
-                                    <input 
-                                      type="text"
-                                      onChange={(event) => (setHostGroup(event))}
-                                    />
-                                  
-                                  </div> 
+                      </div>
+                      <div id="frame-grande">
 
-                                </div>
-                                <div id="box-t1">
-                                  <div id="box-input">
-                                    <p>TIPO</p>
-                                    <input 
-                                      type="text"
-                                      onChange={(event) => (setTipo(event))}
-                                    />
-                                  
-                                  </div>
-                                  <div id="box-input">
-                                    <p>PORTA</p>
-                                    <input 
-                                      type="text"
-                                      onChange={(event) => (setPorta(event))}
-                                    />
-                                  
-                                  </div> 
-
-                                </div>
-                                <div id="box-t1">
-                                  <div id="box-input">
-                                    <p>MAIN</p>
-                                    <input 
-                                      type="text"
-                                      onChange={(event) => (setMain(event))}
-                                    />
-                                  
-                                  </div>
-                                  <div id="box-input">
-                                    <p>DNS</p>
-                                    <input 
-                                      type="text"
-                                      onChange={(event) => (setDns(event))}
-                                    />
-                                  
-                                  </div> 
-
-                                </div>
-                                <button id="btn-new">ENVIAR</button>
-                                
-                              </div>
-                              <div id="box-template">
-                              <p>TEMPLATE</p>
-                              <div className="container-template">
-                                <div class="tbl-header">
-                                  <table className="table-table-2" cellpadding="0" cellspacing="0" border="0">
-                                    <thead>
-                                      <tr>
-                                        <th className="th-table-2">ID TEMPLATE</th>
-                                        <th className="th-table-2">TEMPLATE</th>
-                                        <th className="th-table-2">CHAVE</th>
-                                        <th className="th-table-2">DESCRICAO</th>
-                                        <th className="th-table-2"></th>
-                                      </tr>
-                                    </thead>
-                                  </table>
-                                </div>
-                                <div className="tbl-content">
-                                  <table className="table-table-2" cellpadding="0" cellspacing="0" border="0">
-                                    <tbody>
-                                      {
-                                        listaTemplate.map(item => {
-                                          return(
-                                            <tr>
-                                              <td className="td-table-2">{item.templateId}</td>
-                                              <td className="td-table-2">{item.template} </td>
-                                              <td className="td-table-2">{item.key}</td>
-                                              <td className="td-table-2">{item.description}</td>
-                                              <td className="td-table-2"><button onClick={(event) => escolhido(event.target.item.templateId)} ></button></td>
-
-                                            </tr>
-  
-                                          )
-                                        })
-
-                                      }
-
-                                    </tbody>
-                                  </table>
-                                </div>           
-                                </div>
-                              </div>
-                            </div>
-                          </div>  
-
-
-                         <div className="container-host">
-                         <div className="h-add-host"> SEUS HOSTS</div>
-                            <div className="head-host">HOSTS ZABBIX</div>
-                            <table className="table-table-1">
-                                <thead className="thead-table-1">
-                                <tr>
-                                    <th className="th-table-1">HOST</th>
-                                    <th className="th-table-1">HOST GROUP</th>
-                                    <th className="th-table-1">DESCRIÇÃO</th>
-                                    <th className="th-table-1">STATUS</th>
-                                    <th className="th-table-1">GRAVIDADE</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {
-                                  listaDispositivo.map((item) => {
-                                    return(
-                                      <tr>
-                                        <td className="td-table-1"><a href="#">{item.host}</a></td>
-                                        <td className="td-table-1">{item.hostgroup}</td>
-                                        <td className="td-table-1">{item.descricao}</td>
-                                        <td className="td-table-1">
-                                        <p class="status status-unpaid">{item.status}</p>
-                                        </td>
-                                        <td class="td-table-1 amount">{item.gravidade}</td>
-                                    </tr>
-                                    )
-                                  })
-                                }
-                            
-                                </tbody>
-                            </table>
-                            </div>
-                            
-
-                        
+                      </div>
                     </div>           
                 </section>
     
             </div>
         </div>
-    );
+    )
 }

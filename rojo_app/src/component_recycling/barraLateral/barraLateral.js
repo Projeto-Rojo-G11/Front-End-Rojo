@@ -55,19 +55,27 @@ export default function BarraLateral () {
                             <nav className="funcao-superior">
                                 <p className="fp">GESTAO DE INFRAESTRUTURA</p>
                                 <Link className= "funcao" to="/ListaEquipamento">
-                                    <img src={la} alt="Icone de listagem"/>
+                                    <div id='funcao-img'>
+                                        <img src={la} alt="Icone de listagem"/>
+                                    </div>
                                     <p>Listar Equipamentos</p>
                                 </Link>
                                 <Link className= "funcao" to="/Historico">
-                                    <img src={ho} alt="Icone de histórico"/>
+                                    <div id='funcao-img'>
+                                        <img src={ho} alt="Icone de historico"/>
+                                    </div>
                                     <p>Histórico</p>
                                 </Link>
                                 <Link className= "funcao" to="/Topologia">
-                                    <img src={ta} alt="Icone de topologia"/>
+                                    <div id='funcao-img'>
+                                        <img src={ta} alt="Icone de topologia"/>
+                                    </div>
                                     <p>Topologia</p>
                                 </Link>
                                 <Link className= "funcao" to="/Alerta">
-                                    <img src={aa} alt="Icone de topologia"/>
+                                    <div id='funcao-img'>
+                                        <img src={aa} alt="Icone de alerta"/>
+                                    </div>
                                     <p>Alerta</p>
                                 </Link>
 

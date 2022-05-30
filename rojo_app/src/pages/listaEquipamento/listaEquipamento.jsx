@@ -9,7 +9,6 @@ import '../bemVindo/bemVindo.css';
 import '../../assets/css/animation__input.css';
 import '../cadastrarEquipamento/cadastroEquipamento.css';
 import './listaEquipamento.css';
-import { map } from "lodash";
 import SearchBar  from '../../component_recycling/barraPesquisa/SearchBar';
 import BarraLateral from "../../component_recycling/barraLateral/barraLateral";
 
@@ -54,7 +53,7 @@ export default function ListaEquipamento (){
             <div className="conteudo-equipamento">
 
                 <header>
-                    <h2 className="titulo">SEJA BEM VINDO</h2>
+                    <h2 className="titulo">LISTA DE DISPOSITIVOS</h2>
                     <div className="search-form">
                         <SearchBar placeholder="Pesquise um modelo " data={listaEquipamento}/>
                         
@@ -110,40 +109,40 @@ export default function ListaEquipamento (){
                                             <div className="ob2-status">
                                                 <div className="status">
 
-                                                    STATUS 
+                                                    <p>STATUS</p>
                                                     <div>
                                                         {
                                                         statusOn === true && (
                                                             <div className="on-off">
                                                                 <div className="circle1"/>
-                                                                <p>Ligado</p>
+                                                                <p>LIGADO</p>
                                                             </div>
                                                         )}
                                                         {
                                                         statusOn === false && (
                                                             <div className="on-off">
                                                                 <div className="circle2"/>
-                                                                <p>Desligado</p>
+                                                                <p>DESLIGADO</p>
                                                             </div>
                                                         )}
 
                                                     </div>
                                                 </div>
-                                                <div>
-                                                    ALERTAS
+                                                <div id="con-alerta">
+                                                    <p>ALERTAS</p>
                                                     <div className="box-alerta">
                                                         <div className="alerta">
                                                             <div className="alerta1"/>
                                                             <p>0</p>
-                                                            </div>
+                                                        </div>
                                                 
                                                 
                                                         <div className="alerta">
                                                             <div className="alerta2"/>
                                                             <p>0</p>
                                                         </div>
-                                                        </div>               
-                                                    </div> 
+                                                    </div>               
+                                                </div> 
                                             </div>
                                             <div className="ob3-img"/>
                                     </div>

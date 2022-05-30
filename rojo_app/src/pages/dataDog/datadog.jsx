@@ -229,7 +229,7 @@ export default function Zabbix()
                                   
                                   </div>
                                   <div id="box-input">
-                                    <p>HOST GROUP</p>
+                                    <p>GROUP</p>
                                     <input 
                                       type="text"
                                       onChange={(event) => (setHostGroup(event))}
@@ -326,7 +326,6 @@ export default function Zabbix()
 
                          <div className="container-host">
                          <div className="h-add-host"> SEUS HOSTS</div>
-                            <div className="head-host">HOSTS ZABBIX</div>
                             <table className="table-table-1">
                                 <thead className="thead-table-1">
                                 <tr>
@@ -358,6 +357,7 @@ export default function Zabbix()
                             </table>
                             </div>
                             
+                        <div className="h-add-host"> INCOPORAÇÕES DE GRAFICOS</div>
 
                         
                     </div>           

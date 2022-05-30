@@ -15,7 +15,7 @@ export default function Reboot(){
                     <div className="img-modal"/>
                     <div id="info-modal">
                         <h2>INICIAR REBOOT</h2>
-                        <h4>DO EQUIPAMENTO :</h4>
+                        <h4>DO EQUIPAMENTO</h4>
                         <div id="text">
                             <p>modelo :</p>
                             <p>ip :</p>

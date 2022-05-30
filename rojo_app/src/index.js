@@ -12,7 +12,7 @@ import Erro  from './pages/erro/erro';
 import Login from './pages/login/login';
 import CadastrarUsuario from './pages/cadastrarUsuario/cadastrarUsuario';
 import CadastrarEquipamento from './pages/cadastrarEquipamento/cadastrarEquipamento';
-import Topologia from './pages/topologia/topologia';
+import Topologia from './pages/topologia/topologia.tsx';
 import BemVindo from './pages/bemVindo/bemVindo';
 import Zabbix from './pages/zabbix/zabbix.jsx';
 import Grafana from './pages/grafana/grafana.jsx';
