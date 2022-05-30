@@ -38,10 +38,7 @@ export default function Alerta (){
 
 
     function buscarMeusEquipamentos(){
-        axios('http://localhost:5000/api/Equipamento/listar-meus-equipamentos', {
-            headers : {
-                'Authorization' : 'Bearer ' + localStorage.getItem('usuario-login')
-            }
+        axios('http://3.211.143.134:8080/api/Equipamento/listar-meus-equipamentos/', {
         })
         .then(response => {
             if (response.status === 200) {
@@ -54,7 +51,7 @@ export default function Alerta (){
     useEffect( buscarMeusEquipamentos, [] );
 
     function listaTipoequipamento(){
-        axios.get('http://localhost:5000/api/Usuario/',{})
+        axios.get('http://3.211.143.134:8080/api/TipoEquipamento/lista',{})
 
         .then(resposta => resposta.status === 201)
     }

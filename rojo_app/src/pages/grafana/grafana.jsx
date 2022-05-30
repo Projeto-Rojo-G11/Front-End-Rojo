@@ -157,7 +157,7 @@ export default function Grafana()
     function realizarListagem (){
         let usuario = parseJwt().jti;
         axios
-        .get('http://localhost:5000/api/Equipamento/listar-meus-equipamentos/' + usuario)
+        .get('http://3.211.143.134:8080/api/Equipamento/listar-meus-equipamentos/' + usuario)
         .then((response ) => {
             // console.log(response.data );
             setListaEquipamento((response.data));
@@ -208,7 +208,8 @@ export default function Grafana()
                 <section>
                         
                     <div className="container-info-equipamento grafana">
-                      <div>
+                      <div id="get--">
+                        <p>Incorpore um novo gráfico (IFRAME) pronto de serviços de monitoramento </p>
                         <input type="text" onChange={(event) => setIframe(event.target.value)}/>
                         <button onClick={newIframe}>Enviar</button>
                       </div>

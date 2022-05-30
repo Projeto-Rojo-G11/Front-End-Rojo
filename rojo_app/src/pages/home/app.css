@@ -223,9 +223,9 @@
 .back-vermelho{
   background-image: url(../../assets/img/back-vermelho.png);
   width: 1000px;
-  height: 570px;
+  height: 568px;
   position: absolute;
   z-index: 3;
-  top: 117px;
+  top: 120px;
   right: 0;
 }

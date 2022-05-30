@@ -15,7 +15,7 @@
   .grafana{
     width: 100%;
     height: 100%;
-    background-color: aqua;
+    /* background-color: aqua; */
     display: flex;
     flex-direction: column;
   }
@@ -25,3 +25,29 @@
     height: auto;
     display: flex;
   }
+
+
+#get--{
+  width: 100%;
+  height: 80px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+#get-- p{
+  width: 450px;
+}
+
+#get-- input{
+  width: 450px;
+}
+
+#get-- button{
+  
+}

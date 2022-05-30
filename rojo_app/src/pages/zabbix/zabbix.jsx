@@ -35,7 +35,7 @@ export default function Zabbix()
     const [cargo] = useState(parseJwt().cargo);
 
     //Lista
-    const[listaDispositivo, setListaDispositivo]= useState([{"host":"teste","hostgroup": "teste", "descricao":"teste", "status":"teste", "gravidade":"teste"}]);
+    const[listaDispositivo, setListaDispositivo]= useState([{/*{"host":"teste","hostgroup": "teste", "descricao":"teste", "status":"teste", "gravidade":"teste"}*/}]);
     const[listaEquipamento, setListaEquipamento] = useState([]);
     const[listaTemplate, setListaTemplate] = useState([{"templateId":"1","template":"Linux", "key":"1317", "description":"Linux Server"},{"templateId":"1","template":"Linux", "key":"1317", "description":"Linux Server"},{"templateId":"1","template":"Linux", "key":"1317", "description":"Linux Server"}]);
     const[busca, setBusca] = useState("");
@@ -134,7 +134,7 @@ export default function Zabbix()
     function realizarListagem (){
         let usuario = parseJwt().jti;
         axios
-        .get('http://localhost:5000/api/Equipamento/listar-meus-equipamentos/' + usuario)
+        .get('http://3.211.143.134:8080/api/Equipamento/listar-meus-equipamentos/' + usuario)
         .then((response ) => {
             // console.log(response.data );
             setListaEquipamento((response.data));

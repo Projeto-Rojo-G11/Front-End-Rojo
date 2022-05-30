@@ -45,9 +45,9 @@ print("\nConcluido")
 #https://github.com/andreirapuru/netmiko_send_commands
 
 import getpass
-import netmiko
+import paramiko
 import csv
-from netmiko import ConnectHandler
+from paramiko import ConnectHandler
 
 #Enable debug (optional)
 #logging.basicConfig(filename='netmiko_logs.txt', level=logging.DEBUG)

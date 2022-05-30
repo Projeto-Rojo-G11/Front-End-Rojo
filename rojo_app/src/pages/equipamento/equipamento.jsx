@@ -17,7 +17,7 @@ import '../../assets/css/animation__input.css';
 import '../cadastrarEquipamento/cadastroEquipamento.css';
 import './equipamento.css';
 import '../../component_recycling/barwork/BarWork.css';
-import '../../component_recycling/barwork/style.css';
+import '../../component_recycling/barwork/style.scss';
 
 
 
@@ -77,7 +77,7 @@ export default function CadastroEquipamento() {
         );
     
         axios
-          .post('http://localhost:5000/api/imagem/bd', formData, {
+          .post('http://3.211.143.134:8080/api/ImgEquipamento/imagem/bd', formData, {
             // headers: {
             //   Authorization: 'Bearer ' + localStorage.getItem('usuario-login'),
             // },
@@ -87,7 +87,7 @@ export default function CadastroEquipamento() {
     };
 
     const buscarImagem = () => {
-        axios('http://localhost:5000/api/perfils/imagem/bd', {
+        axios('http://3.211.143.134:8080/api/ImgUsuario/imagem/bd', {
         //   headers: {
         //     Authorization: 'Bearer ' + localStorage.getItem('usuario-login'),
         //   },
@@ -105,7 +105,7 @@ export default function CadastroEquipamento() {
     const buscarTipoEquipamento = () =>
     {
         axios
-        .get('http://localhost:5000/api/TipoEquipamento/lista')
+        .get('http://3.211.143.134:8080/api/TipoEquipamento/lista')
         
         .then(function (response) {
             setDadoTipoEquipamento(response.data)
@@ -131,7 +131,7 @@ export default function CadastroEquipamento() {
     };
     
     axios
-    .post("http://localhost:5000/api/Equipamento/cadastro-equipamento", equipamento
+    .post("http://3.211.143.134:8080/api/Equipamento/cadastro-equipamento", equipamento
     )   
     
     .then( function (response){

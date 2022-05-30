@@ -140,7 +140,7 @@ export default function Zabbix()
     function realizarListagem (){
         let usuario = parseJwt().jti;
         axios
-        .get('http://localhost:5000/api/Equipamento/listar-meus-equipamentos/' + usuario)
+        .get('http://3.211.143.134:8080/api/Equipamento/listar-meus-equipamentos/' + usuario)
         .then((response ) => {
             // console.log(response.data );
             setListaEquipamento((response.data));

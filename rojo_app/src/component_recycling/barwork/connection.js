@@ -1,4 +1,4 @@
-import './style.css'
+import './style.scss'
 import CloseIcon from '@mui/icons-material/Close';
 
 export default function Connection() {
@@ -46,7 +46,6 @@ export default function Connection() {
 
                         </div>
                     </div>
-                    {/* <button id="close" onClick={EventClose}><CloseIcon/></button> */}
                 </div>
             </div> 
     )
