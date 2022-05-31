@@ -422,7 +422,7 @@ export default function CadastroEquipamento() {
                 </div>
                 <Reboot/>
                 <Configuration/>
-                <Connection/>
+                <Connection ip={ip} modelo={modelo}/>
             
             </div>
         );
