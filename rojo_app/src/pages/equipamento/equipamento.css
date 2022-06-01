@@ -61,3 +61,7 @@
 #descricao{
     margin-bottom: 250px;
 }
+
+#descricao textarea{
+    white-space: pre-wrap; 
+}

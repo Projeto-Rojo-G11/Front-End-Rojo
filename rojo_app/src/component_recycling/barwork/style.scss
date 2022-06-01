@@ -29,8 +29,8 @@
 }
 
 #box-modal{
-    width: 450px;
-    height: 300px;
+    width: 580px;
+    height: 350px;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
     border-radius: 10px;
@@ -135,6 +135,11 @@ h4{
     border-radius: 10px 10px 0px 0px;
 }
 
+#h--connection input{
+    width: 50px;
+    height: 50px;
+}
+
 #h--1{
     display: flex;
     flex-direction: column;
@@ -143,16 +148,26 @@ h4{
 }
 
 #h--2{
-    width: 190px;
+    width: auto;
     height: 65%;
-    background: rgba(0, 0, 0, 0.6);
+    // background: rgba(0, 0, 0, 0.6);
     border-radius: 5px;
     display: flex;
-    flex-direction: column;
-    padding: 10px;
-    color: #70FF00;
+    // padding: 10px;
+    justify-content: space-between;
     font-size: 14px;
+    align-items:center;
     font-family: 'Oxygen Mono', monospace;
+    button{
+        width: 100px;
+        height: 40px;
+    }
+    div{
+        width: auto;
+        padding-left: 0;
+        padding: 0 0px 0px 20px;
+        
+    }
 }
 
 #b-connection{
@@ -166,8 +181,8 @@ h4{
 }
 
 #b-global{
-    width:  400px;
-    height: 187px;
+    width:  530px;
+    height: 250px;
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
     position: absolute;
@@ -179,6 +194,14 @@ h4{
     flex-direction: column;
     justify-content: space-between;
     font-family: 'Oxygen Mono', monospace;
+    div{
+        textarea{
+            width: 300px;
+            height: 50px;
+            border: 1px solid black;
+        
+        }
+    }
 
 }
 
@@ -192,8 +215,13 @@ h4{
     width: 240px;
     justify-content: space-between;
     margin-top: 0.5em;
-    font-size: 14px;
-    
+    font-size: 14px;    
+    input{
+        width: 150px;
+        margin-right: 20px;
+        margin-bottom: 10px;
+    }
+   
 }
 
 #i-- p{

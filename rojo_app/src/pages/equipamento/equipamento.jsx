@@ -355,7 +355,7 @@ export default function CadastroEquipamento() {
                                                                 <div className="box-img-equipamento" alt="imagem do equipamento"/>
 
                                                                 <div className="form__div" id="descricao">    
-                                                                    <textarea rows="6" cols="20" wrap="hard"
+                                                                    <textarea rows="3" cols="20" wrap="hard"
                                                                     
                                                                             className="form__input"
                                                                             id="form__input_descricao"

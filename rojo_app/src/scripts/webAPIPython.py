@@ -1,6 +1,6 @@
 # from grafana import apigrafana
-import apizabbix
-from flask import Flask
+# import apizabbix
+# from flask import Flask
 from flask_restful import reqparse
 # from pydantic import BaseModel
     
@@ -10,10 +10,10 @@ from flask_restful import reqparse
 
 import json
 # import ast
-import pandas as pd
-import paramiko
+# import pandas as pd
+# import paramiko
 
-app = Flask(__name__)
+# app = Flask(__name__)
 
 # # Metodos Zabbix
 # @app.route("/connectZabbix", methods=["POST"])
@@ -96,11 +96,25 @@ app = Flask(__name__)
 
 
 from fastapi import FastAPI
-import paramiko
-import time
-from pydantic import BaseModel
+from typing import Optional 
+from starlette.middleware.cors import CORSMiddleware
+# import paramiko
+# import time
+from pydantic import BaseModel, Json
+import csv
+from fastapi.encoders import jsonable_encoder
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class Equipment(BaseModel):
     username: str
@@ -109,30 +123,37 @@ class Equipment(BaseModel):
     ip: str
     command_list: list
 
-@app.post('/send_commands/', METHOD={"POST"})
-def connect_to_equip(equip: Equipment):
-    parser = reqparse.RequestParser() 
+# @app.post("/send_commands", equip = Equipment)
+# def connect_to_equip(obj_json : Equipment ):
 
-    parser.add_argument('user', required=True) 
-    parser.add_argument('password', required=True)
-    parser.add_argument('ip', required=True)
-    parser.add_argument('porta')
-    parser.add_argument('modelo')
+    # return obj_json
+    # equip.port = port
+    # equip.command_list = command_list
+    # equip.password = password
+    # equip.username = username
+    # equip.ip = ip
+    # equip.command_list = command_list
+    
+    # lista = []
 
-    args = parser.parse_args() #Analisar argumentos para dicionário
+    # spamreader = csv.reader(equip.command_list, delimiter='\n') 
 
-    equip.port = args['porta']
-    equip.command_list = args['command_list']
-    equip.password = args['password']
-    equip.username = args['user']
-    equip.ip = args['ip']
+    # for linha in spamreader:
+    #     lista.append(linha)
 
-    client = paramiko.SSHClient()
-    client.set_missing_host_key_policy(paramiko.AutoAddPolicy()) 
-    client.connect(f"{equip.ip}", f"{equip.port}", f"{equip.username}", f"{equip.password}")
-    for i in equip.command_list:
-        stdin, stdout, stderr = client.exec_command(f'{equip.command_list[i]}\n', get_pty=True)
-    return {"Status":"Comandos executados!"}
+    # print(lista[1]) 
+    # print(lista[1][1])
 
-if __name__ == "__main__":
-    app.run(debug=True)
+    # client = paramiko.SSHClient()
+    # client.set_missing_host_key_policy(paramiko.AutoAddPolicy()) 
+    # client.connect(f"{equip.ip}", f"{equip.port}", f"{equip.username}", f"{equip.password}")
+    # for i in equip.command_list:
+    #     stdin, stdout, stderr = client.exec_command(f'{equip.command_list[i]}\n', get_pty=True)
+    # return {"Status":"Comandos executados!"}
+
+# if __name__ == "__main__":
+#     app.run(debug=True)
+
+@app.post("/teste")
+def teste(teste:str):
+    return json.dumps(teste)
