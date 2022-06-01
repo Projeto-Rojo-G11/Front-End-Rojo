@@ -40,9 +40,10 @@
 }
 
 .img-modal{
-    width: 116px;
+    width: 135px;
     height: 100%;
     background-image: url(../../assets/img/J.png);
+    background-size: cover;
 }
 #info-modal{
     display: flex;

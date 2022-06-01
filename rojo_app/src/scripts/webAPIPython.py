@@ -1,6 +1,8 @@
 # from grafana import apigrafana
 # import apizabbix
-# from flask import Flask
+from multiprocessing.spawn import spawn_main
+from sys import stderr, stdout
+from flask import Flask
 from flask_restful import reqparse
 # from pydantic import BaseModel
     
@@ -13,7 +15,7 @@ import json
 # import pandas as pd
 # import paramiko
 
-# app = Flask(__name__)
+app = Flask(__name__)
 
 # # Metodos Zabbix
 # @app.route("/connectZabbix", methods=["POST"])
@@ -98,23 +100,37 @@ import json
 from fastapi import FastAPI
 from typing import Optional 
 from starlette.middleware.cors import CORSMiddleware
-# import paramiko
+import paramiko
+from flask import request 
 # import time
 from pydantic import BaseModel, Json
 import csv
-from fastapi.encoders import jsonable_encoder
+from flask_cors import CORS, cross_origin
 
-app = FastAPI()
 
-origins = ["*"]
+# app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+# origins = ["*"]
+
+# app.add_middleware(
+#     CORSMiddleware,
+#     allow_origins=origins,
+#     allow_credentials=True,
+#     allow_methods=["*"],
+#     allow_headers=["*"],
+# )
+
+api_v1_cors_config ={
+    "origins":['http://localhost:3000'],
+    "methods":["OPTIONS","GET","POST"],
+    "allow_headers":["Authorization", "Content-Type"]
+}
+
+CORS(app, resources={
+    r"/*": {
+        "origins" : "*"
+    }
+})
 
 class Equipment(BaseModel):
     username: str
@@ -123,37 +139,36 @@ class Equipment(BaseModel):
     ip: str
     command_list: list
 
-# @app.post("/send_commands", equip = Equipment)
-# def connect_to_equip(obj_json : Equipment ):
+@app.route('/send_commands', methods=["POST"])
+def connect_to_equip():
+    body = request.get_json()
 
-    # return obj_json
-    # equip.port = port
-    # equip.command_list = command_list
-    # equip.password = password
-    # equip.username = username
-    # equip.ip = ip
-    # equip.command_list = command_list
+    ip = body["ip"]
+    port = body["port"]
+    username = body["username"]
+    password = body["password"]
+    command_list = body["command_list"]
     
     # lista = []
 
-    # spamreader = csv.reader(equip.command_list, delimiter='\n') 
+    # spamreader = csv.reader(command_list, delimiter='\n') 
 
     # for linha in spamreader:
     #     lista.append(linha)
-
-    # print(lista[1]) 
-    # print(lista[1][1])
+    # return(lista[0])
 
     # client = paramiko.SSHClient()
     # client.set_missing_host_key_policy(paramiko.AutoAddPolicy()) 
-    # client.connect(f"{equip.ip}", f"{equip.port}", f"{equip.username}", f"{equip.password}")
-    # for i in equip.command_list:
-    #     stdin, stdout, stderr = client.exec_command(f'{equip.command_list[i]}\n', get_pty=True)
+    # client.connect(f"{ip}", f"{port}", f"{username}", f"{password}")
+    # for i in command_list:
+    #     stdin, stdout, stderr = client.exec_command(f'{lista[i]}\n', get_pty=True)
     # return {"Status":"Comandos executados!"}
 
-# if __name__ == "__main__":
-#     app.run(debug=True)
+    ssh= paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy)
+    ssh.connect(hostname=ip, username=username, password=password)
+    stdin,stdout,stderr = ssh.exec_command('id_command')
+    
 
-@app.post("/teste")
-def teste(teste:str):
-    return json.dumps(teste)
+if __name__ == "__main__":
+    app.run(debug=True)

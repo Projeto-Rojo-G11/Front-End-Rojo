@@ -4,12 +4,11 @@ import { useState } from 'react';
 import axios from 'axios';
 
 export default function Connection(props) {
-    const [porta, setPorta] = useState("123");
-    const [ip, setIp] = useState("123");
-    const [user, setUser] = useState("1231");
-    const [password, setPassword] = useState("123");
-    const [modelo, setModelo] = useState("123");
-    const [lista, setLista] = useState('123');
+    const [porta, setPorta] = useState("");
+    const [ip, setIp] = useState("");
+    const [user, setUser] = useState("");
+    const [password, setPassword] = useState("");
+    const [lista, setLista] = useState('');
 
     function EventClose(){
         var modal_connection = document.getElementById('connection');
@@ -25,54 +24,27 @@ export default function Connection(props) {
     //             return false; // stop reading
     //         }
     // });
-    var teste = {
-        teste: "teste"
-    }
+    var teste =  {"valor":"teste"};    
 
     function connectDevice(){
-        fetch("http://127.0.0.1:8000/teste", {
-            method:"POST",
-            headers:{'Content-Type': 'application/json'},
-            body: JSON.stringify(teste),
-          })
-        .then((response) =>{
-            if(response.status === 200){
-                console.log("deu certo")
 
+        axios.post('http://127.0.0.1:5000/send_commands', {
+            ip: ip,
+            port: porta,
+            username: user,
+            password: password,
+            command_list: lista,
+        }
+        )
+        .then((resposta) => {
+            console.log(resposta)
+            if (resposta.status === 200) {
+                console.log('sucesso');
             }
-            // localStorage.setItem('status-device' + {modelo}, response.data);
-
-            // EventClose()
-            console.log(response)
         })
-        .catch((erro)=>console.log(erro))
-
-
-        // let obj_json = {
-        //     "username": "user",
-        //     // "password": password,
-        //     // "port": porta,
-        //     // "ip": ip,
-        //     // "modelo": modelo,
-        //     // "command_list": lista
-        // }
-        
-
-        // fetch("http://127.0.0.1:8000/send_commands/", {
-        //     method:"POST",
-        //     headers:{
-        //         'Content-type': 'application/json'
-        //     },
-        //     dataType:"JSON",
-        //     body: JSON.stringify(obj_json),
-        //   })
-        // .then((response) =>{
-        //     // localStorage.setItem('status-device' + {modelo}, response.data);
-
-        //     // EventClose()
-        //     console.log(response)
-        // })
-        // .catch((erro)=>console.log(erro))
+        .catch((erro) => {
+            console.log(erro);
+        });
     }
 
     return(
@@ -102,7 +74,6 @@ export default function Connection(props) {
                                     <input type="text" placeholder='Senha' onChange={(event)=> setPassword(event.target.value)}/>
                                 </div>
                                 <div id='i--'>
-                                    <input type="text" placeholder='Modelo' onChange={(event)=> setModelo(event.target.value)}/>
                                     <input type="text" placeholder='IP' onChange={(event)=> setIp(event.target.value)}/>
                                     <input type="text" placeholder='Porta' onChange={(event)=> setPorta(event.target.value)}/>
                                 </div>

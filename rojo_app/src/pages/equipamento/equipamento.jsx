@@ -66,6 +66,7 @@ export default function CadastroEquipamento() {
     const [tipo, setTipo] = useState(null);
     const [dadoEquipamento, setDadoEquipamento] =useState([]);
     const [dadoTipoEquipamento, setDadoTipoEquipamento] = useState([]);
+    const[statusOn, setStatusOn] = useState(false);
     
     const imgAtual  = document.getElementById('')
 
@@ -345,7 +346,27 @@ export default function CadastroEquipamento() {
                                                                     </label>
                                                                 </div>
 
-                                                                
+                                                                <div className="status">
+
+                                                                    <p>STATUS</p>
+                                                                    <div>
+                                                                        {
+                                                                        statusOn === true && (
+                                                                            <div className="on-off">
+                                                                                <div className="circle1"/>
+                                                                                <p>LIGADO</p>
+                                                                            </div>
+                                                                        )}
+                                                                        {
+                                                                        statusOn === false && (
+                                                                            <div className="on-off">
+                                                                                <div className="circle2"/>
+                                                                                <p>DESLIGADO</p>
+                                                                            </div>
+                                                                        )}
+
+                                                                    </div>
+                                                                </div>
                                                                 </div>
 
                                                         </div>
