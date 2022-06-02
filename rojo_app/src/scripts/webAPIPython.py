@@ -8,7 +8,6 @@
 #     name: str
 #     interface: str
 
-import json
 # import ast
 # import pandas as pd
 # import paramiko
@@ -99,8 +98,7 @@ import json
 # from starlette.middleware.cors import CORSMiddleware
 
 # import time
-from pydantic import BaseModel, Json
-import csv
+
 
 
 # app = FastAPI()
@@ -123,82 +121,111 @@ import csv
 #     ip: str
 #     command_list: list
 
-# @app.route('/send_commands', methods=["POST"])
-# def connect_to_equip():
-#     body = request.get_json()
-
-#     ip = body["ip"]
-#     port = body["port"]
-#     username = body["username"]
-#     password = body["password"]
-#     command_list = body["command_list"]
-    
-    # lista = []
-
-    # spamreader = csv.reader(command_list, delimiter='\n') 
-
-    # for linha in spamreader:
-    #     lista.append(linha)
-    # return(lista[0])
-
-    # client = paramiko.SSHClient()
-    # client.set_missing_host_key_policy(paramiko.AutoAddPolicy()) 
-    # client.connect(f"{ip}", f"{port}", f"{username}", f"{password}")
-    # for i in command_list:
-    #     stdin, stdout, stderr = client.exec_command(f'{lista[i]}\n', get_pty=True)
-    # return {"Status":"Comandos executados!"}
-
-    # ssh= paramiko.SSHClient()
-    # ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy)
-    # ssh.connect(hostname=ip, username=username, password=password)
-    # stdin,stdout,stderr = ssh.exec_command('id_command')
 
 
+from asyncio.windows_events import NULL
+from os import device_encoding
+import netmiko
 import paramiko
-from flask import request
-from sys import stderr, stdout
+from flask import jsonify, request
 from flask import Flask
 from flask_restful import reqparse 
 from flask_cors import CORS, cross_origin
+import json
+from sys import stderr, stdout
+
 
 app = Flask(__name__)
-app.config['CORS_HEADERS'] = 'Content_Type'
 
 CORS(app, resources={
     r"/*": {
-        "origins" : ["*"],
+        "origins" : "*",
         "methods": ["OPTIONS","GET","POST"],
-        "allow_headers":["Authorization", "Content-Type"]
+        "allow_headers":["*"]
     }
 })
 
-@app.route('/teste', methods=['POST'])
-def teste():
-    try:
-        todo = request.get_json()
-        
+# @app.route('/teste', methods=['POST'])
+# def teste():
+#     try:
+#         todo = request.get_json()
 
-        # lista={}
-        # for item in lista:
-        #     if info in item.keys():
-        #         lista = item[info]
+#         username = todo["username"]
+#         password = todo["password"]
+#         ip = todo["ip"]
+#         port = todo["port"]
+#         command_list = todo["lista"]
 
-        # x = '{"name":Jhon, "age":39}'
-        # y = json.loads(x)
+#         command_list = command_list.split("\n")
+#         client = paramiko.SSHClient()
 
-        lista = teste()
+#         client.set_missing_host_key_policy(paramiko.AutoAddPolicy()) 
+#         client.connect(f"{ip}", f"{port}", f"{username}", f"{password}")
+#         for i in command_list:
+#             stdin, stdout, stderr = client.exec_command(f'{command_list[i]}\n', get_pty=True)
+#         return {"Status":"Comandos executados!"}
 
-        spamreader = csv.reader(todo[lista], delimiter='\n') 
-
-        for linha in spamreader:
-            lista.append(linha)
- 
-        return (200)
+#         # return jsonify({"username":username, "password": password, "lista": command_list})
     
+#     except Exception as e:
+#         return str (e)
+
+
+# @app.route('/teste', methods=["POST"])
+# def connect_to_equip():
+#     try:
+#         body = request.get_json()
+
+#         ip = body["ip"]
+#         port = body["port"]
+#         username = body["username"]
+#         password = body["password"]
+#         command_list = body["lista"]
+
+#         # ssh = paramiko.SSHClient()
+#         # ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+#         # ssh.connect(hostname=ip, username=username, password=password)
+#         # stdin,stdout,stderr = ssh.exec_command('ifconfig')
+
+#         connection = netmiko.ConnectHandler(ip=ip, device_type="mikrotik_routeros", username=username, password=password)
+
+#         print(connection.send_command("/interface print"))
+
+#         return {"Status":"Comandos executados!"}
+
+#     except Exception as e:
+#         error = str(e)
+#         return (error)
+    
+
+
+@app.route('/teste', methods=["POST"])
+def connect_to_equip():
+    try:
+        body = request.get_json()
+
+        ip = body["ip"]
+        port = body["port"]
+        username = body["username"]
+        password = body["password"]
+        # command_list = body["lista"]
+
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(hostname=ip, username=username, password=password)
+        s = ssh.get_transport().open_session()
+        paramiko.agent.AgentRequestHandler(s)
+
+        print(stdout.readlines())
+
+        s = ssh.get_transport().open_session()
+        paramiko.agent.Agent
+
+        return {"Status":"Comandos executados!"}
+
     except Exception as e:
-        return str (e)
-
-
+        error = str(e)
+        return (error)
 
 if __name__ == "__main__":
     app.run(port=8085, host='0.0.0.0', debug=True, threaded=True)

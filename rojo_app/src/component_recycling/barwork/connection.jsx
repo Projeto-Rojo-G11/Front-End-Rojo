@@ -24,9 +24,16 @@ export default function Connection(props) {
     //             return false; // stop reading
     //         }
     // });
-    let data =  {lista:lista}; 
+    let data = {"lista":"lista"}; 
     function teste(){
-        axios.post("http://127.0.0.1:8085/teste", data)
+        let data ={
+            "lista": lista,
+            "ip": ip,
+            "port": porta,
+            "password": password,
+            "username": user
+        }
+        axios.post("http://localhost:8085/teste", data)
         .then((response) => {
             if(response.status === 200){
                 console.log(response.status)
