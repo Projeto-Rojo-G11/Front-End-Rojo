@@ -24,28 +24,39 @@ export default function Connection(props) {
     //             return false; // stop reading
     //         }
     // });
-    var teste =  {"valor":"teste"};    
-
-    function connectDevice(){
-
-        axios.post('http://127.0.0.1:5000/send_commands', {
-            ip: ip,
-            port: porta,
-            username: user,
-            password: password,
-            command_list: lista,
-        }
-        )
-        .then((resposta) => {
-            console.log(resposta)
-            if (resposta.status === 200) {
-                console.log('sucesso');
+    let data =  {lista:lista}; 
+    function teste(){
+        axios.post("http://127.0.0.1:8085/teste", data)
+        .then((response) => {
+            if(response.status === 200){
+                console.log(response.status)
+                console.log(response.data)
             }
         })
-        .catch((erro) => {
-            console.log(erro);
-        });
+        .catch((erro)=>console.log(erro))
     }
+    
+
+    // function connectDevice(){
+    //     data = {
+    //         ip: ip,
+    //         port: porta,
+    //         username: user,
+    //         password: password,
+    //         command_list: lista,
+    //     }
+
+    //     axios.post('http://localhost:8085/send_commands', data)
+    //     .then((resposta) => {
+    //         console.log(resposta)
+    //         if (resposta.status === 200) {
+    //             console.log('sucesso');
+    //         }
+    //     })
+    //     .catch((erro) => {
+    //         console.log(erro);
+    //     });
+    // }
 
     return(
         <div id="connection" className="modal_container">
@@ -58,7 +69,7 @@ export default function Connection(props) {
                             <h4>DO EQUIPAMENTO</h4>
                         </div>
                         <div id='h--2'>
-                            <button>CONECTAR</button>
+                            <button onClick={teste}>CONECTAR</button>
                             <div id="close" onClick={EventClose}><CloseIcon/></div>
 
                         </div>
@@ -66,8 +77,7 @@ export default function Connection(props) {
                     <div id="b-connection">
                         <div id='b-global'>
                             <div>
-                           
-                        
+                    
                                 <p id='h'>informe os dados</p>
                                 <div id='i--'>
                                     <input type="text" placeholder='Usuario' onChange={(event)=> setUser(event.target.value)}/>
@@ -79,15 +89,7 @@ export default function Connection(props) {
                                 </div>
                                 <textarea placeholder='Insira o script de conexao com o dispositivo' onChange={(event) => setLista(event.target.value)} rows="10" cols="20"wrap="hard"/>
                             </div>
-                            <p id='p'>Tem certeza que deseja continuar?</p>
-                            <div id="btn">
-                                <button className="btn-reboot-s" onClick={connectDevice}>
-                                    <p>sim, estou ciente</p>
-                                </button>
-                                <button onClick={EventClose} className="btn-reboot-n">
-                                    <p>não,cancelar</p>
-                                </button>
-                            </div>
+                            
 
                         </div>
                     </div>
