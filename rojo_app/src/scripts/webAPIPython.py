@@ -101,10 +101,9 @@ from flask_restful import reqparse
 from flask_cors import CORS, cross_origin
 import json
 from sys import stderr, stdout
-import pyping
-from time import sleep
+# from time import sleep
 from datetime import datetime
-from pexpect import pxssh
+# from pexpect import pxssh
 
 
 app = Flask(__name__)
@@ -117,67 +116,72 @@ CORS(app, resources={
     }
 })
 
-# @app.route('/teste', methods=['POST'])
-# def teste():
-#     try:
-#         todo = request.get_json()
-
-#         username = todo["username"]
-#         password = todo["password"]
-#         ip = todo["ip"]
-#         port = todo["port"]
-#         command_list = todo["lista"]
-
-#         command_list = command_list.split("\n")
-#         client = paramiko.SSHClient()
-
-#         client.set_missing_host_key_policy(paramiko.AutoAddPolicy()) 
-#         client.connect(f"{ip}", f"{port}", f"{username}", f"{password}")
-#         for i in command_list:
-#             stdin, stdout, stderr = client.exec_command(f'{command_list[i]}\n', get_pty=True)
-#         return {"Status":"Comandos executados!"}
-
-#         # return jsonify({"username":username, "password": password, "lista": command_list})
-    
-#     except Exception as e:
-#         return str (e)
-
-
-
-
-@app.route('/interface_dispositivo', methods=["POST"])
-def interface_device():
+@app.route('/teste', methods=['POST'])
+def teste():
     try:
-        body = request.get_json()
+        todo = request.get_json()
 
-        ip = body["ip"]
-        port = body["port"]
-        username = body["username"]
-        password = body["password"]
-        command_list = body["lista"]
+        username = todo["username"]
+        password = todo["password"]
+        ip = todo["ip"]
+        command_list = todo["lista"]
+
+        command_list = command_list.split("\n")
+        client = paramiko.SSHClient()
 
         connection = netmiko.ConnectHandler(ip=ip, device_type="mikrotik_routeros", username=username, password=password)
 
-        print(connection.send_command("/interface print"))
+        print(connection.send_command("ping 192.168.100.52"))
 
         return {"Status":"Comandos executados!"}
 
-    except Exception as e:
-        error = str(e)
-        return (error)
+        # client.set_missing_host_key_policy(paramiko.AutoAddPolicy()) 
+        # client.connect(f"{ip}", f"{username}", f"{password}")
+        # for i in command_list:
+        #     stdin, stdout, stderr = client.exec_command(f'{command_list[i]}\n', get_pty=True)
+        # return {"Status":"Comandos executados!"}
 
-@app.route('/reiniciar_dispositivo')
-def reboot_device():
-	try:
-		s = pxssh.pxssh()
-		s.login('192.168.2.209', 'root', 'thereisapassword')
-		s.sendline('reboot')   # run a command
-		s.prompt()             # match the prompt
-		print(s.before)        # print everything before the prompt.
-		s.logout()
-	except pxssh.ExceptionPxssh as e:
-		print("pxssh failed on login.")
-		print(e)
+        # return jsonify({"username":username, "password": password, "lista": command_list})
+    
+    except Exception as e:
+        return str (e)
+
+
+
+
+# @app.route('/interface_dispositivo', methods=["POST"])
+# def interface_device():
+#     try:
+#         body = request.get_json()
+
+#         ip = body["ip"]
+#         port = body["port"]
+#         username = body["username"]
+#         password = body["password"]
+#         command_list = body["lista"]
+
+#         connection = netmiko.ConnectHandler(ip=ip, device_type="mikrotik_routeros", username=username, password=password)
+
+#         print(connection.send_command("/interface print"))
+
+#         return {"Status":"Comandos executados!"}
+
+#     except Exception as e:
+#         error = str(e)
+#         return (error)
+
+# @app.route('/reiniciar_dispositivo')
+# def reboot_device():
+# 	try:
+# 		s = pxssh.pxssh()
+# 		s.login('192.168.2.209', 'root', 'thereisapassword')
+# 		s.sendline('reboot')   # run a command
+# 		s.prompt()             # match the prompt
+# 		print(s.before)        # print everything before the prompt.
+# 		s.logout()
+# 	except pxssh.ExceptionPxssh as e:
+# 		print("pxssh failed on login.")
+# 		print(e)
 
 
 if __name__ == "__main__":

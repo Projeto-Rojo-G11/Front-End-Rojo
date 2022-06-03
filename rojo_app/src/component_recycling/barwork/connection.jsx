@@ -5,10 +5,10 @@ import axios from 'axios';
 
 export default function Connection(props) {
     const [porta, setPorta] = useState("");
-    const [ip, setIp] = useState("");
-    const [user, setUser] = useState("");
-    const [password, setPassword] = useState("");
-    const [lista, setLista] = useState('asdfsadf');
+    const [ip, setIp] = useState("192.168.100.22");
+    const [user, setUser] = useState("admin");
+    const [password, setPassword] = useState("Senai@132");
+    const [lista, setLista] = useState('ping 192.168.100.52');
 
     function EventClose(){
         var modal_connection = document.getElementById('connection');
@@ -29,7 +29,6 @@ export default function Connection(props) {
         let data ={
             "lista": lista,
             "ip": ip,
-            "port": porta,
             "password": password,
             "username": user
         }
