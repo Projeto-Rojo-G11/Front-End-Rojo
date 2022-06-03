@@ -97,7 +97,6 @@ h2.titulo{
   height: auto;
   /* background-color: brown; */
   display: flex;
-  justify-content: space-between;
   flex-direction: column;
   padding-top:5%;
   padding-right:10%;
@@ -156,10 +155,9 @@ h2.titulo{
 
 .container-img{
   width: 30%;
-  height: 600px;
+  height: auto;
   display:flex;
   flex-direction: column;
-  justify-content: space-between;
   /* background-color: pink; */
   padding-top:5%;
   align-items:end;

@@ -8,7 +8,7 @@ export default function Connection(props) {
     const [ip, setIp] = useState("");
     const [user, setUser] = useState("");
     const [password, setPassword] = useState("");
-    const [lista, setLista] = useState('');
+    const [lista, setLista] = useState('asdfsadf');
 
     function EventClose(){
         var modal_connection = document.getElementById('connection');
@@ -43,6 +43,10 @@ export default function Connection(props) {
         .catch((erro)=>console.log(erro))
     }
     
+    function alterarScript(){
+        var string = "";
+        setLista(string)
+    }
 
     // function connectDevice(){
     //     data = {
@@ -85,7 +89,7 @@ export default function Connection(props) {
                         <div id='b-global'>
                             <div>
                     
-                                <p id='h'>informe os dados</p>
+                                <p id='h'>informe os dados <button onClick={alterarScript}>GERAR SCRIPT</button></p>
                                 <div id='i--'>
                                     <input type="text" placeholder='Usuario' onChange={(event)=> setUser(event.target.value)}/>
                                     <input type="text" placeholder='Senha' onChange={(event)=> setPassword(event.target.value)}/>
@@ -94,7 +98,7 @@ export default function Connection(props) {
                                     <input type="text" placeholder='IP' onChange={(event)=> setIp(event.target.value)}/>
                                     <input type="text" placeholder='Porta' onChange={(event)=> setPorta(event.target.value)}/>
                                 </div>
-                                <textarea placeholder='Insira o script de conexao com o dispositivo' onChange={(event) => setLista(event.target.value)} rows="10" cols="20"wrap="hard"/>
+                                <textarea value={lista} placeholder='Insira um script do dispositivo' onChange={(event) => setLista(event.target.value)} rows="10" cols="20"wrap="hard"/>
                             </div>
                             
 

@@ -243,25 +243,48 @@ export default function CadastroEquipamento() {
                                                                     </div>
                                                                 </div>
 
+                                                               <div id="e---">
+                                                                   
+                                                                    <div className="form__div">                   
+                                                                        <input
+                                                                            className="form__input"
+                                                                            type="text"
+                                                                            name="NumeroSerie"
+                                                                            value={numeroDeSerie}
+                                                                            placeholder=" "
+                                                                            onChange={(event) => setNumeroDeSerie(event.target.value)}
+                                                                            disabled={
+                                                                                condicao === false
+                                                                                    ? 'none'
+                                                                                    : ''
+                                                                                }
+                                                                        />  
+                                                                        <label className="form__label">
+                                                                            Numero de Série
+                                                                        </label>
+                                                                    </div> 
+                                                                    <div className="status" id="s">
 
-                                                                <div className="form__div">                   
-                                                                    <input
-                                                                        className="form__input"
-                                                                        type="text"
-                                                                        name="NumeroSerie"
-                                                                        value={numeroDeSerie}
-                                                                        placeholder=" "
-                                                                        onChange={(event) => setNumeroDeSerie(event.target.value)}
-                                                                        disabled={
-                                                                            condicao === false
-                                                                                ? 'none'
-                                                                                : ''
-                                                                            }
-                                                                    />  
-                                                                    <label className="form__label">
-                                                                        Numero de Série
-                                                                    </label>
-                                                                </div> 
+                                                                        <p>STATUS</p>
+                                                                        <div>
+                                                                            {
+                                                                            statusOn === true && (
+                                                                                <div className="on-off">
+                                                                                    <div className="circle1"/>
+                                                                                    <p>LIGADO</p>
+                                                                                </div>
+                                                                            )}
+                                                                            {
+                                                                            statusOn === false && (
+                                                                                <div className="on-off">
+                                                                                    <div className="circle2"/>
+                                                                                    <p>DESLIGADO</p>
+                                                                                </div>
+                                                                            )}
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>                             
 
 
                                                             </div>
@@ -269,105 +292,94 @@ export default function CadastroEquipamento() {
                                                                 <p>Informações para consultas básicas do sistema</p>
                                                                 <div className="palito-divisor"/>
                                                             </div>
-                                                            <div className="box-2">
-                                                                <div className="form__div">                        
-                                                                    <input
-                                                                        className="form__input"
-                                                                        type="text"
-                                                                        name="Gateway"
-                                                                        value={gateWay}
-                                                                        placeholder=" "
-                                                                        onChange={(event) => setGateWay(event.target.value)}
-                                                                        disabled={
-                                                                            condicao === false
-                                                                                ? 'none'
-                                                                                : ''
-                                                                            }
-                                                                    />
-                                                                    <label className="form__label">
-                                                                        GateWay
-                                                                    </label>
-                                                                </div>
-
-                                                                <div className="form__div">                        
-                                                                    <input
-                                                                        className="form__input"
-                                                                        type="text"
-                                                                        name="IP"
-                                                                        value={ip}
-                                                                        placeholder=" "
-                                                                        onChange={(event) => setIp(event.target.value)}
-                                                                        disabled={
-                                                                            condicao === false
-                                                                                ? 'none'
-                                                                                : ''
-                                                                            }
-                                                                    />
-                                                                    <label className="form__label">
-                                                                        Mask
-                                                                    </label>
-                                                                </div>
-
-                                                                <div className="form__div">                      
-                                                                    <input
-                                                                        className="form__input"
-                                                                        type="text"
-                                                                        name="DNS"
-                                                                        value={dns}
-                                                                        placeholder=" "
-                                                                        onChange={(event) => setDns(event.target.value)}
-                                                                        disabled={
-                                                                            condicao === false
-                                                                                ? 'none'
-                                                                                : ''
-                                                                            }
-                                                                    />
-                                                                    <label className="form__label">
-                                                                        DNS
-                                                                    </label> 
-                                                                </div> 
-
-                                                                <div className="form__div">                        
-                                                                    <input
-                                                                        className="form__input"
-                                                                        type="text"
-                                                                        name="Porta"
-                                                                        value={porta}
-                                                                        placeholder=" "
-                                                                        onChange={(event) => setPorta(event.target.value)}
-                                                                        disabled={
-                                                                            condicao === false
-                                                                                ? 'none'
-                                                                                : ''
-                                                                            }
-                                                                    />
-                                                                    <label className="form__label">
-                                                                        Porta
-                                                                    </label>
-                                                                </div>
-
-                                                                <div className="status">
-
-                                                                    <p>STATUS</p>
-                                                                    <div>
-                                                                        {
-                                                                        statusOn === true && (
-                                                                            <div className="on-off">
-                                                                                <div className="circle1"/>
-                                                                                <p>LIGADO</p>
-                                                                            </div>
-                                                                        )}
-                                                                        {
-                                                                        statusOn === false && (
-                                                                            <div className="on-off">
-                                                                                <div className="circle2"/>
-                                                                                <p>DESLIGADO</p>
-                                                                            </div>
-                                                                        )}
-
+                                                            <div className="box-2-equi">
+                                                                <div>
+                                                                    <div className="form__div">                        
+                                                                        <input
+                                                                            className="form__input"
+                                                                            type="text"
+                                                                            name="Gateway"
+                                                                            value={gateWay}
+                                                                            placeholder=" "
+                                                                            onChange={(event) => setGateWay(event.target.value)}
+                                                                            disabled={
+                                                                                condicao === false
+                                                                                    ? 'none'
+                                                                                    : ''
+                                                                                }
+                                                                        />
+                                                                        <label className="form__label">
+                                                                            GateWay
+                                                                        </label>
                                                                     </div>
+                                                                    <div className="form__div">                        
+                                                                        <input
+                                                                            className="form__input"
+                                                                            type="text"
+                                                                            name="IP"
+                                                                            value={ip}
+                                                                            placeholder=" "
+                                                                            onChange={(event) => setIp(event.target.value)}
+                                                                            disabled={
+                                                                                condicao === false
+                                                                                    ? 'none'
+                                                                                    : ''
+                                                                                }
+                                                                        />
+                                                                        <label className="form__label">
+                                                                            Mask
+                                                                        </label>
+                                                                    </div>
+
                                                                 </div>
-                                                                </div>
+
+                                                                <div>
+                                                                
+                                                                    <div className="form__div">                      
+                                                                        <input
+                                                                            className="form__input"
+                                                                            type="text"
+                                                                            name="DNS"
+                                                                            value={dns}
+                                                                            placeholder=" "
+                                                                            onChange={(event) => setDns(event.target.value)}
+                                                                            disabled={
+                                                                                condicao === false
+                                                                                    ? 'none'
+                                                                                    : ''
+                                                                                }
+                                                                        />
+                                                                        <label className="form__label">
+                                                                            DNS
+                                                                        </label> 
+                                                                    </div> 
+
+                                                                    <div className="form__div">                        
+                                                                        <input
+                                                                            className="form__input"
+                                                                            type="text"
+                                                                            name="Porta"
+                                                                            value={porta}
+                                                                            placeholder=" "
+                                                                            onChange={(event) => setPorta(event.target.value)}
+                                                                            disabled={
+                                                                                condicao === false
+                                                                                    ? 'none'
+                                                                                    : ''
+                                                                                }
+                                                                        />
+                                                                        <label className="form__label">
+                                                                            Porta
+                                                                        </label>
+                                                                    </div>
+                                                                </div>                        
+
+                                                                
+                                                            </div>
+                                                            <div id="inter">
+                                                                Interface
+                                                                <p></p>
+                                                            </div>
 
                                                         </div>
                                                         <div className="container-img">

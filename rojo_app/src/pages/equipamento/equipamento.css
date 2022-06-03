@@ -43,6 +43,7 @@
     background-size:cover;
     background-repeat: no-repeat;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    margin-bottom: 50px;
 }
 
 .box-img-equipamento.show{
@@ -65,3 +66,53 @@
 #descricao textarea{
     white-space: pre-wrap; 
 }
+
+.box-2-equi{
+    width: 100%;
+    height: 150px;
+    display: flex;
+    margin-top: 1.5em;
+
+    justify-content: space-between;
+    /* background:blue; */
+}
+
+.box-2-equi div{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.box-2-equi .form-div div{
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 350px;
+    width: 250px;
+    /* background-color: aqua;s */
+}
+
+
+#e---{
+    display: flex;
+    width: 250px;
+    height: 100%;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+#s{
+    margin-bottom: 40px;
+}
+
+#inter{
+    margin-top: 50px;
+    width: 400px;
+    border: 1px solid gray;
+    min-height: 150px;
+    border-radius: 3px;
+    padding: 10px;
+}
+
+

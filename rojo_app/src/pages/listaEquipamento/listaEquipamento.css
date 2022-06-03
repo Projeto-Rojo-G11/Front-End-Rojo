@@ -111,6 +111,7 @@
 }
 
 .status p{
+    margin-left: 0;
     margin-bottom: 5px;
     font-size: 13px;
 }
@@ -129,12 +130,16 @@
 }
 
 .on-off{
-    width: 100%;
+    width: 110px;
     height: AUTO;
     /* background-color: violet; */
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.on-off p{
+    margin: 0;
 }
 
 .circle1, .circle2{

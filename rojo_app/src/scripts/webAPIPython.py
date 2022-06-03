@@ -90,38 +90,6 @@
 #     except Exception as err:
 #         print(f'Falha na requisicao /connectGrafana do GrafanAPI \n erro: {err}')
 
-# Metodos DataDog
-
-
-# from fastapi import FastAPI
-# from typing import Optional 
-# from starlette.middleware.cors import CORSMiddleware
-
-# import time
-
-
-
-# app = FastAPI()
-
-# origins = ["*"]
-
-# app.add_middleware(
-#     CORSMiddleware,
-#     allow_origins=origins,
-#     allow_credentials=True,
-#     allow_methods=["*"],
-#     allow_headers=["*"],
-# )
-
-
-# class Equipment(BaseModel):
-#     username: str
-#     password: str
-#     port: str
-#     ip: str
-#     command_list: list
-
-
 
 from asyncio.windows_events import NULL
 from os import device_encoding
@@ -133,6 +101,10 @@ from flask_restful import reqparse
 from flask_cors import CORS, cross_origin
 import json
 from sys import stderr, stdout
+import pyping
+from time import sleep
+from datetime import datetime
+from pexpect import pxssh
 
 
 app = Flask(__name__)
@@ -171,36 +143,10 @@ CORS(app, resources={
 #         return str (e)
 
 
-# @app.route('/teste', methods=["POST"])
-# def connect_to_equip():
-#     try:
-#         body = request.get_json()
-
-#         ip = body["ip"]
-#         port = body["port"]
-#         username = body["username"]
-#         password = body["password"]
-#         command_list = body["lista"]
-
-#         # ssh = paramiko.SSHClient()
-#         # ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-#         # ssh.connect(hostname=ip, username=username, password=password)
-#         # stdin,stdout,stderr = ssh.exec_command('ifconfig')
-
-#         connection = netmiko.ConnectHandler(ip=ip, device_type="mikrotik_routeros", username=username, password=password)
-
-#         print(connection.send_command("/interface print"))
-
-#         return {"Status":"Comandos executados!"}
-
-#     except Exception as e:
-#         error = str(e)
-#         return (error)
-    
 
 
-@app.route('/teste', methods=["POST"])
-def connect_to_equip():
+@app.route('/interface_dispositivo', methods=["POST"])
+def interface_device():
     try:
         body = request.get_json()
 
@@ -208,24 +154,31 @@ def connect_to_equip():
         port = body["port"]
         username = body["username"]
         password = body["password"]
-        # command_list = body["lista"]
+        command_list = body["lista"]
 
-        ssh = paramiko.SSHClient()
-        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(hostname=ip, username=username, password=password)
-        s = ssh.get_transport().open_session()
-        paramiko.agent.AgentRequestHandler(s)
+        connection = netmiko.ConnectHandler(ip=ip, device_type="mikrotik_routeros", username=username, password=password)
 
-        print(stdout.readlines())
-
-        s = ssh.get_transport().open_session()
-        paramiko.agent.Agent
+        print(connection.send_command("/interface print"))
 
         return {"Status":"Comandos executados!"}
 
     except Exception as e:
         error = str(e)
         return (error)
+
+@app.route('/reiniciar_dispositivo')
+def reboot_device():
+	try:
+		s = pxssh.pxssh()
+		s.login('192.168.2.209', 'root', 'thereisapassword')
+		s.sendline('reboot')   # run a command
+		s.prompt()             # match the prompt
+		print(s.before)        # print everything before the prompt.
+		s.logout()
+	except pxssh.ExceptionPxssh as e:
+		print("pxssh failed on login.")
+		print(e)
+
 
 if __name__ == "__main__":
     app.run(port=8085, host='0.0.0.0', debug=True, threaded=True)
