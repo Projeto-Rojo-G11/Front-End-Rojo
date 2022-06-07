@@ -1,6 +1,6 @@
 import axios from "axios";
 import React,{ useEffect, useState} from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 import { parseJwt } from "../../services/auth";
@@ -35,6 +35,8 @@ import CloseIcon from '@mui/icons-material/Close';
 export default function CadastroEquipamento() {
 
     var navigate = useNavigate();
+    var location = useLocation();
+    const {id} = location.state
 
     //States Img Equipamento
     const [arquivo, setArquivo] = useState(null);
@@ -60,6 +62,7 @@ export default function CadastroEquipamento() {
     const [descricao, setDescricao] = useState('LOCAL : Andar 2, Sala 1');
     const [data, setData] = useState(new Date())
 
+    const [dataEquipamento, setDataEquipamento] = useState([])
 
     const [condicao, setCondicao] = useState(true);
 
@@ -87,6 +90,16 @@ export default function CadastroEquipamento() {
           .then(this.buscarImagem);
     };
 
+    useEffect(() => {
+        axios.get("http://localhost:5000/api/Equipamento/equipamento/", id)
+        .then((response) => {
+            if(response === 200){
+                setDataEquipamento(response.data)
+            }
+        })
+        .catch((error) => console.log(error))
+    },[])
+
     const buscarImagem = () => {
         axios('http://3.211.143.134:8080/api/ImgUsuario/imagem/bd', {
         //   headers: {
@@ -113,11 +126,11 @@ export default function CadastroEquipamento() {
         })
         .catch((erro)=> console.log(erro))
     }
-      
-      const cadastroEquipamento = (event) => 
-      {
-          event.preventDefault();
-          
+    
+    const cadastroEquipamento = (event) => 
+    {
+        event.preventDefault();
+        
         let equipamento = {
             idUsuario: idUsuario,
             idTipoEquipamento: parseInt(idTipoEquipamento),
@@ -129,24 +142,24 @@ export default function CadastroEquipamento() {
             porta: parseInt(porta),
             dataEntrada : new Date(data),
             descricao: descricao,
-    };
+        };
     
-    axios
-    .post("http://3.211.143.134:8080/api/Equipamento/cadastro-equipamento", equipamento
-    )   
-    
-    .then( function (response){
-        setDadoEquipamento(response.data);
-    })
-    
-    .then( function (resposta) {
-            console.log(resposta);
-            navigate('/ListaEquipamento')
+        axios
+        .post("http://3.211.143.134:8080/api/Equipamento/cadastro-equipamento", equipamento
+        )   
+        
+        .then( function (response){
+            setDadoEquipamento(response.data);
         })
         
-        .catch( function (erro) {
-            console.log(erro);
-        });
+        .then( function (resposta) {
+                console.log(resposta);
+                navigate('/ListaEquipamento')
+            })
+            
+            .catch( function (erro) {
+                console.log(erro);
+            });
     }
     
     useEffect(() => (buscarTipoEquipamento()),[])
@@ -227,7 +240,7 @@ export default function CadastroEquipamento() {
                                                                             className="form__input"
                                                                             type="text"
                                                                             name="Modelo"
-                                                                            value={modelo}
+                                                                            value={dataEquipamento.modelo}
                                                                             autoComplete='off'
                                                                             placeholder=" "
                                                                             onChange={(event) => setModelo(event.target.value)}
@@ -250,7 +263,7 @@ export default function CadastroEquipamento() {
                                                                             className="form__input"
                                                                             type="text"
                                                                             name="NumeroSerie"
-                                                                            value={numeroDeSerie}
+                                                                            value={dataEquipamento.numeroDeSerie}
                                                                             placeholder=" "
                                                                             onChange={(event) => setNumeroDeSerie(event.target.value)}
                                                                             disabled={
@@ -299,7 +312,7 @@ export default function CadastroEquipamento() {
                                                                             className="form__input"
                                                                             type="text"
                                                                             name="Gateway"
-                                                                            value={gateWay}
+                                                                            value={dataEquipamento.gateWay}
                                                                             placeholder=" "
                                                                             onChange={(event) => setGateWay(event.target.value)}
                                                                             disabled={
@@ -317,7 +330,7 @@ export default function CadastroEquipamento() {
                                                                             className="form__input"
                                                                             type="text"
                                                                             name="IP"
-                                                                            value={ip}
+                                                                            value={dataEquipamento.ip}
                                                                             placeholder=" "
                                                                             onChange={(event) => setIp(event.target.value)}
                                                                             disabled={
@@ -340,7 +353,7 @@ export default function CadastroEquipamento() {
                                                                             className="form__input"
                                                                             type="text"
                                                                             name="DNS"
-                                                                            value={dns}
+                                                                            value={dataEquipamento.dns}
                                                                             placeholder=" "
                                                                             onChange={(event) => setDns(event.target.value)}
                                                                             disabled={
@@ -359,7 +372,7 @@ export default function CadastroEquipamento() {
                                                                             className="form__input"
                                                                             type="text"
                                                                             name="Porta"
-                                                                            value={porta}
+                                                                            value={dataEquipamento.porta}
                                                                             placeholder=" "
                                                                             onChange={(event) => setPorta(event.target.value)}
                                                                             disabled={
@@ -393,7 +406,7 @@ export default function CadastroEquipamento() {
                                                                             className="form__input"
                                                                             id="form__input_descricao"
                                                                             type="text"     
-                                                                            value={descricao}
+                                                                            value={dataEquipamento.descricao}
                                                                             placeholder=" "                                                                        
                                                                             onChange={(event) => setDescricao(event.target.value)}
                                                                             disabled={

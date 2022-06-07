@@ -33,7 +33,7 @@ export default function ListaEquipamento (){
     function realizarListagem (){
         let usuario = parseJwt().jti;
         axios
-        .get('http://3.211.143.134:8080/api/Equipamento/listar-meus-equipamentos/' + usuario)
+        .get('http://localhost:5000/api/Equipamento/listar-meus-equipamentos/' + usuario)
         .then((response ) => {
             console.log(response.data );
             setListaEquipamento((response.data));
@@ -68,7 +68,7 @@ export default function ListaEquipamento (){
                                 return(
                                 <div className="box-lista">
                                     <div className="box-head-lista">
-                                        <div><p>#{item.idEquipamento} </p></div>
+                                        <div><Link to="/Equipamento" state={{ id : item.idEquipamento}}><p>#{item.idEquipamento} </p></Link></div>
                                     </div>
                                     <div className="box-body-lista">
                                             <div className="ob1-info">

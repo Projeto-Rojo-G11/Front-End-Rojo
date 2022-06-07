@@ -46,7 +46,7 @@ export default function CadastroEquipamento() {
     const buscarTipoEquipamento = () =>
     {
         axios
-        .get('http://3.211.143.134:8080/api/TipoEquipamento/lista')
+        .get('http://localhost:5000/api/TipoEquipamento/lista')
 
         .then(function (response) {
             setDadoTipoEquipamento(response.data)
@@ -57,7 +57,7 @@ export default function CadastroEquipamento() {
     function realizarListagem (){
         let usuario = parseJwt().jti;
         axios
-        .get('http://3.211.143.134:8080/api/Equipamento/listar-meus-equipamentos/' + usuario)
+        .get('http://localhost:5000/api/Equipamento/listar-meus-equipamentos/' + usuario)
         .then((response ) => {
             // console.log(response.data );
             setListaEquipamento((response.data));
@@ -94,7 +94,7 @@ export default function CadastroEquipamento() {
         };
 
         axios
-        .post("http://3.211.143.134:8080/api/Equipamento/cadastro-equipamento", equipamento
+        .post("http://localhost:5000/api/Equipamento/cadastro-equipamento", equipamento
         )   
         
         .then( function (response){
